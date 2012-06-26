@@ -1,0 +1,21 @@
+<apex:page standardController="Case" extensions="Ext_CaseAssociate">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Process Selected" action="{!processSelected}" rerender="table"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" rerender="table"/> 
+            </apex:pageBlockButtons>
+            <!-- In our table we are displaying the cContact records -->
+            <apex:pageBlockTable value="{!users}" var="u" id="table">
+                <apex:column >
+                    <!-- This is our selected Boolean property in our wrapper class -->
+                    <apex:inputCheckbox value="{!u.selected}"/>
+                </apex:column>
+                <!-- This is how we access the contact values within our cContact container/wrapper -->
+                <apex:column value="{!u.use.Name}" />
+                <apex:column value="{!u.use.Email}" />
+                <apex:column value="{!u.use.Phone}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

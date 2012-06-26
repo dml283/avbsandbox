@@ -1,0 +1,137 @@
+<apex:page title="Paged Tasks" controller="TaskListCon" showheader="false">
+<style>
+#bigbox{
+    height: 240px; 
+    /*overflow: scroll;*/ 
+    width: 1000px;
+    padding: 0px;
+    margin: 0px;
+}
+.tasktable{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.viewcol{
+    width: 25px;
+}
+.editcol{
+    width: 25px;
+}
+.datecol{
+    width: 60px;
+}
+.statcol{
+    width: 75px;
+}
+.assoccol{
+    width: 100px;
+}
+.ownercol{
+    width: 75px;
+}
+.accidcol{
+    width: 90px;
+}
+.typecol{
+    width: 75px;
+}
+.subcol{
+    width: 150px;
+}
+.custgroupcol{
+    width: 150px;
+}
+</style>
+
+<apex:messages /> 
+
+<apex:pageblock >
+    <div id="bigbox">
+    <apex:form >
+        
+        <apex:outputpanel id="taskpanel"> 
+            
+            <div style="font-size: 10px;">
+                <table style="width: 100%;">
+                    <tr><td style="width: 100px; text-align: right;">
+                        <apex:selectlist style="font-size: 10px;" size="1" value="{!filter}"> 
+                            <apex:selectOptions value="{!viewoptions}"/>
+                            <apex:actionsupport event="onchange" action="{!changefilter}" /> 
+                        </apex:selectlist>
+                    </td><td style="width: 700px; text-align: center;">
+                        Page: {!CurrentPage} of {!TotalPages}
+                    </td><td style="width: 100px; text-align: right;">
+                        <apex:commandlink action="{!PrevPage}" rendered="{!!IsFirstPage}" rerender="taskpanel">&lt;Previous Page</apex:commandlink>&nbsp;
+                        <apex:outputpanel rendered="{!IsFirstPage}">&lt;Previous Page</apex:outputpanel>&nbsp;
+                    </td><td style="width: 100px;">
+                        <apex:commandlink action="{!NextPage}" rendered="{!!IsLastPage}" rerender="taskpanel">Next Page&gt;</apex:commandlink>&nbsp;
+                        <apex:outputpanel rendered="{!IsLastPage}">Next Page&gt;</apex:outputpanel>&nbsp;
+                    </td></tr>
+                </table>
+            </div>
+            
+            <apex:pageblocktable value="{!xtasklistpage}" var="xtask" 
+                styleclass="tasktable"
+                columnclasses="viewcol, editcol, datecol, statcol, assoccol, ownercol, accidcol, typecol, subcol, custgroupcol"
+                cellpadding="2px">
+                <apex:column >
+                    <apex:outputlink value="/{!xtask.task.id}" target="_task">View</apex:outputlink>
+                </apex:column>
+                <apex:column >
+                    <apex:outputlink value="/{!xtask.task.id}/e" target="_task">Edit</apex:outputlink>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyDate}">Date</apex:commandlink> 
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.ActivityDate}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyStatus}">Status</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Status}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink rerender="taskpanel" action="{!SortbyAssoc}">AVB Associate</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.AVB_Associate_First_Last_Name__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!Sortbyowner}">Assigned to</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Owner.Alias}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!Sortbyavbacct}">AVB Account ID</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.AVB_Account_ID__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyType}">Type</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.AVB_Type__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!Sortbysubcat}">Subcategory</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Subject_Sub_Category__c}"/>
+                </apex:column>
+                <apex:column headervalue="Customer Group">
+                    <apex:outputlink value="/{!xtask.AccountID}" target="_blank">{!xtask.AccountName}</apex:outputlink>
+                    <!--<apex:outputfield value="{!task.whoid}"/>-->
+                </apex:column>
+             </apex:pageblocktable>
+        </apex:outputpanel> <!-- taskpanel -->
+    </apex:form>
+    </div><!-- end of bigbox -->     
+</apex:pageblock>
+
+
+</apex:page>

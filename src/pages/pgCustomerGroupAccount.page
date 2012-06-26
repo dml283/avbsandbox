@@ -1,0 +1,21 @@
+<apex:page standardController="Account">
+     <apex:PageBlock >
+         <apex:PageBlockSection columns="5" title="Account Detail">
+            <apex:outputField value="{!account.Account_ID__c}"/>
+            <apex:outputField value="{!account.Associate_Housing__c}"/>
+            <apex:outputField value="{!account.parentid}"/>
+            <apex:outputText value="col4"/>
+            <apex:outputText value="col5"/>
+            <apex:outputField value="{!account.name}"/>
+            <apex:outputField value="{!account.Affordable_Housing__c}"/>
+            <apex:outputField value="{!account.CommunityBrand__c}"/>
+            <apex:outputText value="col4"/>
+            <apex:outputText value="col5"/>
+            <apex:outputField value="{!account.Unique_Record_Id__c}"/>
+            <apex:outputField value="{!account.Send_Copy_of_Bill_To__c}"/>
+            <apex:outputField value="{!account.SODA_Req_d_Days__c}"/>
+            <apex:outputText value="col4"/>
+            <apex:outputText value="col5"/>
+         </apex:PageBlockSection>
+     </apex:PageBlock>
+</apex:page>

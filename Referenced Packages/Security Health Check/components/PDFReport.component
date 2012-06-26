@@ -1,0 +1,194 @@
+<apex:component access="global">
+
+    <apex:stylesheet value="{!$Resource.shc__shc_css}" />
+    <apex:attribute name="report" type="shc__SHCScore__c"
+        description="Security Report" />
+
+    <apex:sectionHeader title="Security Health Checker Report"/>
+
+    <apex:outputPanel styleClass="title2">
+        <apex:panelGrid columns="2" styleClass="hc">
+            <apex:outputText styleClass="title2" value="Company Name: " />
+            <apex:outputText styleClass="title2" value="{!report.shc__Org_Name__c}" />
+            <apex:outputText styleClass="title2" value="Organization ID: " />
+            <apex:outputText styleClass="title2" value="{!report.shc__orgid__c}" />
+            <apex:outputText styleClass="title2" value="Last Run Date: " />
+            <apex:outputField styleClass="title2" value="{!report.shc__Date__c}" />
+        </apex:panelGrid>
+    </apex:outputPanel>    
+    <br clear="all" />
+    <br clear="all" />
+    
+    <apex:outputText styleClass="title" value="Overall Security Score: " />
+    <apex:outputField styleClass="title"
+        value="{!report.shc__Overall_Score__c}" />
+    <br clear="all" />
+    <br clear="all" />
+   
+    <apex:outputText styleClass="title"
+        value="Security Configuration Settings" />
+    <br clear="all" />
+    <apex:outputText styleClass="title" value="Score: " />
+    <apex:outputField styleClass="title"
+        value="{!report.shc__Configuration_Score__c}" />
+    <br clear="all" />
+    <br clear="all" />
+    <apex:panelGrid columns="3" styleClass="list" border="1" rowClasses="white, shade">
+
+        <apex:outputText styleClass="header" value="Item" />
+        <apex:outputText styleClass="header" value="Result" />
+        <apex:outputText styleClass="header" value="Recommendation" />
+
+        <apex:outputText styleClass="bold" value="Password Expiration (Days)" />
+        <apex:outputField value="{!report.shc__pwexpire__c}" />
+        <apex:outputText value="60" />
+
+        <apex:outputText styleClass="bold" value="Password History" />
+        <apex:outputField value="{!report.shc__pwhist__c}" />
+        <apex:outputText value="5" />
+
+        <apex:outputText styleClass="bold" value="Password Length" />
+        <apex:outputField value="{!report.shc__pwlen__c}" />
+        <apex:outputText value="8" />
+
+        <apex:outputText styleClass="bold" value="Password Complexity" />
+        <apex:outputField value="{!report.shc__pwcomp_t__c}" />
+        <apex:outputText value="Must mix alpha and numeric" />
+
+        <apex:outputText styleClass="bold" value="Password Hint" />
+        <apex:outputField value="{!report.shc__pwquest_t__c}" />
+        <apex:outputText value="Cannot contain password" />
+
+        <apex:outputText styleClass="bold" value="Max Invalid Logins" />
+        <apex:outputField value="{!report.shc__pwlogin__c}" />
+        <apex:outputText value="5" />
+
+        <apex:outputText styleClass="bold" value="Lockout Time (mins)" />
+        <apex:outputField value="{!report.shc__pwlockout__c}" />
+        <apex:outputText value="30" />
+
+        <apex:outputText styleClass="bold" value="Idle Session Timeout (mins)" />
+        <apex:outputField value="{!report.shc__sesstimeout__c}" />
+        <apex:outputText value="60" />
+
+        <apex:outputText styleClass="bold" value="Disable Timeout Warning" />
+        <apex:outputField value="{!report.shc__sesstimeoutdisable__c}" />
+        <apex:outputText value="" />
+
+        <apex:outputText styleClass="bold" value="Lock Sessions to Login IP" />
+        <apex:outputField value="{!report.shc__sesslockip__c}" />
+        <apex:outputText value="" />
+
+        <apex:outputText styleClass="bold" value="Require HTTPS" />
+        <apex:outputField value="{!report.shc__sesssecure__c}" />
+        <apex:outputText value="Yes" />
+
+        <apex:outputText styleClass="bold"
+            value="Enable Caching on Login Page" />
+        <apex:outputField value="{!report.shc__sesscache__c}" />
+        <apex:outputText value="" />
+
+        <apex:outputText styleClass="bold"
+            value="Using Delegated Authentication" />
+        <apex:outputField value="{!report.shc__hassaml__c}" />
+        <apex:outputText value="Yes" />
+
+        <apex:outputText styleClass="bold" value="IP Range Restrictions Used" />
+        <apex:outputField value="{!report.shc__ipranges_used__c}" />
+        <apex:outputText value="Yes" />
+    </apex:panelGrid>
+   
+
+    <br clear="all" />
+    <br clear="all" />
+    <apex:outputText styleClass="title"
+        value="User and Administration Information" />
+    <br clear="all" />
+    <apex:outputText styleClass="title" value="Score: " />
+    <apex:outputField styleClass="title" value="{!report.shc__Profile_Score__c}" />
+    <br clear="all" />
+    <br clear="all" />
+    <apex:panelGrid columns="2" styleClass="list " border="1"
+        rowClasses="white, shade">
+        <apex:outputText styleClass="header" value="Item" />
+        <apex:outputText styleClass="header" value="Result" />
+
+        <apex:outputText styleClass="bold" value="Profiles / Users Ratio" />
+        <apex:outputField value="{!report.shc__profs_users__c}" />
+
+        <apex:outputText styleClass="bold" value="Admins / Users Ratio" />
+        <apex:outputField value="{!report.shc__admins_users__c}" />
+
+        <apex:outputText styleClass="bold" value="Number of Users" />
+        <apex:outputField value="{!report.shc__numusers__c}" />
+
+        <apex:outputText styleClass="bold" value="Number of Administrators" />
+        <apex:outputField value="{!report.shc__numadmins__c}" />
+
+        <apex:outputText styleClass="bold" value="Number of Profiles" />
+        <apex:outputField value="{!report.shc__numprofs__c}" />
+
+        <apex:outputText rendered="false" styleClass="bold"
+            value="Number of Roles" />
+        <apex:outputField rendered="false" value="{!report.shc__numroles__c}" />
+
+        <apex:outputText styleClass="bold" value="IP Range Restrictions" />
+        <apex:outputText escape="false" value="{!report.shc__ipranges__c}" />
+
+    </apex:panelGrid>
+    <br clear="all" />
+    <br clear="all" />
+    <apex:outputText styleClass="title" value="Sharing Analysis" />
+    <br clear="all" />
+    <apex:outputText styleClass="title" value="Score: " />
+    <apex:outputField styleClass="title" value="{!report.shc__Sharing_Score__c}" />
+    <br clear="all" />
+    <br clear="all" />
+    <apex:outputText styleClass="bold"
+        value="Number of Custom Sharing Rules: " />
+    <apex:outputField value="{!report.shc__sharing_number__c}" />
+    <br clear="all" />
+    <apex:outputText styleClass="bold" value="Default Sharing Rules" />
+    <apex:panelGrid columns="3" styleClass="list " border="1"
+        rowClasses="white, shade">
+        <apex:outputText styleClass="header" value="Item" />
+        <apex:outputText styleClass="header" value="Result" />
+        <apex:outputText styleClass="header" value="Recommendation" />
+
+        <apex:outputText styleClass="bold" value="Leads" />
+        <apex:outputText value="{!report.shc__sharing_lead__c}" />
+        <apex:outputText value="Private" />
+
+        <apex:outputText styleClass="bold" value="Accounts and Contracts" />
+        <apex:outputText value="{!report.shc__sharing_account__c}" />
+        <apex:outputText value="Private" />
+
+        <apex:outputText styleClass="bold" value="Contacts" />
+        <apex:outputText value="{!report.shc__sharing_contact__c}" />
+        <apex:outputText value="Controlled by Parent" />
+
+        <apex:outputText styleClass="bold" value="Opportunities" />
+        <apex:outputText value="{!report.shc__sharing_opportunity__c}" />
+        <apex:outputText value="Private" />
+
+        <apex:outputText styleClass="bold" value="Cases" />
+        <apex:outputText value="{!report.shc__sharing_case__c}" />
+        <apex:outputText value="Private" />
+
+        <apex:outputText styleClass="bold" value="Campaigns" rendered="false" />
+        <apex:outputText value="{!report.shc__sharing_campaign__c}"
+            rendered="false" />
+        <apex:outputText value="Private" rendered="false" />
+
+        <apex:outputText styleClass="bold" value="Activities" rendered="false" />
+        <apex:outputText value="{!report.shc__sharing_activity__c}"
+            rendered="false" />
+        <apex:outputText value="Private" rendered="false" />
+
+        <apex:outputText styleClass="bold" value="Calendars" rendered="false" />
+        <apex:outputText value="{!report.shc__sharing_calendar__c}"
+            rendered="false" />
+        <apex:outputText value="Private" rendered="false" />
+    </apex:panelGrid>
+
+</apex:component>

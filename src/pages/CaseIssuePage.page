@@ -1,0 +1,45 @@
+<apex:page standardController="Case" extensions="Ext_CaseIssues" title="Case Issues">
+<apex:messages />
+	<apex:form >
+	<apex:pageBlock title="Case Issues: {!Case.CaseNumber}" mode="edit">
+		<apex:pageBlockButtons >
+	        <apex:commandButton action="{!saveIssues}" value="Save"/>
+	        <apex:commandbutton action="{!addRow}" value="Add Case Issue"/>
+	        <apex:commandbutton value="Delete Selected Rows" disabled="true" />
+	        <apex:commandButton action="{!cancel}" value="Cancel"/>
+		</apex:pageBlockButtons>
+		
+		<apex:pageblocktable value="{!issues}" var="issue">
+			<apex:column >
+				<apex:inputcheckbox selected="false"/>
+			</apex:column>
+			
+			<apex:column headerValue="Category">
+				<apex:inputfield value="{!issue.Category__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Subcategory">
+				<apex:inputfield value="{!issue.Subcategory__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Charge Type">
+				<apex:inputfield value="{!issue.Charge_Type__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Transaction Type">
+				<apex:inputfield value="{!issue.Type__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Amount">
+				<apex:inputfield style="width: 50px;" value="{!issue.Amount__c}" />
+			</apex:column>
+		
+			<apex:column headerValue="Notes">
+				<apex:inputfield style="width: 300px; height: 30px;"  value="{!issue.Notes__c}" />
+			</apex:column>
+			
+		</apex:pageblocktable>
+	
+	</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,110 @@
+<apex:page Controller="Ctl_AddGuestCard" tabStyle="Guest_Card__c" >
+    <apex:outputpanel rendered="{!!HasPermissionToEdit}">
+    	<apex:sectionHeader title="Insufficient Privileges" />
+    	<apex:pageblock title="Insufficient Privileges">
+    		<apex:form >
+    			You may not edit this record. To copy this Guest Card to your Community, choose "Share".<br/><br/>
+    			<apex:commandbutton value="Return to Previous Page" action="{!cancelGC}" />
+    		</apex:form>
+    	</apex:pageblock>  
+    </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!HasPermissionToEdit}">
+	    <apex:sectionHeader title="Guest Card Edit" subtitle="New Guest Card"/>
+	    <apex:pageMessages id="errors" escape="false" />
+	    <apex:form >
+	    <apex:pageBlock title="Guest Card Edit" mode="edit" rendered="{!$ObjectType.Guest_Card__c.accessible}">
+	        <apex:actionfunction name="ChangeStatus" />
+	        
+	        <apex:pageBlockButtons >
+	            <apex:commandButton action="{!saveGC}" value="Save"/> 
+	            <apex:commandButton action="{!cancelGC}" value="Cancel" immediate="true"/> 
+	        </apex:pageBlockButtons>
+	
+	        <apex:pageBlockSection showHeader="true" title="Name" columns="2" rendered="{!(mode=='edit')}">
+	            <apex:inputField required="true" value="{!thisGC.Name}"/>
+	        </apex:pageBlockSection>  
+	             
+	        <apex:pageBlockSection showHeader="true" title="Name" columns="2" rendered="{!((mode=='new') || (mode=='clone'))}">
+	            <apex:inputField required="true" value="{!thisContact.FirstName}"/>
+	            <apex:inputField required="true" value="{!thisContact.LastName}"/>   
+	        </apex:pageBlockSection>
+	        
+	        <apex:pageBlockSection showHeader="true" title="Information" columns="2">
+	            <!-- <apex:inputField value="{!thisGC.Community__c}" required="true"/> -->
+	            <apex:pageblocksectionitem >
+		            <apex:outputlabel value="Community" />
+		            <apex:selectList value="{!chosenCommunityId}" size="1">
+		            	<apex:selectoptions value="{!communityOptions}"/>
+		            </apex:selectList>
+		        </apex:pageblocksectionitem>
+	            <apex:pageblocksectionitem />
+	            <apex:inputField value="{!thisGC.MRI_Leasing_Associate__c}" required="true"/>
+	            <apex:outputField value="{!thisGC.AVB_Associate__c}" rendered="{!(mode == 'edit')}"/>
+	            <apex:pageblocksectionitem rendered="{!(mode != 'edit')}"/><!--/>-->
+	            
+	            <apex:inputField value="{!thisGC.Initial_Lead_Type__c}" rendered="{!(mode != 'edit')}"/> <!-- CJC 07MAR12 -->
+	            <apex:outputField value="{!thisGC.Initial_Lead_Type__c}" rendered="{!(mode == 'edit')}"/>
+	            
+	            <apex:pageblocksectionitem />
+	            <apex:outputField value="{!thisGC.How_did_you_hear_about_us__c}" rendered="{!(mode=='edit')}"/>
+	            <apex:inputField value="{!thisGC.How_did_you_hear_about_us__c}" required="true" rendered="{!((mode=='new') || (mode=='clone'))}"/>
+	            <apex:pageblocksectionitem />
+	            <apex:inputField value="{!thisGC.Secondary_Marketing_Source__c}"/>
+	            <!--<apex:inputField value="{!thisGC.Initial_Visit_Date__c}"/> JN 031212-->
+	            <apex:pageblocksectionitem />
+	            <apex:inputField value="{!thisGC.Rating__c}" required="true" />
+	            <apex:pageblocksectionitem />
+	            <apex:inputField value="{!thisGC.Bed__c}" required="true"/>
+	            <apex:inputField value="{!thisGC.Status__c}" onchange="ChangeStatus" />
+	            <apex:inputField value="{!thisGC.Bath__c}" required="true"/>
+	            <apex:inputField value="{!thisGC.Inactive_Reason__c}" /> 
+	            <apex:inputField value="{!thisGC.Class_ID__c}" required="true"/>
+	            <apex:inputField value="{!thisGC.Where_else_did_you_lease__c}" />
+	            <apex:outputField value="{!thisGC.Level_One_Appointment_Created__c}"/> 
+	        </apex:pageBlockSection>
+	        
+	        <apex:pageBlockSection showHeader="true" title="Requirements" columns="2">
+	            <apex:inputField value="{!thisGC.When_will_you_be_moving_in__c}" required="true"/>
+	            <apex:inputField value="{!thisGC.Reason_for_relocating__c}"/>
+	            <apex:inputField value="{!thisGC.Lease_term_desired__c}" required="true"/>
+	            <apex:inputField value="{!thisGC.Other_communities_being_considered__c}"/>
+	            <apex:inputField value="{!thisGC.Price_Range_Desired__c}"/>
+	            <apex:inputField value="{!thisGC.How_Many_Occupants__c}"/>
+	            <apex:inputField value="{!thisGC.What_is_most_important_to_you__c}"/>
+	            <apex:inputField value="{!thisGC.Have_a_pet_other_than_a_service_animal__c}"/>
+	            <apex:inputField value="{!thisGC.What_features_are_most_important__c}"/>
+	            <apex:inputField value="{!thisGC.Pet_Type_Breed__c}"/>
+	        </apex:pageBlockSection>
+	        
+	        <apex:pageBlockSection showHeader="false" columns="1">
+	            <apex:inputField value="{!thisGC.Guest_Card_Details__c}" style="width: 80%;"/>
+	        </apex:pageBlockSection>
+	        
+	        <apex:pageBlockSection showHeader="true" title="Contact Information" columns="2">
+	            <apex:inputField value="{!thisGC.Email__c}"/>
+	            <apex:inputField value="{!thisGC.Contact_Info_has_been_edited__c}"/>
+	            <apex:inputField value="{!thisGC.Work_Phone__c}"/>
+	            <apex:inputField value="{!thisGC.Home_Phone__c}"/>
+	            <apex:inputField value="{!thisGC.Work_Phone_2__c}"/>
+	            <apex:inputField value="{!thisGC.Cell_Phone__c}"/>
+	            <apex:inputField value="{!thisGC.Fax__c}"/>
+	            <apex:inputField value="{!thisGC.Address_Street_1__c}"/>
+	            <apex:inputField value="{!thisGC.Address_Street_2__c}"/>            
+	            <apex:inputField value="{!thisGC.Address_City__c}"/>
+	            <apex:inputField value="{!thisGC.Address_State__c}"/>            
+	            <apex:inputField value="{!thisGC.Address_Postal_Code__c}"/>
+	        </apex:pageBlockSection>
+	        
+	        <apex:pageBlockSection showHeader="true" title="Other residents" columns="2">
+	            <apex:inputField value="{!thisGC.Other_residents__c}"/>
+	            <apex:inputField value="{!thisGC.Other_resident_phone__c}"/>
+	            <apex:pageBlockSectionItem />
+	            <apex:inputField value="{!thisGC.Other_resident_email_s__c}"/>
+	        </apex:pageBlockSection>
+	        
+	    </apex:pageBlock>
+	    </apex:form>
+    </apex:outputpanel>
+    
+</apex:page>

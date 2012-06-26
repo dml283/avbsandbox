@@ -1,0 +1,269 @@
+<script src="/soap/ajax/15.0/connection.js" type="text/javascript"></script>
+<script>
+
+sforce.connection.sessionId="{!API.Session_ID}";
+var orgid = "{!$Organization.Id}";
+
+document.domain='salesforce.com';
+  
+function getRealId(partialid){
+	alert('here');
+	var re= new RegExp(partialid,'g');
+	var elems = document.getElementsByTagName('*'), i=0, el;
+	while(el=elems[i++]){
+		alert(el.id);
+		if(el.id.match(re)){
+			alert(el.id);
+			break;
+		}
+	}
+}
+
+urlprefix = '';
+if (window.XMLHttpRequest) { 
+	request = new XMLHttpRequest();
+} else {
+	request = new ActiveXObject("Microsoft.XMLHTTP");
+}
+reqType='GET';
+bool=false;
+
+
+// get items from setup
+url=urlprefix + '/'+orgid;
+request.open(reqType, url, bool);
+request.send(null);
+pwbody = request.responseText;
+p1 = /Salesforce.*Active(.*)<\/td>/g;
+junk = p1.exec(pwbody);
+body2 = junk[1];
+body3 = body2.replace(/,/g,"");
+p2 = />(\d+)<.*>(\d+)<.*>(\d+)</g;
+junk = p2.exec(body3);
+numlicenses = junk[1];
+
+
+// do a sharing analysis
+// get the order of the select forms
+url = urlprefix + '/p/own/OrgSharingDetail';
+
+pattern=/select.*id="p\d+"/g;
+pattern=/^.*(>Lead<|>Account, Contract.*Asset<|>Contact<|>Opportunity<|>Case<).*(Public|Private|Controlled).*$/g;
+pattern=/(>Lead<|>Account, Contract.*Asset<|>Contact<|>Opportunity<|>Case<).*(Public Read\/Write\/Transfer|Public Read\/Write|Public Read Only|Controlled by Parent|Private)/g;
+request.open(reqType,url,bool);
+request.send(null);
+var sharbody = request.responseText;
+shar1=sharbody.match(pattern);
+var shar2=new Array();
+var sharb=new Array();
+pattern2=/(Lead|Account, Contract.*Asset|Contact|Opportunity|Case)/;
+patternb=/(Public Read\/Write\/Transfer|Public Read\/Write|Public Read Only|Controlled by Parent|Private)/;
+if (shar1) {
+	for ( var i=0, len=shar1.length; i<len; ++i ){
+		shar2[i] = shar1[i].match(pattern2)[0];
+		sharb[i] = shar1[i].match(patternb)[0];
+		var test = shar1[i].match(pattern2)[0];
+	}
+}
+
+
+// get number of sharing rules
+pattern=/(dataRow.*"\/00E)/g;
+sharrule=sharbody.match(pattern);
+var numsharingrules = 0;
+if (sharrule) {
+	numsharingrules = sharrule.length;
+}
+
+
+
+// get IP range restrictions
+
+if (window.XMLHttpRequest) { 
+	request = new XMLHttpRequest();
+} else {
+	request = new ActiveXObject("Microsoft.XMLHTTP");
+}
+url= urlprefix + '/05G';
+// this will break it up into an array of 5 elements
+pattern=/^.*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\D*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).+>(.*)<\/td>.*>(.*)<\/td>.*>(.*)<\/td>.*$/gim;
+request.open(reqType, url, bool);
+request.send(null);
+ipbody = request.responseText;
+iplist = ipbody.match(pattern);
+var ipstring='' ;
+var iprangeused = 'No';
+if (iplist) {
+ipstring += '<table>';
+
+for ( var i=0, len=iplist.length; i<len; ++i ){
+	var pattern2 = new RegExp();
+	var str = iplist[i];
+	var item = new Array();
+	// need to redefine this here...not sure why
+	var pattern2=/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\D*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).+>(.*)<\/td>.*>(.*)<\/td>.*>(.*)<\/td>.*/gi;
+	item = pattern2.exec(str);
+	// we need to reuse the pattern2 again here. Don't really know why but it seems
+	// to be a javascript quirk when re-using in a loop like this.
+	var junk = pattern2.exec(str);
+	
+// don't do this at home...
+// this is a terrible hack because we're putting HTML in here so we have to
+// disable the XSS filters on the IP range outputText 
+// It's ok here because we know that the output is controlled by the admin anyway
+
+	if (item) {
+		ipstring += '<tr><td>' + item[1] + '</td><td>' + item[2] + '</td><td>' + item[3] + '</td><td>' + 
+			item[4] + '</td><td>' + item[5] + '</td></tr>'
+		iprangeused = 'Yes';
+	} else {
+		alert(' item is null for : ' + str);
+	}
+}
+ipstring += '</table>'
+}
+
+url=urlprefix + '/secur/orgloginsettingedit.jsp';
+
+request.open(reqType, url, bool);
+request.send(null);
+pwbody = request.responseText;
+
+var pattern= /"\d+" selected/g;
+var patternnum = /\d+/;
+sp = pwbody.match(pattern);
+
+var pwexpire = sp[0].match(patternnum);
+var pwhist= sp[1].match(patternnum);
+var pwlen= sp[2].match(patternnum);
+var pwcomp = sp[3].match(patternnum);
+var pwquest= sp[4].match(patternnum);
+var pwlogin = sp[5].match(patternnum);
+var pwlockout = sp[6].match(patternnum);
+
+// get the session settings
+if (window.XMLHttpRequest) { 
+	request = new XMLHttpRequest();
+} else {
+	request = new ActiveXObject("Microsoft.XMLHTTP");
+}
+url= urlprefix + '/_ui/system/security/SessionSettings';
+request.open(reqType, url, bool);
+request.send(null);
+sessbody = request.responseText;
+sess = sessbody.match(pattern);
+var sesstimeout = sess[0].match(patternnum);
+
+var checkpattern;
+checkpattern = /<input[a-zA-Z"=\s]*checked="(checked)"[a-zA-Z"=\s]*id="p1"/;
+sess = sessbody.match(checkpattern);
+var sesslockip = 'No';
+if (sess) {
+	sesslockip = 'Yes';
+} 
+checkpattern = /<input[a-zA-Z"=\s]*checked="(checked)"[a-zA-Z"=\s]*id="p2"/;
+sess = sessbody.match(checkpattern);
+var sesstimeoutdisable = 'No';
+if (sess) {
+	sesstimeoutdisable = 'Yes';
+} 
+checkpattern = /<input[a-zA-Z"=\s]*checked="(checked)"[a-zA-Z"=\s]*id="p4"/;
+sess = sessbody.match(checkpattern);
+var sesssecure = 'No';
+if (sess) {
+	sesssecure = 'Yes';
+} 
+checkpattern = /<input[a-zA-Z"=\s]*checked="(checked)"[a-zA-Z"=\s]*id="p5"/;
+sess = sessbody.match(checkpattern);
+var sesscache = 'No';
+if (sess) {
+	sesscache = 'Yes';
+} 
+
+var delauth = null;
+if (delauth) { // we're set
+	hassaml = 'Yes';
+} else { // nope, check for saml
+// is saml enabled?
+if (window.XMLHttpRequest) { 
+	request = new XMLHttpRequest();
+} else {
+	request = new ActiveXObject("Microsoft.XMLHTTP");
+}
+url= urlprefix + '/_ui/system/security/SingleSignOnSettingsUi/d';
+pattern = /(SAML Enabled.*checkbox_unchecked.gif)/g;
+request.open(reqType, url, bool);
+request.send(null);
+var samlbody = request.responseText;
+var hassaml = false;
+samlstr = samlbody.match(pattern);
+if (!samlstr) {
+	hassaml = 'Yes';
+} else {
+	hassaml = 'No';
+}
+} // end if delauth
+
+try {
+result = sforce.connection.query("select Id, Name, shc__Date__c  from shc__SHCScore__c where name = 'score' order by shc__Date__c desc limit 1");
+records = result.getArray("records");
+var tt = records[0];
+
+  tt.shc__pwexpire__c = parseInt(pwexpire);
+  tt.shc__pwhist__c = parseInt(pwhist);
+  tt.shc__pwlen__c = parseInt(pwlen);
+  tt.shc__pwcomp__c = parseInt(pwcomp);
+  tt.shc__pwquest__c = parseInt(pwquest);
+  tt.shc__pwlogin__c = parseInt(pwlogin);
+  tt.shc__pwlockout__c = parseInt(pwlockout);
+  tt.shc__sesstimeout__c = parseInt(sesstimeout);
+  tt.shc__sesstimeoutdisable__c = sesstimeoutdisable;
+  tt.shc__sesslockip__c = sesslockip;
+  tt.shc__sesssecure__c = sesssecure;
+  tt.shc__sesscache__c = sesscache;
+  tt.shc__ipranges__c = ipstring.substr(0,31999);
+  tt.shc__ipranges_used__c = iprangeused;
+  tt.shc__hassaml__c = hassaml;
+  tt.shc__numusers__c = numlicenses;
+    tt.shc__Date__c = new Date();
+  
+  
+  if (shar2) {
+	for ( var i=0, len=shar2.length; i<len; ++i ){
+	
+	if (shar2[i] == 'Lead') { // lead
+		tt.shc__sharing_lead__c = sharb[i];
+	}
+	if (shar2[i].indexOf("Account")>-1) { 
+		tt.shc__sharing_account__c = sharb[i];
+	}
+	if (shar2[i] == 'Contact') { 
+		tt.shc__sharing_contact__c = sharb[i];
+	}	  
+	if (shar2[i] == 'Opportunity') {
+		tt.shc__sharing_opportunity__c = sharb[i];
+	}	  
+	if (shar2[i] == 'Case') {
+		tt.shc__sharing_case__c = sharb[i];
+	}	  
+	if (shar2[i] == 'p12') {
+		tt.shc__sharing_campaign__c = sharb[i];
+	}
+	if (shar2[i] == 'p16') {
+		tt.shc__sharing_activity__c = sharb[i];
+	}
+	if (shar2[i] == 'p13') {
+		tt.shc__sharing_calendar__c = sharb[i];
+	}			  			
+  }
+}
+  tt.shc__sharing_number__c = numsharingrules;
+
+  var result = sforce.connection.upsert('Id',[tt]);
+}catch(error){
+      alert("Got error: " + error);
+}
+
+//alert('Data Collected. Now click Show Report');
+
+</script>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>22.0</apiVersion>
+    <available>true</available>
+    <description>SHC email report</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>PublicEmailReportTemplate</name>
+    <style>none</style>
+    <subject>Security Health Checker Report</subject>
+    <type>visualforce</type>
+</EmailTemplate>

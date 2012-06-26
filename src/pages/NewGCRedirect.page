@@ -1,0 +1,5 @@
+<apex:page standardController="Guest_Card__c" showheader="false" sidebar="false">
+
+<meta http-equiv="REFRESH" content="0;url=../apex/SearchAddGuestCard" /> 
+
+</apex:page>

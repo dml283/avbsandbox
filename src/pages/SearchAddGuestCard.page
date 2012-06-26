@@ -1,0 +1,95 @@
+<apex:page Controller="Ctl_AddGuestCard"  tabStyle="Guest_Card__c">
+<apex:sectionheader title="Add Guest Card" />
+<apex:form >
+<apex:Messages id="errors" /> 
+    <apex:pageBlock mode="edit">
+
+        <apex:actionFunction name="searchServer" action="{!doSearch}" /> 
+      
+        <apex:pageBlockButtons >
+            <apex:commandButton action="{!doSearch}" value="Search"  status="searchStatus"/>
+            <apex:commandButton action="{!clearPage}" value="Clear" />
+        </apex:pageBlockButtons>
+    
+        <apex:pageBlockSection >
+            
+            <!-- *******************************Search Fields ******************************** -->
+            <!--cjc 26MAR12
+            <apex:inputField id="searchFirst" value="{!searchContact.FirstName}" /> 
+            <apex:inputField id="searchCell" value="{!searchGC.Cell_Phone__c}" />
+            <apex:inputField id="searchLast" value="{!searchContact.LastName}" required="False" />
+            <apex:inputField id="searchHome" value="{!searchGC.Home_Phone__c}" />
+            <apex:inputField id="searchEmail" value="{!searchGC.Email__c}" /> 
+            <apex:inputField id="searchCity" value="{!searchGC.Address_City__c}" />
+            <apex:pageblocksectionitem />
+            <apex:inputField id="searchState" value="{!searchGC.Address_State__c}" /> 
+            cjc 26MAR12-->
+            
+            <!--cjc 26MAR12-->
+            <apex:inputField id="searchFirst" value="{!searchContact.FirstName}" /> 
+            <apex:inputField id="searchLast" value="{!searchContact.LastName}" required="False" />
+            <apex:inputField id="searchEmail" value="{!searchGC.Email__c}" /> 
+            <apex:inputField id="searchCell" value="{!searchGC.Cell_Phone__c}" />            
+            <apex:inputField id="searchHome" value="{!searchGC.Home_Phone__c}" />
+            <!--<apex:inputField id="searchPhone" value="{!searchGC.searchPhone__c}" />-->
+            <apex:inputField id="searchCity" value="{!searchGC.Address_City__c}" />
+            <apex:pageblocksectionitem />
+            <apex:inputField id="searchState" value="{!searchGC.Address_State__c}" />
+            <!--cjc 26MAR12-->            
+            <!-- ******************************* End Search Fields ******************************** -->
+ 
+        </apex:pageBlockSection><br/>
+
+    </apex:pageBlock>
+ 
+    <apex:actionStatus id="searchStatus" startText="Searching... please wait..."/>
+ 
+    <apex:pageBlock rendered="{!(searchResults != null)}" id="searchPageBlock">
+    
+        {!searchResultsSize}
+        <br/>   
+    
+        <apex:commandbutton action="{!newGuestCard}" value="Create New Prospect" rendered="{!showCreateButton == True}"/>
+        
+        <apex:pageBlockTable value="{!searchResults}" var="result" >
+            
+            <!-- ******************************* Search Result Columns ******************************** -->  
+            
+            <apex:column headerValue="Guest Card Name" width="80">
+                <apex:commandLink action="/{!result.gc.id}" target="_blank">{!result.gc.Name}</apex:commandLink>
+            </apex:column>
+            
+            <apex:column headerValue="Community" width="80">
+                <apex:outputField value="{!result.gc.Community__r.Name}"/>
+            </apex:column>     
+            
+            <apex:column headerValue="First Name" width="80">
+                <apex:outputField value="{!result.contact.FirstName}"/>
+            </apex:column>
+            
+            <apex:column headerValue="Last Name" width="80">
+                <apex:outputField value="{!result.contact.LastName}"/>
+            </apex:column>
+            
+            <apex:column headerValue="Last Activity Date" width="80">
+                <apex:outputField value="{!result.gc.LastActivityDate}"/>
+            </apex:column>         
+            
+            <apex:column headerValue="Email" width="80">
+                <apex:outputField value="{!result.gc.Email__c}"/>
+            </apex:column>
+            
+            <apex:column headerValue="Status" width="80">
+                <apex:outputField value="{!result.gc.Prospect_Account__r.Status__c}"/>
+            </apex:column>     
+            
+            <apex:column headerValue="AVB Associate" width="80">
+                <apex:outputField value="{!result.gc.AVB_Associate__c}"/>
+            </apex:column>     
+       
+        <!-- ******************************* End Search Result Columns ******************************** -->        
+        </apex:pageBlockTable>
+         
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,16 @@
+<apex:page standardcontroller="Guest_Card__c" extensions="GuestCard_Ext">
+<apex:messages />
+	<apex:form >
+		<apex:pageblock title="Choose new Community"> 
+			<apex:pageblocksection >
+				<apex:pageblocksectionitem >
+					<apex:outputlabel value="Community" for="comm"/>
+					<apex:inputfield id="comm" value="{!tempRMA.Community_Do_not_use__c}" required="true" />
+				</apex:pageblocksectionitem> 
+				<apex:commandbutton value="Save" action="{!saveclone}"/>
+				<apex:pageblocksectionitem />
+				<apex:commandbutton value="Cancel" action="{!cancelclone}" immediate="true"/>
+			</apex:pageblocksection>
+		</apex:pageblock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,34 @@
+<apex:page controller="MyPagingController" showheader="false">
+
+<apex:form >
+<apex:pageBlock title="" id="pageBlock">
+
+<apex:pageMessages ></apex:pageMessages>
+<div align="right" style="display:{!IF(NOT(ISNULL(cases)),'block','none')}">
+<font size="1pt">Page #:&nbsp;<apex:outputLabel value="{!PageNumber}"/>&nbsp;out of&nbsp;<apex:outputLabel value="{!totalPageNumber}"/>&nbsp;&nbsp;&nbsp;&nbsp;</font>
+<apex:commandButton value="Previous" action="{!previousBtnClick}" disabled="{!previousButtonEnabled}" reRender="pageBlock"></apex:commandButton>
+<apex:commandButton value="Next" action="{!nextBtnClick}" reRender="pageBlock" disabled="{!nextButtonDisabled}" ></apex:commandButton>
+</div>
+<br/><br/>
+<apex:pageBlockTable value="{!cases}" var="c" rendered="{!NOT(ISNULL(cases))}" rows="{!PageSize}">
+<apex:column >
+<apex:facet name="header">Case #</apex:facet>
+<apex:outputLink value="/{!c.Id}" target="_blank">{!c.CaseNumber}</apex:outputLink>
+</apex:column>
+<apex:column value="{!c.Account.Name}"></apex:column>
+<apex:column value="{!c.Account.Account_ID__c}" />
+<apex:column value="{!c.Status}"></apex:column>
+<apex:column value="{!c.Reason}"></apex:column>
+<apex:column value="{!c.Case_Primary_Type__c}"></apex:column>
+<apex:column value="{!c.AVB_Contact_Name__c}"></apex:column>
+</apex:pageBlockTable>
+<div align="right" style="display:{!IF(NOT(ISNULL(cases)),'block','none')}">
+<br/>
+<font size="1pt">Page #:&nbsp;<apex:outputLabel value="{!PageNumber}"/>&nbsp;out of&nbsp;<apex:outputLabel value="{!totalPageNumber}"/>&nbsp;&nbsp;&nbsp;&nbsp;</font>
+<apex:commandButton value="Previous" action="{!previousBtnClick}" disabled="{!previousButtonEnabled}" reRender="pageBlock"></apex:commandButton>
+<apex:commandButton value="Next" action="{!nextBtnClick}" reRender="pageBlock" disabled="{!nextButtonDisabled}" ></apex:commandButton>
+</div>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

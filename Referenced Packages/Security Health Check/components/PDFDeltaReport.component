@@ -1,0 +1,15 @@
+<apex:component controller="shc.SHCDeltaController" access="global">
+	<apex:stylesheet value="{!$Resource.shc__shc_css}" />
+	
+	<apex:dataTable value="{!DeltaItems}" styleClass="list" var="item">
+		<apex:column >
+			<apex:facet name="header">Field Name</apex:facet>{!item.FieldName}
+		</apex:column>
+		<apex:column >
+			<apex:facet name="header">Previous Value</apex:facet>{!item.OldValue}
+		</apex:column>
+		<apex:column >
+			<apex:facet name="header">New Value</apex:facet>{!item.NewValue}
+		</apex:column>
+	</apex:dataTable>
+</apex:component>

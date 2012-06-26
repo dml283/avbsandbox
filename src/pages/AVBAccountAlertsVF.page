@@ -1,0 +1,46 @@
+<apex:page standardController="Account">
+    <script type="text/javascript"> 
+    
+        var msg = "";
+        var tab = "  ";
+        var pn = "{!$Profile.Name}";
+        var ca = "{!JSENCODE( TRIM( Account.CustomAlert__c))}";
+        var ola = "{!Account.Open_Litigation_Activities__c}"
+        var si = "{!$Api.Session_ID}"
+
+        if (pn.indexOf('Admin') != -1 || pn.indexOf('CCC') != -1)    //Only execute for Admin and CCC staff
+        {    
+            //custom alert
+            if (ca.length > 0) 
+            {
+                msg += tab + ca + "\n";
+            }
+    
+            //resident community sold
+            if (!{!ISNULL(Account.Parent_SOLD__c)})
+            { 
+                msg += tab + "This Account's Community has been sold.\n"; 
+            }
+        
+            //community sold
+            if (!{!ISNULL(Account.SOLD_Flag__c )})
+            {
+                msg += tab + "This Community has been sold.\n";
+            }        
+            
+            //open litigation
+            if (ola > 0)
+            {
+                msg += tab + "This Account is in Legal.\n";
+            }
+                 
+            //display
+            if (msg.length > 0)
+            {
+                msg = "Account Alert(s):\n" + msg;
+                window.alert(msg); 
+            } 
+        }
+                
+    </script>   
+</apex:page>

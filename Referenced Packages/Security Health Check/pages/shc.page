@@ -1,0 +1,402 @@
+<apex:page controller="shc.SHCController" action="{!showLatestReport}">
+
+<apex:stylesheet value="{!$Resource.shc__shc_css}" />
+
+    <style>
+    .activeTab{background-color:#7F1917;color:white;background-image:none;}
+    .inactiveTab{background-color:#B15656;color:white;background-image:none;}
+    </style>
+    <h1>Security Health Check</h1>
+    <br />
+<apex:tabPanel switchType="ajax" activeTabClass="activeTab" inactiveTabClass="inactiveTab">
+    
+<apex:tab name="Show Reports" label="Show Reports" style="background-color:#ffffff" styleClass="white">
+    <apex:form >
+    <apex:outputPanel id="choosereport">
+    <apex:selectList value="{!selectedReport}" size="5" multiselect="false">
+        <apex:selectOptions value="{!allReportList}"/>
+    </apex:selectList>  
+    <br />
+    <apex:commandButton action="{!showThisReport}" value="Show Report"  />
+    <apex:commandButton action="{!rescoreThisReport}" value="Re-Score Report"  />
+    <apex:commandButton action="{!rescoreAllReports}" value="Re-Score All Reports"  />
+    <apex:commandButton action="{!deleteAllReports}" value="Delete All Reports"  /> 
+    <apex:commandButton action="{!deleteThisReport}" value="Delete This Report"  /> 
+    <apex:commandButton action="{!printThisReport}" value="Printer-Friendly Page"  />   
+    </apex:outputPanel>
+    <br clear="all" />  
+    <apex:outputPanel id="reports" rendered="{!showThisReportDraw}">    
+        <c:ShowReport check="{!hc}" score="{!sc}" />
+    </apex:outputPanel>
+    </apex:form>
+</apex:tab>
+
+
+<apex:tab name="Privileged Users" label="Privileged Users" style="background-color:#ffffff" styleClass="white">
+    <apex:form >
+    <apex:outputPanel id="privsection">
+    <apex:commandButton value="Show Privileged Users" action="{!doPrivs}" rerender="privsection" status="privStatus"/>
+     <apex:actionStatus startText="Please Wait. For large accounts, this may take a few minutes." stopText="" id="privStatus"/>
+
+    <br clear="all" />
+    <apex:outputText value="{!errorMessage}" rendered="{!showError}" /> 
+    <br clear="all" />
+    <apex:outputPanel id="profilesysadmin" rendered="{!showProfileSysadmin}">
+        <apex:outputText styleClass="title" value="System Administrators" />
+        <apex:dataTable value="{!sysAdminList}" var="u" styleClass="list" >
+            <apex:column >
+                <apex:facet name="header">Name</apex:facet>
+                <apex:outputField value="{!u.name}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Username</apex:facet>
+                <apex:outputField value="{!u.Username}" />
+            </apex:column>          
+            <apex:column >
+                <apex:facet name="header">Title</apex:facet>
+                <apex:outputField value="{!u.title}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Email</apex:facet>
+                <apex:outputField value="{!u.email}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Phone</apex:facet>
+                <apex:outputField value="{!u.phone}" />
+            </apex:column>          
+            <apex:column >
+                <apex:facet name="header">Active</apex:facet>
+                <apex:outputField value="{!u.isactive}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Last Login</apex:facet>
+                <apex:outputField value="{!u.LastLoginDate}" />
+            </apex:column>                                          
+        </apex:dataTable>
+
+    </apex:outputPanel>
+    <br clear="all" />
+    <apex:outputPanel id="profilecustom" rendered="{!showProfileCustom}">
+        <apex:panelGrid columns="1">
+            <apex:outputText value="Profiles with Sensitive Privileges" styleclass="title" />
+            <apex:outputText value="Number of profiles: {!sprofListSize}" styleClass="title" />
+            <apex:dataTable value="{!myProfList}" var="p" styleClass="list" rowClasses="white, shade" style="bold">
+                <apex:column >
+                    <apex:facet name="header">Name</apex:facet>
+                    <apex:outputField value="{!p.p.name}" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Description</apex:facet>
+                    <apex:outputField value="{!p.p.Description}" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Type</apex:facet>
+                    <apex:outputField value="{!p.p.UserType}" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Sensitive Privs</apex:facet>
+                    <apex:dataTable value="{!p.sProfList}" var="sp" >
+                        <apex:column >
+                            
+                            <apex:outputText value="{!sp}" />
+                        </apex:column>
+                    </apex:dataTable>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">User List</apex:facet>
+                    <apex:dataTable value="{!p.uList}" var="uu" >
+                        <apex:column >
+                            <apex:outputText value="{!uu.Name}" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:outputField value="{!uu.Username}" />
+                        </apex:column>                          
+                        <apex:column >
+                            <apex:outputText value="{!uu.email}" />
+                        </apex:column>                      
+                    </apex:dataTable>
+                </apex:column>                              
+            </apex:dataTable>
+        </apex:panelGrid>
+    <br clear="all" />
+    <apex:outputText value="Full Profile Analysis" styleClass="title"/>
+    <apex:dataTable value="{!fullProfList}" var="p" styleClass="list" rowClasses="white, shade" >
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputField value="{!p.Name}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Modify All Data</apex:facet>
+            <apex:outputField value="{!p.PermissionsModifyAllData}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">View All Data</apex:facet>
+            <apex:outputField value="{!p.PermissionsViewAllData}"  />
+        </apex:column>      
+        <apex:column rendered="true">
+            <apex:facet name="header">Manage Users</apex:facet>
+            <apex:outputField value="{!p.permissionsmanageusers}"  />
+        </apex:column>
+        <apex:column rendered="true">
+            <apex:facet name="header">Customize Application</apex:facet>
+            <apex:outputField value="{!p.permissionscustomizeapplication}"  />
+        </apex:column>
+        <apex:column rendered="true">
+            <apex:facet name="header">Password Never Expires</apex:facet>
+            <apex:outputField value="{!p.permissionspasswordneverexpires}"  />
+        </apex:column>                        
+
+        <apex:column rendered="true">
+            <apex:facet name="header">Manage Public Documents</apex:facet>
+            <apex:outputField value="{!p.permissionseditpublicdocuments}"  />
+        </apex:column>
+        <apex:column rendered="true">
+            <apex:facet name="header">Manage Dashboards</apex:facet>
+            <apex:outputField value="{!p.permissionsmanagedashboards}"  />
+        </apex:column>              
+    </apex:dataTable>
+    <br clear="all" />
+    <apex:outputText value="Users with the Modify All Data Permission: " styleClass="title"/>
+    <apex:outputText value="{!modifyAllDataSize}" styleClass="title"/>
+    <apex:dataTable value="{!modifyAllData}" var="u" styleClass="list" rowClasses="white, shade">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>          
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>          
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                     
+    </apex:dataTable>
+    <br clear="all" />
+    <apex:outputText value="Users with the View All Data Permission: " styleClass="title"/>
+    <apex:outputText value="{!viewAllDataSize}" styleClass="title"/>    
+    <apex:dataTable value="{!viewAllData}" var="u" styleClass="list" rowClasses="white, shade" >
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                     
+    </apex:dataTable>
+    <br clear="all" />  
+    <apex:outputText value="Users with the Manage Users Permission: " styleClass="title" />
+    <apex:outputText value="{!manageUsersSize}" styleClass="title"/>    
+    <apex:dataTable value="{!manageUsers}" var="u" styleClass="list" rowClasses="white, shade">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                                           
+    </apex:dataTable>  
+
+    <br clear="all" />  
+    <apex:outputText value="Users with the Customize Application: " styleClass="title" />
+    <apex:outputText value="{!customAppDataSize}" styleClass="title"/>  
+    <apex:dataTable value="{!customAppData}" var="u" styleClass="list" rowClasses="white, shade">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                                           
+    </apex:dataTable>  
+    <br clear="all" />  
+    <apex:outputText value="Users with the Password Never Expires Permission: " styleClass="title" />
+    <apex:outputText value="{!pwdDataSize}" styleClass="title"/>    
+    <apex:dataTable value="{!pwdData}" var="u" styleClass="list" rowClasses="white, shade">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                                           
+    </apex:dataTable>  
+    <br clear="all" />  
+    <apex:outputText value="Users with the Author Apex Permission: " styleClass="title" />
+    <apex:outputText value="{!apexDataSize}" styleClass="title"/>   
+    <apex:dataTable value="{!apexData}" var="u" styleClass="list" rowClasses="white, shade">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                                           
+    </apex:dataTable>  
+    <br clear="all" />  
+    <apex:outputText value="Users with the Manage Documents Permission: " styleClass="title" rendered="false"/>
+    <apex:outputText value="{!docsDataSize}" styleClass="title" rendered="false" /> 
+    <apex:dataTable value="{!docsData}" var="u" styleClass="list" rowClasses="white, shade" rendered="false">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                                           
+    </apex:dataTable>  
+    <br clear="all" />  
+    <apex:outputText value="Users with the Manage Dashboards Permission: " styleClass="title" rendered="false"/>
+    <apex:outputText value="{!dashDataSize}" styleClass="title" rendered="false"/>  
+    <apex:dataTable value="{!dashData}" var="u" styleClass="list" rowClasses="white, shade" rendered="false">
+        <apex:column >
+            <apex:facet name="header">Profile Name</apex:facet>
+            <apex:outputtext value="{!u.Profile.Name}"  />
+        </apex:column>   
+        <apex:column >
+            <apex:facet name="header">Name</apex:facet>
+            <apex:outputtext value="{!u.name}"  />
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Username</apex:facet>
+            <apex:outputField value="{!u.Username}" />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+            <apex:outputtext value="{!u.title}"  />
+        </apex:column>      
+        <apex:column >
+            <apex:facet name="header">Email</apex:facet>
+            <apex:outputtext value="{!u.email}"  />
+        </apex:column>     
+        <apex:column >
+            <apex:facet name="header">Last Login</apex:facet>
+            <apex:outputField value="{!u.LastLoginDate}" />
+        </apex:column>                                                           
+    </apex:dataTable>               
+  
+    </apex:outputPanel>
+    </apex:outputPanel>
+    </apex:form>
+</apex:tab>
+
+</apex:tabPanel>
+
+  <apex:panelGroup id="jsid">
+      <apex:scontrol controlName="shc" width="-100" height="500" rendered="{!runjs}" />
+    </apex:panelGroup>
+</apex:page>

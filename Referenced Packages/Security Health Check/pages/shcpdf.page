@@ -1,0 +1,6 @@
+<apex:page controller="shc.SHCPDF" showHeader="false" sidebar="false" >
+    <apex:stylesheet value="{!$Resource.shc__shc_css}" />
+    <apex:form >
+    <c:ShowReport check="{!hc}" score="{!sc}" />
+    </apex:form>
+</apex:page>

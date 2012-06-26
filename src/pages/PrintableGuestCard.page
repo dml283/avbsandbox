@@ -1,0 +1,156 @@
+<apex:page title="Printable Guest Card" standardController="Guest_Card__c" extensions="GuestCard_Ext" showheader="false" >
+
+<apex:messages />
+<style> 
+.wholepage {
+    font-size: 14px;
+    width: 750px;
+}
+.gcdetail {
+}
+.Quotes {
+}
+.RMActions {
+}
+.Tasks{
+}
+.Events{
+}
+.underline {
+    border-bottom: 1px solid black;
+    margin-bottom: 0px;
+}
+</style>
+
+<div class="wholepage">
+    
+    <div class="header">
+        <div style="text-align: center; font-weight: bold; font-size: 18px;">Avalon Communities Guest Card</div>
+        <div style="width: 100%; text-align: right;">
+            <table style="width: 20%; margin-left: 80%;">
+                <tr><td>Date:</td><td>{!todaysDate}</td></tr>
+                <tr><td>Time:</td><td>{!rightNow}</td></tr>
+            </table>
+        </div>
+    </div>
+    <br/>
+            
+    <div class="gcdetail">
+        <table style="text-align: left;">
+            <tr><td style="width: 25%;">Name</td><td  style="width: 30%;" class="underline">{!guestcard.Name}</td><td style="width: 15%;" >E-Mail</td><td style="width: 20%;" class="underline">{!guestcard.Email__c}</td><td  style="width: 10%;" ></td></tr>
+            <tr><td>Address Street 1</td><td colspan="4" class="underline">{!guestcard.Address_Street_1__c}</td></tr>
+            <tr><td>City, State, Zip</td><td colspan="4" class="underline">{!guestcard.Address_City__c}, {!guestcard.Address_State__c}&nbsp;&nbsp;{!guestcard.Address_Postal_Code__c}</td></tr>
+            <tr><td>Home Phone</td><td class="underline">{!guestcard.Home_Phone__c}</td><td>Work Phone 1</td><td class="underline">{!guestcard.Work_Phone__c}</td></tr>
+            <tr><td>Cell</td><td class="underline">{!guestcard.Cell_Phone__c}</td><td>Fax</td><td class="underline">{!guestcard.Fax__c}</td></tr>
+            <tr><td>How did you hear about us?</td><td colspan="4" class="underline">{!guestcard.How_did_you_hear_about_us__c}</td></tr>
+            <tr><td>Size Apt. home needed?</td><td style="text-align: right;">Bedrooms:</td><td class="underline">{!guestcard.Bed__c}</td><td style="text-align: right;">Bathrooms:</td><td class="underline">{!guestcard.Bath__c}</td></tr>
+            <tr><td>Community Consultant</td><td colspan="4" class="underline">{!guestcard.AVB_Associate__c}</td></tr>
+            <tr><td>When will you be moving in?</td><td class="underline"><apex:outputfield value="{!guestcard.When_will_you_be_moving_in__c}" /></td><td>Lease term desired?</td><td class="underline">{!guestcard.Lease_term_desired__c}</td></tr>
+            <tr><td>Other Residents<br/><br/></td><td colspan="4" class="underline">{!guestcard.Other_residents__c}<br/>{!guestcard.Other_resident_phone__c}<br/>{!guestcard.Other_resident_email_s__c}</td></tr>
+            <tr><td>Reason for Relocating?</td><td colspan="4" class="underline">{!guestcard.Reason_for_relocating__c}</td></tr>
+            <tr>
+                <td>What is most important to you? (Check one)</td>
+                <td style="text-align: center;">
+                    <apex:outputpanel rendered="{!(guestcard.What_is_most_important_to_you__c == 'Move In Date')}" style="font-weight: bold; text-decoration: underline; font-size: 18px;">&nbsp;X&nbsp;</apex:outputpanel>
+                    <apex:outputpanel rendered="{!(guestcard.What_is_most_important_to_you__c != 'Move In Date')}" style="font-weight: bold;">___</apex:outputpanel>
+                    &nbsp;Expected Move In Date
+                </td>
+                <td style="text-align: center;">
+                    <apex:outputpanel rendered="{!(guestcard.What_is_most_important_to_you__c == 'Price')}" style="font-weight: bold; text-decoration: underline; font-size: 18px;">&nbsp;X&nbsp;</apex:outputpanel>
+                    <apex:outputpanel rendered="{!(guestcard.What_is_most_important_to_you__c != 'Price')}" style="font-weight: bold;">___</apex:outputpanel>
+                    &nbsp;Price
+                </td>
+                <td style="text-align: center;">
+                    <apex:outputpanel rendered="{!(guestcard.What_is_most_important_to_you__c == 'Lease Term')}" style="font-weight: bold; text-decoration: underline; font-size: 18px;">&nbsp;X&nbsp;</apex:outputpanel>
+                    <apex:outputpanel rendered="{!(guestcard.What_is_most_important_to_you__c != 'Lease Term')}" style="font-weight: bold;">___</apex:outputpanel>
+                    &nbsp;Lease Term
+                 </td>
+                <td/>
+            </tr>
+            
+            <tr><td>Price Range Desired?</td><td colspan="2" class="underline">{!guestcard.Price_Range_Desired__c}</td></tr>
+            <tr><td>Do you have a pet other than a service animal?</td><td class="underline">{!guestcard.Have_a_pet_other_than_a_service_animal__c}</td><td>If yes, pet type and breed?</td><td colspan="2" class="underline">{!guestcard.Pet_Type_Breed__c}</td></tr>
+            <tr><td>What features are most important?</td><td colspan="4" class="underline">{!guestcard.What_features_are_most_important__c}</td></tr>
+            <tr><td>What other communities are you considering?</td><td class="underline">{!guestcard.Other_communities_being_considered__c}</td></tr>
+            
+        </table>
+    </div>
+    <br/>
+    
+    <div class="Quotes" >
+        <table style="width: 100%">
+            <apex:repeat value="{!gcQuotes}" var="quote">
+                <tr style="height: 50px;">
+                    <td class="underline">
+                        Quote Date:
+                        <apex:outputfield id="quotedate" value="{!quote.Quote_Date__c}"/>
+                    </td><td class="underline">
+                        Apt. Type:
+                        <apex:outputfield id="apttype" value="{!quote.Legacy_Apartment_Type__c}"/>
+                    </td><td class="underline">
+                        Apt. #:
+                        <apex:outputfield id="apt" value="{!quote.Apt__c}"/>
+                    </td><td class="underline">
+                        Move in Date:
+                        <apex:outputfield id="moveindate" value="{!quote.Move_In_Date__c}"/>
+                    </td><td class="underline">
+                        Lease term:
+                        <apex:outputfield id="leaseterm" value="{!quote.Lease_Term__c}"/>
+                    </td><td class="underline">
+                        Rent:
+                        <apex:outputfield id="rent" value="{!quote.Rent__c}"/>
+                    </td>
+                </tr>
+            </apex:repeat>
+        </table>
+    </div>
+    <br/>
+    
+    <div class="lowerbody">
+        <table style="width: 100%;">
+            <tr><td style="width: 10%; ">Notes:</td><td style="width: 90%; text-decoration: underline;" colspan="4" class="underline">{!guestcard.Guest_Card_Details__c}</td></tr>
+            <tr><td/><td class="underline" colspan="4">&nbsp;</td></tr>
+            <tr><td/><td class="underline" colspan="4">&nbsp;</td></tr>
+            <tr><td>Community Consultant</td><td class="underline">{!guestcard.AVB_Associate__c}</td></tr>
+        </table>
+    </div>
+    <br/>
+    <br/>
+    
+    <apex:outputpanel style="text-decoration: underline;" rendered="{!((!isnull(gcRMActions)) || (!isnull(gcTasks)) || (!isnull(gcEvents)))}">
+        <h1>History</h1>
+        <br/><br/>
+    </apex:outputpanel>
+    <apex:outputpanel styleclass="RMActions" rendered="{!!isnull(gcRMActions)}">
+        RMActions<br/>
+        <apex:datatable style="margin-left: 50px; width: 100%;" value="{!gcRMActions}" var="rma" >
+            <apex:column style="width: 20%;" headervalue="Date" value="{!rma.ActDate__c}"/>
+            <apex:column style="width: 30%;" headervalue="Action Type" value="{!rma.ActCode__c}"/>
+            <apex:column style="width: 50%;" headervalue="Note" value="{!rma.ActDescription__c}"/>
+        </apex:datatable>
+    </apex:outputpanel>
+    
+    <apex:outputpanel styleclass="Tasks" rendered="{!!isnull(gcTasks)}">
+        Tasks<br/>
+        <apex:datatable style="margin-left: 50px; width: 100%;" value="{!gcTasks}" var="task" >
+            <apex:column style="width: 20%;" headervalue="Due Date" value="{!task.ActivityDate}"/>
+            <apex:column style="width: 15%;" headervalue="Type" value="{!task.Subject_Sub_Category__c}"/>
+            <apex:column style="width: 15%;" headervalue="Status" value="{!task.Status}"/>
+            <!--<apex:column style="width: 23%;" headervalue="Note" value="{!task.Description}"/>-->
+            <apex:column style="width: 27%;" headervalue="Leasing Agent" value="{!task.AVB_Associate_First_Last_Name__c}"/>
+        </apex:datatable>
+    </apex:outputpanel>
+    
+    <apex:outputpanel styleclass="Events" rendered="{!!isnull(gcEvents)}">
+        Events<br/>
+        <apex:datatable style="margin-left: 50px; width: 100%;" value="{!gcEvents}" var="event" >
+            <apex:column style="width: 20%;" headervalue="Scheduled Date" value="{!event.StartDateTime}"/>
+            <apex:column style="width: 15%;" headervalue="Type" value="{!event.Subject_Sub_Category__c}"/>
+            <apex:column style="width: 15%;" headervalue="Status" value="{!event.Status__c}"/>
+            <apex:column style="width: 23%;" headervalue="Note" value="{!event.Description}"/>
+            <apex:column style="width: 27%;" headervalue="Note" value="{!event.AVB_Associate_First_Last_Name__c}"/>
+        </apex:datatable>
+    </apex:outputpanel>
+</div>
+
+</apex:page>

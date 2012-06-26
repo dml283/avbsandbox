@@ -1,0 +1,5 @@
+<apex:page standardController="Guest_Card__c" showheader="false" sidebar="false">
+
+<meta http-equiv="REFRESH" content="0;url=../apex/editguestcard?id={!Guest_Card__c.Id}&mode=edit&returl=%2F{!Guest_Card__c.Id}" /> 
+
+</apex:page>

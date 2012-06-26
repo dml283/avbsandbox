@@ -1,0 +1,43 @@
+<apex:page StandardController="shc__State__c" extensions="shc.StateExtension">
+	<apex:variable id="state" var="config" value="{!getConfiguration}" />
+	<apex:sectionHeader title="Configuration" />
+	<apex:pageBlock >
+		<apex:pageblockSection title="How to setup SHC periodic checks">
+			<ul>
+				<li>Browse to <a href="{!URLFOR($Site.Domain)}/setup/ui/assignhomelayout.jsp">Default Page Layout</a></li>
+				<li>Choose 'SHC periodic check' as your page layout</li>			
+			</ul>
+		</apex:pageblockSection>
+	</apex:pageBlock>
+	<apex:form >
+		<apex:pageBlock title="Email configuration">
+			<apex:panelGrid columns="2">
+				<apex:outputLabel value="Send reports via email" />
+				<apex:inputCheckbox value="{!config.shc__Send_Reports__c}">
+					<apex:actionSupport event="onchange" action="{!save}"
+						rerender="emailConfig" status="status" />
+				</apex:inputCheckbox>
+				<apex:actionStatus id="status" startText="...refreshing..." />
+			</apex:panelGrid>
+			<apex:panelGrid id="emailConfig" columns="2">
+				<apex:outputLabel value="Whom to send report" rendered="{!visible}" />
+				<apex:inputField value="{!config.shc__email__c}" rendered="{!visible}"
+					required="true" />
+				<apex:outputLabel value="Send report every (days)"
+					rendered="{!visible}" />
+				<apex:inputField value="{!config.shc__Run_every_days__c}"
+					rendered="{!visible}" required="true" />
+
+				<apex:outputLabel value="Which report to send" rendered="{!visible}" />
+				<apex:inputField value="{!config.shc__Send_All_Reports__c}"
+					rendered="{!visible}" required="true" />
+
+				<apex:outputLabel value="Last time report collected" />
+				<apex:outputField value="{!config.shc__Last_Time_Report_Collected__c}" />
+			</apex:panelGrid>
+			<apex:pageBlockButtons >
+				<apex:commandButton action="{!save}" value="Save" />
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>
