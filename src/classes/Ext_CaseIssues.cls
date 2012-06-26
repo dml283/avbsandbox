@@ -24,6 +24,7 @@ public class Ext_CaseIssues {
 		newComment = new CaseComment();
 		
 		//TODO: Make this selective wrt the user's Profile
+		//this comment just added
 		CanCopyAssociates = TRUE;
 	}
 	
