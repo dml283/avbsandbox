@@ -157,7 +157,7 @@ trigger CaseValidations on Case (before insert,before update,after insert,after 
                                                 Trigger.new[j].Warning_Message__c = 'Prior Resident is not eligible for a referral bonus';
                                                 if(queue_grp != null)
                                                     Trigger.new[j].OwnerId = queue_grp.Id;
-                                            }
+                                            } 
                                         }
                                     }
                                 }

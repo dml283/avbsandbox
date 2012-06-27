@@ -2,13 +2,13 @@ public without sharing class GuestCard_Ext {
     /*
     Purpose:    Controller Extension to support the Printable Guest Card output page and obsolete Guest Card clone function
                     Note: This clone function is superseded by a clone controlled by Ctl_AddGuestCard.cls and SearchAddGuestCard.page
-    				These methods support Ctl_AddGuestCard, by performing with system access through the "without sharing" class:
-    				saveObj()
-    					save any object passed
-    				makeGCShared()
-    					set the Shared field on any number of Guest Cards
-    				getAvailableCommunities()
-    					returns a list of Communities a specific user should be able to create Guest Cards for.
+                    These methods support Ctl_AddGuestCard, by performing with system access through the "without sharing" class:
+                    saveObj()
+                        save any object passed
+                    makeGCShared()
+                        set the Shared field on any number of Guest Cards
+                    getAvailableCommunities()
+                        returns a list of Communities a specific user should be able to create Guest Cards for.
     Created By:     Jeremy Nottingham (Synaptic) 3/2/2011
     
     Last Modified By:   Jeremy Nottingham (Synaptic) 6/8/2011
@@ -240,22 +240,22 @@ system.debug('\n\n123 duplicategc ' + duplicategc);
     
     public static String saveObj(SObject objtosave)
     {
-    	//Return null if successful
-    	String returnstring;
-    	try
-    	{
-    		upsert objtosave;
-    	}
-    	catch (Exception e)
-    	{
-    		returnstring = 'Exception occurred during save: ' + e.getMessage();
-    	}
-    	return returnstring;
+        //Return null if successful
+        String returnstring;
+        try
+        {
+            upsert objtosave;
+        }
+        catch (Exception e)
+        {
+            returnstring = 'Exception occurred during save: ' + e.getMessage();
+        }
+        return returnstring;
     }
     
     public static list<Account> getAvailableCommunities(Id userId)
     {
-    	User thisUser = [select id, Name, UserRoleId, UserRole.Name, ProfileId, Profile.Name from User where id = :userId];
+        User thisUser = [select id, Name, UserRoleId, UserRole.Name, ProfileId, Profile.Name from User where id = :userId];
         map<id, set<Id>> spodid2subrolesmap = new map<id, set<id>>(); //Id of spod Role to set of Role Ids from subordinate Roles
         map<id, id> roleid2spodroleidmap = new map<id, id>(); //Role Id to parent/top spod Role Id 
         map<id, list<User>> roleid2usersmap = new map<id, list<User>>(); //Role Id to list of users who have that role
@@ -269,10 +269,13 @@ system.debug('\n\n123 duplicategc ' + duplicategc);
             roleid2spodroleidmap.put(role.Id, null);
 system.debug('\n\n263 Role ' + role.Name + ' ' + role.Id + '\nParent: ' + role.ParentRoleId);   
 
-            if (role.Name.contains('SPOD')) {
+            //cjc 26JUN12: key on REGION instead of SPOD
+            if (role.Name.contains('SPOD')) 
+            {
                 spodid2subrolesmap.put(role.id, new set<id> { role.Id });
-system.debug('\n\n267 this is a SPOD: ' + role.Name);                
+                system.debug('\n\n267 this is a SPOD: ' + role.Name);                
             }
+            //cjc 26JUN12: key on REGION instead of SPOD
         }
         
         
@@ -303,7 +306,7 @@ system.debug('\n\n287 role ' + role.Name + '\nparent ' + roleid2rolemap.get(curr
                     break; 
                 }
                 if (spodid2subrolesmap.containsKey(parentId)) {
-system.debug('\n\n297 found spod ' + role.Name + ' spod: ' + roleid2rolemap.get(parentId).Name);                	
+system.debug('\n\n297 found spod ' + role.Name + ' spod: ' + roleid2rolemap.get(parentId).Name);                    
                     spodFound = true;
                     roleid2spodroleidmap.put(role.id, parentId);
                     spodid2subrolesmap.get(parentId).add(role.id);
@@ -316,9 +319,9 @@ system.debug('\n\n301 list ids ' + spodid2subrolesmap.get(parentId));
         String rolemapstr = '';
         for (Id spodid : spodid2subrolesmap.keyset())
         {
-        	rolemapstr += '\n\n' + roleid2rolemap.get(spodid).Name + ' ' + spodid + '\n';
-        	for (Id i : spodid2subrolesmap.get(spodid))
-        		rolemapstr += roleid2rolemap.get(i) + ' ' + i + ', ';
+            rolemapstr += '\n\n' + roleid2rolemap.get(spodid).Name + ' ' + spodid + '\n';
+            for (Id i : spodid2subrolesmap.get(spodid))
+                rolemapstr += roleid2rolemap.get(i) + ' ' + i + ', ';
         }
 system.debug('\n\n302 spodid2subrolesmap ' + rolemapstr);        
         //get all Role Ids that will be affected
@@ -334,25 +337,25 @@ system.debug('\n\n302 spodid2subrolesmap ' + rolemapstr);
         }
 system.debug('\n\n326 affectedroleids ' + affectedroleids);        
         list<User> affectedusers = [select id, Name, UserRoleId 
-        	from User 
-        	where UserRoleId in :affectedRoleIds];
+            from User 
+            where UserRoleId in :affectedRoleIds];
         set<Id> ownerids = new set<Id>();
         for (User u : affectedusers) 
         {
-        	ownerids.add(u.Id);
+            ownerids.add(u.Id);
         }
-system.debug('\n\n321 ownerids ' + ownerids);    	
-    	list<Account> accs = [select Id, Name
-    		from Account
-    		where OwnerId in :ownerids
-    			and Recordtype.Name = 'Community'];
-String acclist = '';		
+system.debug('\n\n321 ownerids ' + ownerids);       
+        list<Account> accs = [select Id, Name
+            from Account
+            where OwnerId in :ownerids
+                and Recordtype.Name = 'Community'];
+String acclist = '';        
 for (Account a : accs)
 {
-	acclist += '\n- ' + a.Id + ' ' + a.Name;
-}		    			
+    acclist += '\n- ' + a.Id + ' ' + a.Name;
+}                       
 system.debug('\n\n332 acclist ' + acclist); 
-    	return accs;
+        return accs;
     } 
     
 /*  Testmethods for this class  */
@@ -421,13 +424,13 @@ system.debug('\n\n84 returnGC ' + returnGC);
     
     static testmethod void testobjsave()
     {
-    	Account a = new Account(Name = 'testacc');
+        Account a = new Account(Name = 'testacc');
 test.startTest();
-		String results = GuestCard_Ext.saveObj(a);
-test.stopTest();    	
-		system.assertEquals(null, results);
-		system.assertNotEquals(null, a.Id);
-    	
+        String results = GuestCard_Ext.saveObj(a);
+test.stopTest();        
+        system.assertEquals(null, results);
+        system.assertNotEquals(null, a.Id);
+        
     }
     
     static testmethod void testClone()
@@ -540,120 +543,120 @@ test.StopTest();
     
     static testmethod void testGetAvailableCommunities()
     {
-    	User adminuser = [select Id from User where Profile.Name = 'System Administrator' and IsActive = TRUE limit 1];
-    	UserRole spodrole;
-    	UserRole subrole;
-    	User spoduser;
-    	User subuser1;
-    	User subuser2;
-    	User independentUser;
-    	
-    	system.runAs(adminuser)
-    	{
-	    	list<UserRole> roles = new list<UserRole>();
-	    	spodrole = new UserRole(
-	    		Name = 'SPOD test Role');
-	    	roles.add(spodrole);
-	    	subrole = new UserRole(Name = 'sub role');
-	    	roles.add(subrole);
-	    	insert roles;
-	    	
-	    	subrole.parentRoleId = spodrole.Id;
-	    	update subrole;
-    	
-    	
-	       	Profile p = [select Id from Profile where Name = 'Community'];
-	    	list<User> newusers = new list<User>();
-	        spoduser = new User(alias = 'test123', 
-	            email='test7805678442@avalonbay.com.blueberry',
-	            emailencodingkey='UTF-8', 
-	            lastname='Testing', 
-	            Department='Other',
-	            languagelocalekey='en_US',
-	            localesidkey='en_US', 
-	            profileid = p.Id, 
-	            UserRoleId = spodrole.Id,
-	            country='United States', 
-	            timezonesidkey='America/Los_Angeles', 
-	            username='1test7805a678442@avalonbay.com.blueberry'
-	            );
-	        newusers.add(spoduser);
-	        subuser1 = new User(alias = 'test123', 
-	            email='test7805678442@avalonbay.com.blueberry',
-	            emailencodingkey='UTF-8', 
-	            lastname='Testing', 
-	            Department='Other',
-	            languagelocalekey='en_US',
-	            localesidkey='en_US', 
-	            profileid = p.Id, 
-	            UserRoleId = subrole.Id,
-	            country='United States', 
-	            timezonesidkey='America/Los_Angeles', 
-	            username='1test780b5678442@avalonbay.com.blueberry'
-	            );
-	        newusers.add(subuser1);
-	        subuser2 = new User(alias = 'test123', 
-	            email='test7805678442@avalonbay.com.blueberry',
-	            emailencodingkey='UTF-8', 
-	            lastname='Testing', 
-	           	Department='Other',
-	            languagelocalekey='en_US',
-	            localesidkey='en_US', 
-	            profileid = p.Id, 
-	            UserRoleId = subrole.Id,
-	            country='United States', 
-	            timezonesidkey='America/Los_Angeles', 
-	            username='1test7c805678442@avalonbay.com.blueberry'
-	            );
-	        newusers.add(subuser2);
-	        independentUser = new User(alias = 'test123', 
-	            email='test7805678442@avalonbay.com.blueberry',
-	            emailencodingkey='UTF-8', 
-	            lastname='Testing', 
-	            Department='Other',
-	            languagelocalekey='en_US',
-	            localesidkey='en_US', 
-	            profileid = p.Id, 
-	            country='United States', 
-	            timezonesidkey='America/Los_Angeles', 
-	            username='1test7ca805678442@avalonbay.com.blueberry'
-	            );
-	        newusers.add(independentUser);
-	        
-	        insert newusers;
+        User adminuser = [select Id from User where Profile.Name = 'System Administrator' and IsActive = TRUE limit 1];
+        UserRole spodrole;
+        UserRole subrole;
+        User spoduser;
+        User subuser1;
+        User subuser2;
+        User independentUser;
+        
+        system.runAs(adminuser)
+        {
+            list<UserRole> roles = new list<UserRole>();
+            spodrole = new UserRole(
+                Name = 'REGION test Role');
+            roles.add(spodrole);
+            subrole = new UserRole(Name = 'sub role');
+            roles.add(subrole);
+            insert roles;
+            
+            subrole.parentRoleId = spodrole.Id;
+            update subrole;
+        
+        
+            Profile p = [select Id from Profile where Name = 'Community'];
+            list<User> newusers = new list<User>();
+            spoduser = new User(alias = 'test123', 
+                email='test7805678442@avalonbay.com.blueberry',
+                emailencodingkey='UTF-8', 
+                lastname='Testing', 
+                Department='Other',
+                languagelocalekey='en_US',
+                localesidkey='en_US', 
+                profileid = p.Id, 
+                UserRoleId = spodrole.Id,
+                country='United States', 
+                timezonesidkey='America/Los_Angeles', 
+                username='1test7805a678442@avalonbay.com.blueberry'
+                );
+            newusers.add(spoduser);
+            subuser1 = new User(alias = 'test123', 
+                email='test7805678442@avalonbay.com.blueberry',
+                emailencodingkey='UTF-8', 
+                lastname='Testing', 
+                Department='Other',
+                languagelocalekey='en_US',
+                localesidkey='en_US', 
+                profileid = p.Id, 
+                UserRoleId = subrole.Id,
+                country='United States', 
+                timezonesidkey='America/Los_Angeles', 
+                username='1test780b5678442@avalonbay.com.blueberry'
+                );
+            newusers.add(subuser1);
+            subuser2 = new User(alias = 'test123', 
+                email='test7805678442@avalonbay.com.blueberry',
+                emailencodingkey='UTF-8', 
+                lastname='Testing', 
+                Department='Other',
+                languagelocalekey='en_US',
+                localesidkey='en_US', 
+                profileid = p.Id, 
+                UserRoleId = subrole.Id,
+                country='United States', 
+                timezonesidkey='America/Los_Angeles', 
+                username='1test7c805678442@avalonbay.com.blueberry'
+                );
+            newusers.add(subuser2);
+            independentUser = new User(alias = 'test123', 
+                email='test7805678442@avalonbay.com.blueberry',
+                emailencodingkey='UTF-8', 
+                lastname='Testing', 
+                Department='Other',
+                languagelocalekey='en_US',
+                localesidkey='en_US', 
+                profileid = p.Id, 
+                country='United States', 
+                timezonesidkey='America/Los_Angeles', 
+                username='1test7ca805678442@avalonbay.com.blueberry'
+                );
+            newusers.add(independentUser);
+            
+            insert newusers;
         }
-    	
+        
         Id commrtid = [select Id from Recordtype where SObjectType = 'Account' and Name = 'Community' limit 1].Id;
-    	list<Account> comms = new list<Account>();
-    	comms.add(new Account(
-    		RecordtypeId = commrtid,
-    		Name = 'testcomm1',
-    		OwnerId = spoduser.Id));
-    	comms.add(new Account(
-    		RecordtypeId = commrtid,
-    		Name = 'testcomm1',
-    		OwnerId = subuser1.Id));
-    	comms.add(new Account(
-    		RecordtypeId = commrtid,
-    		Name = 'testcomm1',
-    		OwnerId = subuser2.Id));
-    	comms.add(new Account(
-    		RecordtypeId = commrtid,
-    		Name = 'testcomm1',
-    		OwnerId = independentUser.Id));
-    	insert comms;
-    	
+        list<Account> comms = new list<Account>();
+        comms.add(new Account(
+            RecordtypeId = commrtid,
+            Name = 'testcomm1',
+            OwnerId = spoduser.Id));
+        comms.add(new Account(
+            RecordtypeId = commrtid,
+            Name = 'testcomm1',
+            OwnerId = subuser1.Id));
+        comms.add(new Account(
+            RecordtypeId = commrtid,
+            Name = 'testcomm1',
+            OwnerId = subuser2.Id));
+        comms.add(new Account(
+            RecordtypeId = commrtid,
+            Name = 'testcomm1',
+            OwnerId = independentUser.Id));
+        insert comms;
+        
 test.startTest();
 system.debug('\n\n615 ');
-		list<Account> returnedcomms = GuestCard_Ext.getAvailableCommunities(spoduser.Id);
-		system.assertEquals(3,returnedcomms.size());
-		returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser1.Id);
-		system.assertEquals(3,returnedcomms.size());
-		returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser2.Id);
-		system.assertEquals(3,returnedcomms.size());
-		returnedcomms = GuestCard_Ext.getAvailableCommunities(independentUser.Id);
-		system.assertEquals(1,returnedcomms.size());
-		
-test.stopTest();    	
+        list<Account> returnedcomms = GuestCard_Ext.getAvailableCommunities(spoduser.Id);
+        system.assertEquals(3,returnedcomms.size());
+        returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser1.Id);
+        system.assertEquals(3,returnedcomms.size());
+        returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser2.Id);
+        system.assertEquals(3,returnedcomms.size());
+        returnedcomms = GuestCard_Ext.getAvailableCommunities(independentUser.Id);
+        system.assertEquals(1,returnedcomms.size());
+        
+test.stopTest();        
     }
 }

@@ -23,9 +23,11 @@ public class Ext_CaseIssues {
 		makeAddresseeOptions();
 		newComment = new CaseComment();
 		
-		//TODO: Make this selective wrt the user's Profile
-		//this comment just added
-		CanCopyAssociates = TRUE;
+		//Make CanCopyAssociates selective wrt the user's Development_Settings__c Custom Setting
+		CanCopyAssociates = FALSE;
+		if (Development_Settings__c.getInstance().Can_Copy_Associates_on_Cases__c == TRUE)
+			CanCopyAssociates = TRUE;
+			
 	}
 	
 	public class extIssue

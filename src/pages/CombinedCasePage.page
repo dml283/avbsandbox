@@ -5,12 +5,11 @@
 		
 	}
 </style>
-<apex:messages id="pagemessages" />
 	<apex:sectionHeader title="{!$ObjectType.Case.label} Edit" subtitle="{!Case.Casenumber}"/>
 	<apex:form >
-	<apex:actionfunction name="redrawTable" rerender="issuetable, pagemessages " />
-	
-	<apex:pageBlock title="{!$ObjectType.Case.label} Edit" mode="edit">
+	<apex:pagemessages id="pagemessages" />
+	<!--<apex:actionfunction name="redrawTable" rerender="issuetable, pagemessages " />-->
+	<apex:pageBlock title="{!$ObjectType.Case.label} Edit" id="caseFields" mode="edit">
 		<div style="max-width: 750px;" >
 			<apex:pageBlockButtons >
 		        <apex:commandButton action="{!saveCase}" value="Save"/>
@@ -79,8 +78,8 @@
 						<apex:facet name="header">
 							New Task
 						</apex:facet>
-						<apex:inputcheckbox style="width: 50px;" value="{!xissue.WillCreateTask}" rendered="{!((CanCopyAssociates) && (xissue.IsEditable))}" >
-							<apex:actionsupport event="onclick" rerender="issuetable, pagemessages"/>
+						<apex:inputcheckbox style="width: 50px;" value="{!xissue.WillCreateTask}" rendered="{!(xissue.IsEditable)}" >
+							<apex:actionsupport event="onclick" rerender="pagemessages, issuetable, caseFields"/>
 						</apex:inputcheckbox>
 					</apex:column>
 					
@@ -88,19 +87,19 @@
 						<apex:inputfield value="{!xissue.NewTask.Task_Queue__c}" rendered="{!((xissue.IsEditable) && (xissue.WillCreateTask))}" />
 					</apex:column>
 				
-					<apex:column headerValue="Send Email" width="15px">
+					<apex:column headerValue="Send Email" width="15px" rendered="{!(CanCopyAssociates)}">
 						<apex:inputcheckbox value="{!xissue.WillSendEmail}" rendered="{!((CanCopyAssociates) && (xissue.IsEditable))}" >
-							<apex:actionsupport event="onclick" rerender="issuetable, pagemessages"/>
+							<apex:actionsupport event="onclick" rerender="pagemessages, issuetable, caseFields" />
 						</apex:inputcheckbox>
 					</apex:column>
 					
-					<apex:column headerValue="Copy Associates">
+					<apex:column headerValue="Copy Associates" rendered="{!(CanCopyAssociates)}">
 						<apex:selectlist size="3" value="{!xissue.addresseeIds}" rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}">
 							<apex:selectOptions value="{!addresseeOptions}" />
 						</apex:selectlist>
 					</apex:column> 
 					
-					<apex:column headerValue="Additional Emails">
+					<apex:column headerValue="Additional Emails" rendered="{!(CanCopyAssociates)}">
 						<apex:inputtext style="width: 250px; height: 60px;" value="{!xissue.additionalEmails}" rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}"/>
 					</apex:column>
 					

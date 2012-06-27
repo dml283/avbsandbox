@@ -7,16 +7,16 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
                             Find Initial Followup Task and close it.
                         - If IsUpdate and (MRI Leasing Associate or AVB_Associate__c is changed)
                             Change AVB_Associate_First_Last_Name__c on all Events and Tasks for that GC, regardless of Initial Visit Date
-                       		Populate on parent Customer Group Account
+                            Populate on parent Customer Group Account
                         - If IsInsert and Initial_Lead_Type__c != 'Email' //REMOVED and != 'Walk In'
                             Create Initial Follow Up Task
                         - If MRI Leasing Associate is changed
                             
                 BEFORE: - Also validates that there can be only one Guest Card for each Community/Customer Group combo.
-                		- If Needs_Contact__c checkbox has been unchecked, change Owner to the Community
-    					- If (IsInsert) OR (IsUpdate and MRI Leasing Associate is changed)
+                        - If Needs_Contact__c checkbox has been unchecked, change Owner to the Community
+                        - If (IsInsert) OR (IsUpdate and MRI Leasing Associate is changed)
                             Change AVB_Associate__c on triggering Guest Card to match name from MRI Leasing Associate
-                       		
+                            
     Created By:     Jeremy Nottingham (SAP) - 2/16/2011
     
     Last Modified By:   Jeremy Nottingham (SAP) - 3/30/2012
@@ -40,7 +40,7 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
 /*  AFTER  */    
     if (Trigger.IsAfter) {
         /*  Fix Sharing  */
-    	set<id> ownerGCIds = new set<Id>(); //GCs that are new or have had the OwnerId changed
+        set<id> ownerGCIds = new set<Id>(); //GCs that are new or have had the OwnerId changed
         set<id> EmailGCids = new set<Id>(); //GCs that have been made Initial Lead Type of 'Email' or 'Walk In'
         set<id> AVBAssocGCids = new set<Id>(); //GCs that have had AVB Associate/MRI Leasing Associate changed
         
@@ -77,7 +77,7 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
             //get GCs to change AVB Associate name
             if ((Trigger.IsUpdate)
                 && ((Trigger.oldmap.get(gc.id).MRI_Leasing_Associate__c != Trigger.newmap.get(gc.id).MRI_Leasing_Associate__c)
-                	|| (Trigger.oldmap.get(gc.id).AVB_Associate__c != Trigger.newmap.get(gc.id).AVB_Associate__c)))
+                    || (Trigger.oldmap.get(gc.id).AVB_Associate__c != Trigger.newmap.get(gc.id).AVB_Associate__c)))
             {
                 AVBAssocGCids.add(gc.id);
             }
@@ -100,9 +100,11 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
         for (UserRole role : roles) {
             roleid2spodroleidmap.put(role.Id, null);
             
+            //cjc 15JUN12: key on roles containing REGION instead of SPOD
             if (role.Name.contains('SPOD')) {
                 spodid2subrolesmap.put(role.id, new set<id>());
             }
+            //cjc 15JUN12: key on roles containing REGION instead of SPOD
         }
          
         Id currentId;
@@ -173,34 +175,34 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
             Guest_Card__c gc = Trigger.newmap.get(gcid);
             if (ownerid2usermap.containsKey(gc.OwnerId))
             {
-	            User Owner = ownerid2usermap.get(gc.OwnerId);
-	            Id spodRoleId = roleid2spodroleidmap.get(Owner.UserRoleId);
-	
-	            //ReadWrite users: same Role as owner
-	            if ((Owner.UserRoleId != null) && (roleid2usersmap.get(Owner.UserRoleId) != null)){
-	                for (User u : roleid2usersmap.get(Owner.UserRoleId)) {
-	                    gcshares.add(new Guest_Card__Share(
-	                        ParentId = gcid,
-	                        UserOrGroupId = u.id,
-	                        AccessLevel = 'Edit',
-	                        RowCause = Schema.Guest_Card__Share.RowCause.Community__c));
-	                }
-	            }
-	            //Read Only users: all in spod
-	            if ((spodRoleId != null) && (spodid2subrolesmap.get(spodRoleId) != null)) {
-	                for (Id i : spodid2subrolesmap.get(spodRoleId)) {
-	                    if(roleid2usersmap.get(i) == null) continue;
-	
-	                    for (User u : roleid2usersmap.get(i)) {
-	                        gcshares.add(new Guest_Card__Share(
-	                            ParentId = gcid,
-	                            UserOrGroupId = u.id,
-	                            AccessLevel = 'Read',
-	                            RowCause = Schema.Guest_Card__Share.RowCause.POD__c));
-	                    }
-	                }
-	            } //end if spodRole != null
-        	}
+                User Owner = ownerid2usermap.get(gc.OwnerId);
+                Id spodRoleId = roleid2spodroleidmap.get(Owner.UserRoleId);
+    
+                //ReadWrite users: same Role as owner
+                if ((Owner.UserRoleId != null) && (roleid2usersmap.get(Owner.UserRoleId) != null)){
+                    for (User u : roleid2usersmap.get(Owner.UserRoleId)) {
+                        gcshares.add(new Guest_Card__Share(
+                            ParentId = gcid,
+                            UserOrGroupId = u.id,
+                            AccessLevel = 'Edit',
+                            RowCause = Schema.Guest_Card__Share.RowCause.Community__c));
+                    }
+                }
+                //Read Only users: all in spod
+                if ((spodRoleId != null) && (spodid2subrolesmap.get(spodRoleId) != null)) {
+                    for (Id i : spodid2subrolesmap.get(spodRoleId)) {
+                        if(roleid2usersmap.get(i) == null) continue;
+    
+                        for (User u : roleid2usersmap.get(i)) {
+                            gcshares.add(new Guest_Card__Share(
+                                ParentId = gcid,
+                                UserOrGroupId = u.id,
+                                AccessLevel = 'Read',
+                                RowCause = Schema.Guest_Card__Share.RowCause.POD__c));
+                        }
+                    }
+                } //end if spodRole != null
+            }
             
         }
         if (gcshares.size() > 0) insert gcshares;
@@ -229,7 +231,7 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
         if (AVBAssocGCids.size() > 0)
         {
             list<Guest_Card__c> gcs = [select AVB_Associate__c, MRI_Leasing_Associate__c, 
-            	MRI_Leasing_Associate__r.LeasingAssociateName__c, Prospect_Account__c,
+                MRI_Leasing_Associate__r.LeasingAssociateName__c, Prospect_Account__c,
                 (select Id, AVB_Associate_First_Last_Name__c from Tasks where IsClosed = false),
                 (select Id, AVB_Associate_First_Last_Name__c from Events)
                 from Guest_Card__c
@@ -243,9 +245,9 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
                 //AVB Associate should come from the MRI Leasing Associate record, unless there isn't one or the name on it is blank
                 String associateName = gc.AVB_Associate__c;
                 if ((gc.MRI_Leasing_Associate__c != null)
-                	&& (gc.MRI_Leasing_Associate__r.LeasingAssociateName__c != null))
-                	associateName = gc.MRI_Leasing_Associate__r.LeasingAssociateName__c;
-                	
+                    && (gc.MRI_Leasing_Associate__r.LeasingAssociateName__c != null))
+                    associateName = gc.MRI_Leasing_Associate__r.LeasingAssociateName__c;
+                    
                 for (Task t : gc.Tasks)
                 {
                     t.AVB_Associate_First_Last_Name__c = associateName;
@@ -256,15 +258,15 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
                     e.AVB_Associate_First_Last_Name__c = associateName;
                     eventstoupdate.add(e);
                 }
-            	
-            	//update MRI Leasing Associate on CG Account
-            	if ((gc.Prospect_Account__c != null)
-            		&& (gc.MRI_Leasing_Associate__c != null))
-            	{
-            		accid2accmaptoupdate.put(gc.Prospect_Account__c, new Account(
-            			Id = gc.Prospect_Account__c,
-            			MRI_Leasing_Associate__c = gc.MRI_Leasing_Associate__c));
-            	}
+                
+                //update MRI Leasing Associate on CG Account
+                if ((gc.Prospect_Account__c != null)
+                    && (gc.MRI_Leasing_Associate__c != null))
+                {
+                    accid2accmaptoupdate.put(gc.Prospect_Account__c, new Account(
+                        Id = gc.Prospect_Account__c,
+                        MRI_Leasing_Associate__c = gc.MRI_Leasing_Associate__c));
+                }
             }
             
             update taskstoupdate;
@@ -273,35 +275,35 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
         }
         
         /*  Create Tasks  */
-	    if (Trigger.IsInsert) {
-	        Id leadrtid = [select id from Recordtype where SObjectType = 'Task' and Name = 'Pilot Lead Process' limit 1].id;
-	        list<Task> newtasks = new list<Task>();
-	        for (Guest_Card__c gc : Trigger.new) {
-	            //Only create Task for non-Leased GCs owned by real Users
-	            if ((gc.Status__c != 'Leased')
-	                //removed 031212 JN && (gc.Initial_Lead_Type__c != 'Walk In')
-	                && (gc.Initial_Lead_Type__c != 'Email')
-	                && (((String)gc.OwnerId).substring(0,3) == '005'))
-	            {
-	                newtasks.add(new Task(
-	                    OwnerId = gc.OwnerId,
-	                    RecordtypeId = leadrtid,
-	                    AVB_Type__c = 'Lead Pursuit Process',
-	                    Subject_Sub_Category__c = 'Initial Followup',
-	                    //QB4164; cjc; Change timing on the initial Follow up task to = today
-	                    //ActivityDate = system.today().addDays(2),
-	                    ActivityDate = system.today(),
-	                    //QB4164; cjc; Change timing on the initial Follow up task to = today
-	                    AVB_Associate_First_Last_Name__c = gc.AVB_Associate__c,
-	                    WhatId = gc.Id
-	                    ));
-	            }
-	        } //end for gc : trigger.new
-	        
-	        if (newtasks.size() > 0) 
-	            insert newtasks;
-	    }
-	    /*  End Create Tasks  */
+        if (Trigger.IsInsert) {
+            Id leadrtid = [select id from Recordtype where SObjectType = 'Task' and Name = 'Pilot Lead Process' limit 1].id;
+            list<Task> newtasks = new list<Task>();
+            for (Guest_Card__c gc : Trigger.new) {
+                //Only create Task for non-Leased GCs owned by real Users
+                if ((gc.Status__c != 'Leased')
+                    //removed 031212 JN && (gc.Initial_Lead_Type__c != 'Walk In')
+                    && (gc.Initial_Lead_Type__c != 'Email')
+                    && (((String)gc.OwnerId).substring(0,3) == '005'))
+                {
+                    newtasks.add(new Task(
+                        OwnerId = gc.OwnerId,
+                        RecordtypeId = leadrtid,
+                        AVB_Type__c = 'Lead Pursuit Process',
+                        Subject_Sub_Category__c = 'Initial Followup',
+                        //QB4164; cjc; Change timing on the initial Follow up task to = today
+                        //ActivityDate = system.today().addDays(2),
+                        ActivityDate = system.today(),
+                        //QB4164; cjc; Change timing on the initial Follow up task to = today
+                        AVB_Associate_First_Last_Name__c = gc.AVB_Associate__c,
+                        WhatId = gc.Id
+                        ));
+                }
+            } //end for gc : trigger.new
+            
+            if (newtasks.size() > 0) 
+                insert newtasks;
+        }
+        /*  End Create Tasks  */
         
     } //end if IsAfter
 
@@ -309,7 +311,7 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
     if (Trigger.IsBefore) {
         
         /*  Validate uniqueness of Guest Card  */
-    	set<id> triggeringids = new set<id>();
+        set<id> triggeringids = new set<id>();
         if (Trigger.IsUpdate) triggeringids = Trigger.newmap.keyset();
         //collect Customer Group ids
         set<id> cgids = new set<id>();
@@ -335,51 +337,51 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
                 
                 //if Needs Contact just changed to unchecked, assign this GC to the Community it belongs to (from CCC web leads queue)
                 if ((Trigger.IsUpdate)
-                	&& (gc.Needs_Contact__c == FALSE)
-                	&& (Trigger.oldmap.get(gc.Id).Needs_Contact__c == TRUE))
+                    && (gc.Needs_Contact__c == FALSE)
+                    && (Trigger.oldmap.get(gc.Id).Needs_Contact__c == TRUE))
                 {
-                	gc.OwnerId = cg.Parent.OwnerId;
+                    gc.OwnerId = cg.Parent.OwnerId;
                 }
             }
         }
         /*  End Guest Card Uniqueness Validation  */ 
-    	
-		/*  Start MRI Leasing Associate update on GC  */
-		//gather MRI Leasing Associate Ids to query
-		set<Id> mrilaids = new set<ID>();
-		for (Guest_Card__c gc : Trigger.new)
-		{
-			if ((gc.MRI_Leasing_Associate__c != null)
-				&& ((Trigger.IsInsert)
-					|| (gc.MRI_Leasing_Associate__c != Trigger.oldmap.get(gc.Id).MRI_Leasing_Associate__c)))
-			{
-				mrilaids.add(gc.MRI_Leasing_Associate__c);
-			}
-		}
-		
-		//query for MRI Leasing Associates and update on triggering Guest Card
-		if (mrilaids.size() > 0)
-		{
-			map<Id, MRILeasingAssociate__c> mriid2mrimap = new map<Id, MRILeasingAssociate__c>(
-				[select Id, LeasingAssociateName__c
-				from MRILeasingAssociate__c
-				where Id in :mrilaids]);
-			
-			for (Guest_Card__c gc : Trigger.new)
-			{
-				if ((gc.MRI_Leasing_Associate__c != null)
-					&& ((Trigger.IsInsert)
-						|| (gc.MRI_Leasing_Associate__c != Trigger.oldmap.get(gc.Id).MRI_Leasing_Associate__c))
-					&& (mriid2mrimap.containsKey(gc.MRI_Leasing_Associate__c))
-					&& (mriid2mrimap.get(gc.MRI_Leasing_Associate__c).LeasingAssociateName__c != null)
-					&& (mriid2mrimap.get(gc.MRI_Leasing_Associate__c).LeasingAssociateName__c.contains(' ')))
-				{
-					gc.AVB_Associate__c = mriid2mrimap.get(gc.MRI_Leasing_Associate__c).LeasingAssociateName__c;
-				}
-			}
-		} //end if mrilaids.size > 0
-		/*  END MRI Leasing Associate update on GC  */
-		
+        
+        /*  Start MRI Leasing Associate update on GC  */
+        //gather MRI Leasing Associate Ids to query
+        set<Id> mrilaids = new set<ID>();
+        for (Guest_Card__c gc : Trigger.new)
+        {
+            if ((gc.MRI_Leasing_Associate__c != null)
+                && ((Trigger.IsInsert)
+                    || (gc.MRI_Leasing_Associate__c != Trigger.oldmap.get(gc.Id).MRI_Leasing_Associate__c)))
+            {
+                mrilaids.add(gc.MRI_Leasing_Associate__c);
+            }
+        }
+        
+        //query for MRI Leasing Associates and update on triggering Guest Card
+        if (mrilaids.size() > 0)
+        {
+            map<Id, MRILeasingAssociate__c> mriid2mrimap = new map<Id, MRILeasingAssociate__c>(
+                [select Id, LeasingAssociateName__c
+                from MRILeasingAssociate__c
+                where Id in :mrilaids]);
+            
+            for (Guest_Card__c gc : Trigger.new)
+            {
+                if ((gc.MRI_Leasing_Associate__c != null)
+                    && ((Trigger.IsInsert)
+                        || (gc.MRI_Leasing_Associate__c != Trigger.oldmap.get(gc.Id).MRI_Leasing_Associate__c))
+                    && (mriid2mrimap.containsKey(gc.MRI_Leasing_Associate__c))
+                    && (mriid2mrimap.get(gc.MRI_Leasing_Associate__c).LeasingAssociateName__c != null)
+                    && (mriid2mrimap.get(gc.MRI_Leasing_Associate__c).LeasingAssociateName__c.contains(' ')))
+                {
+                    gc.AVB_Associate__c = mriid2mrimap.get(gc.MRI_Leasing_Associate__c).LeasingAssociateName__c;
+                }
+            }
+        } //end if mrilaids.size > 0
+        /*  END MRI Leasing Associate update on GC  */
+        
     } //end if Trigger.IsBefore
     
     
