@@ -28,11 +28,34 @@ public with sharing class Ctl_AddGuestCard {
     		if (communityOptions == null)
     		{
     			communityOptions = new list<SelectOption>();
-    			list<Account> accs = GuestCard_Ext.getAvailableCommunities(Userinfo.getUserId());
-    			for (Account a : accs)
+    			set<Id> commids = new set<Id>();
+    			
+    			//Accounts retrieved based on Region/SPOD membership
+    			list<Account> regionalAccs = GuestCard_Ext.getAvailableCommunities(Userinfo.getUserId());
+    			map<String, Account> name2accmap = new map<String, Account>();
+    			for (Account a : regionalAccs)
     			{
-    				communityOptions.add(new SelectOption(a.Id, a.Name));
+    				name2accmap.put(a.Name, a);
+    				commids.add(a.Id);
     			}
+    			
+    			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
+    			list<Account> naturalAccs = [select Id, Name 
+    				from Account 
+    				where Recordtype.Name = 'Community'
+    					and Id not in :commids];
+    			for (Account a : naturalAccs)
+    			{
+    				name2accmap.put(a.Name, a);
+    			}
+    			
+    			list<String> accnames = new list<String>(name2accmap.keyset());
+    			accnames.sort();
+    			for (String a : accnames)
+    			{
+    				communityOptions.add(new SelectOption(name2accmap.get(a).Id, name2accmap.get(a).Name));
+    			}
+    			
     		}
     		return communityOptions;
     	}
@@ -106,7 +129,7 @@ public with sharing class Ctl_AddGuestCard {
                 Inactive_Reason__c, Id, How_did_you_hear_about_us__c, How_Many_Occupants__c, Home_Phone__c, Have_a_pet_other_than_a_service_animal__c, 
                 Guest_Card_Details__c, Fax__c, Email__c, Days_Active__c, CreatedDate, CreatedById, Contact__c, Contact_Info_has_been_edited__c, 
                 Community__c, Class_ID__c, Cell_Phone__c, Bed__c, Bath__c, Address_Street_2__c, Address_Street_1__c, Address_State__c, 
-                Address_Postal_Code__c, Address_City__c, AVB_Associate__c, MRI_Leasing_Associate__c  
+                Address_Postal_Code__c, Address_City__c, AVB_Associate__c, MRI_Leasing_Associate__c
                 from Guest_Card__c 
                 where Id = :thisgcid]; 
             if (thisGC == null) thisGC = new Guest_Card__c();
@@ -146,7 +169,7 @@ public with sharing class Ctl_AddGuestCard {
     public class SearchResult
     {
         public Guest_Card__c gc { get; set; }
-        public Account cgAccount {get; set; }
+        //public Account cgAccount {get; set; }
         public Contact contact { get; set; }
         
         public SearchResult(Guest_Card__c passedgc)
@@ -538,7 +561,7 @@ system.debug('\n\n98 searchGC ' + searchGC);
             
             Boolean NeedsAND = FALSE;
             String gcquerystring = 'select Id, Name, Contact_First_Name__c, Contact_Last_Name__c, LastActivityDate,'
-                + ' Email__c, Prospect_Account__c, Community__r.Name, AVB_Associate__c, Prospect_Account__r.Status__c'
+                + ' Email__c, Prospect_Account__c, Community__r.Name, AVB_Associate__c, Prospect_Status__c'
                 + ' from Guest_Card__c'
                 + ' where ';
             if (searchGC.Email__c != null)
@@ -606,11 +629,11 @@ system.debug('\n\n213 gcquerystring ' + gcquerystring);
                     {
                         newSR.contact.LastName = gc.Contact_Last_Name__c;
                     }
-                    newSR.cgAccount = new Account();
-                    if (gc.Prospect_Account__c != null)
-                    {
-                        newSR.cgAccount.Status__c = gc.Prospect_Account__r.Status__c;
-                    }
+                    //newSR.cgAccount = new Account();
+                    //if (gc.Prospect_Account__c != null)
+                    //{
+                        //newSR.cgAccount.Status__c = gc.Prospect_Account__r.Status__c;
+                    //}
                     newresults.add(newSR);
                     
                 }   

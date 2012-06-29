@@ -60,7 +60,8 @@
             </apex:column>
             
             <apex:column headerValue="Community" width="80">
-                <apex:outputField value="{!result.gc.Community__r.Name}"/>
+                <!-- 062712 JN <apex:outputField value="{!result.gc.Community__r.Name}"/> -->
+                <apex:outputField value="{!result.gc.Community__c}"/>
             </apex:column>     
             
             <apex:column headerValue="First Name" width="80">
@@ -80,7 +81,7 @@
             </apex:column>
             
             <apex:column headerValue="Status" width="80">
-                <apex:outputField value="{!result.gc.Prospect_Account__r.Status__c}"/>
+                <apex:outputField value="{!result.gc.Prospect_Status__c}"/>
             </apex:column>     
             
             <apex:column headerValue="AVB Associate" width="80">

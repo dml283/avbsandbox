@@ -22,7 +22,7 @@ public without sharing class GuestCard_Ext {
                         v1.4 - (JN 060812) added saveObj and getAvailableCommunities
     */
     
-    //Guest Card specified, with lists of subobjects
+    //Guest Card specified, with lists of subobjects 
     public Guest_Card__c guestcard;
     public Guest_Card__c newGC { get; set; }
     public list<Quotes__c> gcQuotes;
@@ -270,7 +270,7 @@ system.debug('\n\n123 duplicategc ' + duplicategc);
 system.debug('\n\n263 Role ' + role.Name + ' ' + role.Id + '\nParent: ' + role.ParentRoleId);   
 
             //cjc 26JUN12: key on REGION instead of SPOD
-            if (role.Name.contains('SPOD')) 
+            if (role.Name.toUpperCase().contains('REGION')) 
             {
                 spodid2subrolesmap.put(role.id, new set<id> { role.Id });
                 system.debug('\n\n267 this is a SPOD: ' + role.Name);                
@@ -290,8 +290,7 @@ system.debug('\n\n263 Role ' + role.Name + ' ' + role.Id + '\nParent: ' + role.P
             if ((spodid2subrolesmap.containsKey(role.id))) {
                 otherRoleIds.add(role.id);  
                 roleid2spodroleidmap.put(role.id, role.Id);
-                    
-                continue;
+                spodFound = TRUE; 
             }
             
             //climb the hierarchy until you find a spod, then put this role id into the set for that spod and go to the next role
@@ -555,7 +554,7 @@ test.StopTest();
         {
             list<UserRole> roles = new list<UserRole>();
             spodrole = new UserRole(
-                Name = 'REGION test Role');
+                Name = 'REGION SPOD test Role');
             roles.add(spodrole);
             subrole = new UserRole(Name = 'sub role');
             roles.add(subrole);
@@ -628,6 +627,7 @@ test.StopTest();
         
         Id commrtid = [select Id from Recordtype where SObjectType = 'Account' and Name = 'Community' limit 1].Id;
         list<Account> comms = new list<Account>();
+        
         comms.add(new Account(
             RecordtypeId = commrtid,
             Name = 'testcomm1',
@@ -640,21 +640,25 @@ test.StopTest();
             RecordtypeId = commrtid,
             Name = 'testcomm1',
             OwnerId = subuser2.Id));
+        
         comms.add(new Account(
             RecordtypeId = commrtid,
             Name = 'testcomm1',
-            OwnerId = independentUser.Id));
+            OwnerId = independentUser.Id)); 
         insert comms;
         
 test.startTest();
 system.debug('\n\n615 ');
         list<Account> returnedcomms = GuestCard_Ext.getAvailableCommunities(spoduser.Id);
+        
         system.assertEquals(3,returnedcomms.size());
-        returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser1.Id);
+        returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser1.Id); 
         system.assertEquals(3,returnedcomms.size());
         returnedcomms = GuestCard_Ext.getAvailableCommunities(subuser2.Id);
         system.assertEquals(3,returnedcomms.size());
+        
         returnedcomms = GuestCard_Ext.getAvailableCommunities(independentUser.Id);
+        for (Account a : returnedcomms) system.debug('\n\naccount ' + a);
         system.assertEquals(1,returnedcomms.size());
         
 test.stopTest();        
