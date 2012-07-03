@@ -1,0 +1,9 @@
+<apex:page controller="Ctl_AddGuestCard">
+	<apex:sectionHeader title="Insufficient Privileges" />
+   	<apex:pageblock title="Insufficient Privileges">
+   		<apex:form >
+   			You may not edit this record. To copy this Guest Card to your Community, choose "Share".<br/>
+   			<apex:commandbutton value="Return to Previous Page" action="{!cancelGC}" />
+   		</apex:form>
+   	</apex:pageblock>
+</apex:page>
