@@ -11,7 +11,10 @@ public class Ext_CaseIssues {
 	Integer NumIssuesOnPage = 5;
 	
 	public CaseComment newComment { get; set; }
+	public Boolean CreateCaseTask { get; set; }
+	public Task newCaseTask { get; set; }
 	public list<SelectOption> addresseeOptions { get; private set; }
+	public list<SelectOption> ownerOrQueueOptions { get; private set; }
 	
 	public Ext_CaseIssues(ApexPages.standardController stdcon)
 	{
@@ -21,7 +24,11 @@ public class Ext_CaseIssues {
 		}
 		makeCaseIssues();
 		makeAddresseeOptions();
+		makeOwnerOrQueueOptions();
+		
 		newComment = new CaseComment();
+		CreateCaseTask = FALSE;
+		newCaseTask = new Task();
 		
 		//Make CanCopyAssociates selective wrt the user's Development_Settings__c Custom Setting
 		CanCopyAssociates = FALSE;
@@ -34,20 +41,33 @@ public class Ext_CaseIssues {
 	{
 		public Case_Issue__c issue { get; set; }
 		
-		public Boolean WillCreateTask { get; set; }
-		public Boolean WillSendEmail { get; set; }
-		public Task NewTask { get; set; }
-		public list<Id> addresseeIds { get; set; } //user Ids to address email
+		public Boolean WillSendEmail { get; set; } //whether to send email on this case issue
+		public list<String> addresseeIds { get; set; } //user Ids to address email
 		public String additionalEmails { get; set; } //additional email addresses to use
+		
+		public Boolean WillCreateTask { get; set; } //whether to create new task
+		public String OwnerOrQueue { get; set; } //who to assign new task to
+		public Task NewTask { get; set; }
+		
 		public Boolean IsEditable { get; set; }
 		
 		public extIssue(Case_Issue__c ci)
 		{
 			this.issue = ci;
-			this.NewTask = new Task();
+			this.NewTask = new Task(OwnerId = Userinfo.getUserId());
+			this.OwnerOrQueue = 'Queue';
 			this.WillSendEmail = FALSE;
 			this.WillCreateTask = FALSE;
 		}
+	}
+	
+	private void makeOwnerOrQueueOptions()
+	{
+		ownerOrQueueOptions = new list<SelectOption>
+		{
+			new SelectOption('Queue', 'Queue'),
+			new SelectOption('Owner', 'Person')
+		};
 	}
 	
 	private void makeAddresseeOptions()
@@ -133,7 +153,7 @@ public class Ext_CaseIssues {
 		Integer counter = 0;
 		for (Integer i = 0; i < NumBlankIssues; i++)
 		{
-			Case_Issue__c newissue = new Case_Issue__c();
+			Case_Issue__c newissue = new Case_Issue__c(Case__c = thisCase.Id);
 			issues.add(newissue);
 			extIssue newxissue = new extIssue(newissue);
 			newxissue.IsEditable = TRUE;
@@ -157,17 +177,30 @@ public class Ext_CaseIssues {
 		if (eblastCase.Eblast_Audience_Distribution_list__c == null)
 			thisCase.Eblast_Audience_Distribution_list__c = 'required text';
 		
+		Savepoint sp = Database.setSavepoint();
+
 		try
 		{
+			Contact con = [select AccountId from Contact where Id = :thisCase.ContactId];
+			thisCase.AccountId = con.AccountId;
+			
 			database.upsert(new list<Case> { thisCase });
 			
+			//Create Task on Case if necessary
+			if (CreateCaseTask)
+			{
+				newCaseTask.WhoId = thisCase.ContactId;
+				newCaseTask.WhatId = thisCase.Id;
+				
+				insert newCaseTask;
+			}
 			//save case issues
 			saveIssues();
 			
-			//make Tasks
+			//make Tasks on case issues
 			makeTasks();
 			
-			//send emails (copy associates)
+			//send emails on case issues (copy associates)
 			sendEmails();
 			
 			//save case comment
@@ -183,7 +216,8 @@ public class Ext_CaseIssues {
 		}
 		catch (Exception e)
 		{
-			ApexPages.addMessages(e);
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, '214 ' + e.getMessage()));
+			Database.rollback(sp);
 		}
 		
 		return pageref;
@@ -195,10 +229,27 @@ public class Ext_CaseIssues {
 		list<Task> taskstoinsert = new list<Task>();
 		for (extIssue xi : xissues)
 		{
-			if (xi.WillCreateTask)
+			if ((xi.WillCreateTask) && (xi.IsEditable) && (xi.issue.Id != null))
 			{
+				//Only accept Owner or Queue determination. The other choice gets blanked out on the new task.
+				if (xi.ownerOrQueue == 'Owner')
+				{
+					xi.NewTask.Task_Queue__c = null;
+				}
+				else if (xi.ownerOrQueue == 'Queue')
+				{
+					xi.NewTask.OwnerId = UserInfo.getUserId();
+				}
+				
 				xi.NewTask.ActivityDate = system.today();
 				xi.NewTask.WhatId = thisCase.Id;
+				xi.NewTask.WhoId = thisCase.ContactId;
+				//xi.NewTask.Status = 'Not Started';
+				xi.NewTask.ActivityDate = system.today();
+				xi.NewTask.AVB_Type__c = 'Other';
+				xi.NewTask.Subject = 'Task Created through Case page';
+				xi.NewTask.Subject_Sub_Category__c = 'Other';
+				xi.NewTask.Description = 'Task Created on Case ' + thisCase.CaseNumber + ' and Case Issue ' + xi.issue.Category__c;
 				taskstoinsert.add(xi.NewTask);
 			}
 		}
@@ -222,10 +273,10 @@ public class Ext_CaseIssues {
 			set<Id> userids = new set<Id>();
 			for (extIssue xi : xissues)
 			{
-				if (xi.WillSendEmail)
-					userids.addall(xi.addresseeIds);
+				if ((xi.WillSendEmail) && (xi.IsEditable) && (xi.issue.Id != null))
+					userids.addall((list<Id>)xi.addresseeIds);
 			}
-			map<Id, User> userid2usermap = new map<Id, User>([select Id, Email 
+			map<Id, User> userid2usermap = new map<Id, User>([select Id, FirstName, LastName, Email 
 				from User 
 				where Id in :userids]);
 				
@@ -235,22 +286,46 @@ public class Ext_CaseIssues {
 			for (extIssue xi : xissues)
 			{
 				String namelist = '';
-				if (xi.WillSendEmail)
+				if ((xi.WillSendEmail) && (xi.IsEditable) && (xi.issue.Id != null))
 				{
 					list<String> emailaddresses = new list<String>();
+					Boolean firstEmail = TRUE;
 					for (Id userid : xi.addresseeIds)
 					{
 						User u = userid2usermap.get(userid);
 						emailaddresses.add(u.Email);
-						namelist += u.FirstName + ' ' + u.LastName + ', ';
+						if (firstEmail)
+						{
+							FirstEmail = FALSE;
+						} else
+						{
+							namelist += ', ';
+						}
+						namelist += ((u.FirstName != null) ? u.FirstName : '') + ' ' + u.LastName;
+							
+							
 					}
-					emailaddresses.addAll(xi.additionalEmails.split(';'));
+					if (xi.additionalEmails.length() > 0)
+						emailaddresses.addAll(xi.additionalEmails.split(';'));
+					
+					for (String em : emailaddresses)
+					{
+						if (firstEmail)
+						{
+							FirstEmail = FALSE;
+						} else
+						{
+							namelist += ', ';
+						}
+						namelist += em;
+					}
 					
 					Messaging.SingleEmailMessage newemail = new Messaging.SingleEmailMessage();
 					newemail.setToAddresses(emailaddresses);
 					newemail.setWhatId(thisCase.Id);
-					newemail.setTemplateId(templates[0].Id);
-					
+					//newemail.setTemplateId(templates[0].Id);
+					newemail.setHTMLBody('This email was sent automatically from Case ' + thisCase.CaseNumber + ' on Case Issue ' + xi.issue.Category__c + '.');
+					newemail.setSubject('Copy Associate from Case');
 					emailstosend.add(newemail);
 				
 					//save Email as Completed Task on Case
@@ -258,9 +333,10 @@ public class Ext_CaseIssues {
 					
 					Task newtask = new Task(
 						WhatId = thisCase.Id,
+						WhoId = thisCase.ContactId,
 						Status = 'Complete',
 						ActivityDate = system.today(),
-						Subject = 'Email',
+						Subject = 'Email: ' + newemail.getSubject(),
 						Description = descrip);
 					taskstoinsert.add(newtask);
 				}
@@ -268,8 +344,12 @@ public class Ext_CaseIssues {
 			}
 			
 			//send email list
-			Messaging.sendEmail(emailstosend);
+			if (emailstosend.size() > 0)
+				Messaging.sendEmail(emailstosend);
 			
+			//save email tasks
+			if (taskstoinsert.size() > 0)
+				insert taskstoinsert;
 			
 			
 		} //end if templates size > 0
@@ -288,15 +368,7 @@ public class Ext_CaseIssues {
 				Case_Issue__c ci = xi.issue;
 				if (ci.Category__c != null)
 				{
-					Case_Issue__c newci = new Case_Issue__c(
-						Id = ci.Id,
-						Case__c = thisCase.Id,
-						Category__c = ci.Category__c,
-						Subcategory__c = ci.Subcategory__c,
-						Type__c = ci.Type__c,
-						Notes__c = ci.Notes__c,
-						Charge_Type__c = ci.Charge_Type__c);
-					cistoupsert.add(newci);
+					cistoupsert.add(ci);
 				}
 			}
 			if (cistoupsert.size() > 0)
@@ -312,7 +384,7 @@ system.debug('\n\n87 cistoupsert ' + cistoupsert);
 	public PageReference addRow()
 	{
 		PageReference pageref = null;
-		Case_Issue__c newissue = new Case_Issue__c();
+		Case_Issue__c newissue = new Case_Issue__c(Case__c = thisCase.Id);
 		//issues.add(newissue);
 		extIssue newxissue = new extIssue(newissue);
 		newxissue.IsEditable = TRUE;

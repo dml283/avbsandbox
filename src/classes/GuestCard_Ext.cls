@@ -344,7 +344,7 @@ system.debug('\n\n326 affectedroleids ' + affectedroleids);
             ownerids.add(u.Id);
         }
 system.debug('\n\n321 ownerids ' + ownerids);       
-        list<Account> accs = [select Id, Name
+        list<Account> accs = [select Id, Name, OwnerId
             from Account
             where OwnerId in :ownerids
                 and Recordtype.Name = 'Community'];

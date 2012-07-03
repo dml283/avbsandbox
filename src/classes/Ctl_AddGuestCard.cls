@@ -21,6 +21,7 @@ public with sharing class Ctl_AddGuestCard {
     public Boolean ShowCreateButton { get; private set; }
     public Id thisGCId; 
     public Boolean HasPermissionToEdit { get; private set; }
+    map<Id, Account> accid2accmap;
     
     public list<SelectOption> communityOptions { 
     	get
@@ -33,6 +34,7 @@ public with sharing class Ctl_AddGuestCard {
     			//Accounts retrieved based on Region/SPOD membership
     			list<Account> regionalAccs = GuestCard_Ext.getAvailableCommunities(Userinfo.getUserId());
     			map<String, Account> name2accmap = new map<String, Account>();
+    			accid2accmap = new map<Id, Account>(regionalAccs);
     			for (Account a : regionalAccs)
     			{
     				name2accmap.put(a.Name, a);
@@ -40,13 +42,14 @@ public with sharing class Ctl_AddGuestCard {
     			}
     			
     			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
-    			list<Account> naturalAccs = [select Id, Name 
+    			list<Account> naturalAccs = [select Id, Name, OwnerId
     				from Account 
     				where Recordtype.Name = 'Community'
     					and Id not in :commids];
     			for (Account a : naturalAccs)
     			{
     				name2accmap.put(a.Name, a);
+    				accid2accmap.put(a.Id, a);
     			}
     			
     			list<String> accnames = new list<String>(name2accmap.keyset());
@@ -316,7 +319,8 @@ public with sharing class Ctl_AddGuestCard {
                             PROSPECT_AddressCity__c = thisGC.Address_City__c,
                             PROSPECT_AddressState__c = thisGC.Address_State__c,
                             PROSPECT_AddressZip__c = thisGC.Address_Postal_Code__c,
-                            Status__c = 'Prospect'
+                            Status__c = 'Prospect',
+                            OwnerId = accid2accmap.get(chosenCommunityId).OwnerId
                             );
                         GuestCard_Ext.saveObj(newAccount);
                         

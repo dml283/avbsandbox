@@ -1,16 +1,35 @@
 <apex:page standardController="Case" extensions="Ext_CaseIssues" title="Case Interaction Entry Page">
 <style>
-	.issueheaders
+	.odd
+	{
+		background-color: dark gray;
+	}
+	.even
 	{
 		
 	}
+	.toprow
+	{
+		border-top: 1px solid black;
+	}
+	.columnB
+	{
+		border-top: none;
+		/* width:20px; */
+		
+	}
+	.inputfield
+	{
+		width:20px;
+	}
+	
 </style>
 	<apex:sectionHeader title="{!$ObjectType.Case.label} Edit" subtitle="{!Case.Casenumber}"/>
 	<apex:form >
 	<apex:pagemessages id="pagemessages" />
 	<!--<apex:actionfunction name="redrawTable" rerender="issuetable, pagemessages " />-->
-	<apex:pageBlock title="{!$ObjectType.Case.label} Edit" id="caseFields" mode="edit">
-		<div style="max-width: 750px;" >
+	<apex:pageBlock title="{!$ObjectType.Case.label} Edit" id="caseFields" mode="edit" >
+	<div style="max-width: 750px;" >
 			<apex:pageBlockButtons >
 		        <apex:commandButton action="{!saveCase}" value="Save"/>
 		        <apex:commandbutton action="{!addRow}" value="Add Case Issue"/>
@@ -30,7 +49,7 @@
 				<apex:inputField value="{!Case.Escalated_Queue__c}"/>
 				<apex:inputField value="{!Case.Priority}"/>
 				<apex:inputField value="{!Case.Rejected__c}"/>
-			</apex:pageBlockSection>
+			</apex:pageBlockSection> 
 			
 			<apex:pageBlockSection showHeader="true" title="Description Information" columns="1">
 				<apex:inputField style="width: 70%" value="{!Case.Subject}"/>
@@ -41,72 +60,124 @@
 				</apex:pageblocksectionitem>
 			</apex:pageBlockSection>
 			
-			<apex:pageblocksection showHeader="true" title="Case Issues" columns="1">
+			<br/>
+			<apex:inputcheckbox id="createcasetask" value="{!CreateCaseTask}" >
+				<apex:actionsupport event="onclick" rerender="pagemessages, issuetable, caseFields"/>
+			</apex:inputcheckbox>
+			<apex:outputlabel for="createcasetask" value="Create New Task on this Case" />
 			
-				<apex:pageblocktable id="issuetable" value="{!xissues}" var="xissue" width="700px" headerClass="issueheaders">
-					<apex:column headerValue="Category">
-						<apex:inputfield value="{!xissue.issue.Category__c}" rendered="{!xissue.IsEditable}"/>
+			<apex:outputpanel id="newcasetask" >	
+				<apex:pageblocksection title="Create New Task on Case" rendered="{!CreateCaseTask}">
+					<apex:inputfield value="{!newCaseTask.Subject}" />
+					<apex:inputfield value="{!newCaseTask.ActivityDate}" />
+					<apex:inputfield value="{!newCaseTask.AVB_Type__c}" />
+					<apex:inputfield value="{!newCaseTask.Subject_Sub_Category__c}" />
+					<apex:inputfield value="{!newCaseTask.AVB_Associate_First_Last_Name__c}" />
+					
+				</apex:pageblocksection>
+				
+				<apex:pageblocksection columns="1" rendered="{!CreateCaseTask}">
+					<apex:inputfield style="width: 100%" value="{!newCaseTask.Description}" />
+				</apex:pageblocksection>
+			</apex:outputpanel>
+			
+			<div id="phil" >
+			<apex:pageblocksection showHeader="true" title="Case Issues" columns="1" >
+				<apex:pageblocktable id="issuetable" value="{!xissues}" var="xissue" 
+					headerClass="issueheaders" 
+					
+					rowclasses="odd, even">
+					<apex:column styleclass="toprow" headerValue="Category" >
+						<apex:inputfield value="{!xissue.issue.Category__c}" rendered="{!xissue.IsEditable}" styleClass="inputField" />
 						<apex:outputfield value="{!xissue.issue.Category__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
 					
-					<apex:column headerValue="Subcategory">
+					<apex:column styleclass="toprow" headerValue="Subcategory">
 						<apex:inputfield value="{!xissue.issue.Subcategory__c}" rendered="{!xissue.IsEditable}"/>
 						<apex:outputfield value="{!xissue.issue.Subcategory__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
 					
-					<apex:column headerValue="Charge Type">
+					<apex:column styleclass="toprow" >
+						<apex:facet name="header">
+							Charge<br/>Type
+						</apex:facet>
 						<apex:inputfield value="{!xissue.issue.Charge_Type__c}" rendered="{!xissue.IsEditable}"/>
 						<apex:outputfield value="{!xissue.issue.Charge_Type__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
 					
-					<apex:column headerValue="Transaction Type">
+					<apex:column styleclass="toprow" >
+						<apex:facet name="header">
+							Transaction<br/>Type
+						</apex:facet>
 						<apex:inputfield value="{!xissue.issue.Type__c}" rendered="{!xissue.IsEditable}"/>
 						<apex:outputfield value="{!xissue.issue.Type__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
 					
-					<apex:column headerValue="Amount">
+					<apex:column styleclass="toprow" headerValue="Amount">
 						<apex:inputfield style="width: 50px;" value="{!xissue.issue.Amount__c}" rendered="{!xissue.IsEditable}"/>
 						<apex:outputfield style="width: 50px;" value="{!xissue.issue.Amount__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
 				
-					<apex:column headerValue="Notes">
+					<apex:column styleclass="toprow" headerValue="Notes">
 						<apex:inputfield style="width: 200px; height: 60px;" value="{!xissue.issue.Notes__c}" rendered="{!xissue.IsEditable}"/>
 						<apex:outputfield style="width: 200px; height: 60px;" value="{!xissue.issue.Notes__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
 					
-					<apex:column width="10px">
+					<apex:column width="10px" breakBefore="true">
 						<apex:facet name="header">
-							New Task
+							New<br/>Task
 						</apex:facet>
-						<apex:inputcheckbox style="width: 50px;" value="{!xissue.WillCreateTask}" rendered="{!(xissue.IsEditable)}" >
+						<apex:outputlabel for="maketask" value="Create Task" rendered="{!(xissue.IsEditable)}"/>
+						<apex:inputcheckbox id="maketask" style="width: 50px;" value="{!xissue.WillCreateTask}" rendered="{!(xissue.IsEditable)}" > 
 							<apex:actionsupport event="onclick" rerender="pagemessages, issuetable, caseFields"/>
 						</apex:inputcheckbox>
 					</apex:column>
 					
-					<apex:column headerValue="Task Queue">
-						<apex:inputfield value="{!xissue.NewTask.Task_Queue__c}" rendered="{!((xissue.IsEditable) && (xissue.WillCreateTask))}" />
-					</apex:column>
+					<apex:column >
+						<apex:facet name="header">
+							Assign<br/>Task 
+						</apex:facet>
+						<apex:selectRadio value="{!xissue.ownerOrQueue}" rendered="{!((xissue.IsEditable) && (xissue.WillCreateTask))}">
+            				<apex:selectOptions value="{!ownerOrQueueOptions}"/> 
+            				<apex:actionsupport event="onclick" rerender="pagemessages, issuetable, caseFields" />
+						</apex:selectRadio>
+						<apex:inputfield value="{!xissue.NewTask.Task_Queue__c}" rendered="{!((xissue.IsEditable) && (xissue.WillCreateTask) && (xissue.ownerOrQueue == 'Queue'))}" />
+						<apex:inputfield style="width: 100px;" value="{!xissue.NewTask.OwnerId}" rendered="{!((xissue.IsEditable) && (xissue.WillCreateTask) && (xissue.ownerOrQueue == 'Owner'))}"/>
+					
+					</apex:column> 
 				
-					<apex:column headerValue="Send Email" width="15px" rendered="{!(CanCopyAssociates)}">
-						<apex:inputcheckbox value="{!xissue.WillSendEmail}" rendered="{!((CanCopyAssociates) && (xissue.IsEditable))}" >
+					<apex:column width="15px" rendered="{!(CanCopyAssociates)}">
+						<apex:facet name="header">
+							Send<br/>Email
+						</apex:facet>
+						<apex:outputlabel for="willsend" value="Copy Associates" rendered="{!((CanCopyAssociates) && (xissue.IsEditable))}" />
+						<apex:inputcheckbox id="willsend" value="{!xissue.WillSendEmail}" rendered="{!((CanCopyAssociates) && (xissue.IsEditable))}" >
 							<apex:actionsupport event="onclick" rerender="pagemessages, issuetable, caseFields" />
 						</apex:inputcheckbox>
 					</apex:column>
 					
-					<apex:column headerValue="Copy Associates" rendered="{!(CanCopyAssociates)}">
-						<apex:selectlist size="3" value="{!xissue.addresseeIds}" rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}">
+					<apex:column headerValue="Copy Associates" colspan="2" rendered="{!(CanCopyAssociates)}">
+						<apex:facet name="header">
+							Copy<br/>Associates
+						</apex:facet>
+						<apex:outputlabel style="font-size: 10px;" value="Users to Copy (Ctrl-click for multiple)"  rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}"/>
+						<apex:selectlist size="3" value="{!xissue.addresseeIds}" rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}" multiselect="true">
 							<apex:selectOptions value="{!addresseeOptions}" />
 						</apex:selectlist>
 					</apex:column> 
 					
-					<apex:column headerValue="Additional Emails" rendered="{!(CanCopyAssociates)}">
+					<apex:column headerValue="Additional Emails" rendered="{!(CanCopyAssociates)}">   
+						<apex:facet name="header">
+							Additional<br/>Emails
+						</apex:facet>
+						<apex:outputlabel style="font-size: 10px;" value="Other Emails to send to (separated by semicolons)"  rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}"/>
 						<apex:inputtext style="width: 250px; height: 60px;" value="{!xissue.additionalEmails}" rendered="{!((xissue.IsEditable) && (xissue.WillSendEmail))}"/>
 					</apex:column>
 					
-					
 				</apex:pageblocktable>
 			</apex:pageblocksection>
-		</div>	        
+			</div>
+	</div>
 	</apex:pageBlock>
 	</apex:form>
 </apex:page>
