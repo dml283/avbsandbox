@@ -1,11 +1,11 @@
-#Wed Jun 20 14:41:59 EDT 2012
+#Fri Jul 06 14:15:06 EDT 2012
 ExecuteAnonymousApex_code=Debug
 ExecuteAnonymousApex_profiling=Info
 ExecuteAnonymousCallout=Info
 ExecuteAnonymousDb=Info
 ExecuteAnonymousValidation=Info
 ExecuteAnonymousWorkflow=Info
-RunTestApex_code=Debug
+RunTestApex_code=Fine
 RunTestApex_profiling=Info
 RunTestCallout=Info
 RunTestDb=Info

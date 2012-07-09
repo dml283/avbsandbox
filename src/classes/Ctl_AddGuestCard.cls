@@ -37,19 +37,23 @@ public with sharing class Ctl_AddGuestCard {
     			accid2accmap = new map<Id, Account>(regionalAccs);
     			for (Account a : regionalAccs)
     			{
-    				name2accmap.put(a.Name, a);
-    				commids.add(a.Id);
+    				if (a.IsLiveOnLM__c == TRUE)
+    				{
+    					name2accmap.put(a.Name, a);
+    					commids.add(a.Id);
+    				}
     			}
     			
     			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
     			list<Account> naturalAccs = [select Id, Name, OwnerId
     				from Account 
     				where Recordtype.Name = 'Community'
+    					and IsLiveOnLM__c = TRUE
     					and Id not in :commids];
     			for (Account a : naturalAccs)
     			{
     				name2accmap.put(a.Name, a);
-    				accid2accmap.put(a.Id, a);
+	    			accid2accmap.put(a.Id, a);
     			}
     			
     			list<String> accnames = new list<String>(name2accmap.keyset());

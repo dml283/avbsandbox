@@ -48,16 +48,16 @@
 				<apex:inputField value="{!Case.Interaction_Type__c}"/>
 				<apex:inputField value="{!Case.Escalated_Queue__c}"/>
 				<apex:inputField value="{!Case.Priority}"/>
-				<apex:inputField value="{!Case.Rejected__c}"/>
+				<!-- <apex:inputField value="{!Case.Rejected__c}"/> -->
 			</apex:pageBlockSection> 
 			
 			<apex:pageBlockSection showHeader="true" title="Description Information" columns="1">
 				<apex:inputField style="width: 70%" value="{!Case.Subject}"/>
 				<apex:inputField style="width: 70%" value="{!Case.Description}"/>
-				<apex:pageblocksectionitem >
+				<!-- <apex:pageblocksectionitem >
 					<apex:outputlabel for="comments" value="Add Internal Comments" />
 					<apex:inputField id="comments" style="width: 70%" value="{!newComment.CommentBody}"/>
-				</apex:pageblocksectionitem>
+				</apex:pageblocksectionitem> -->
 			</apex:pageBlockSection>
 			
 			<br/>
