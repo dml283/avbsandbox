@@ -1,14 +1,33 @@
 public class Ext_CaseIssues {
 
 	Case thisCase;
+	Account thisAcc;
+	User thisUser;
+	Contact thisCon;
+	
 	//public list<Case_Issue__c> issues { get; set; }
 	public list<extIssue> xissues { get; set; }
 	
 	//Can this user copy associates?
 	public Boolean CanCopyAssociates { get; private set; }
 	
+	//Can we create a case on this Account?
+	public Boolean CanCreateCase { get; private set; }
+	
+	//show escalated queue checkbox on page
+	public Boolean ShowEscalatedQueue { get; private set; }
+	
 	//number of Case Issues to display on combined page
 	Integer NumIssuesOnPage = 5;
+	
+	//Department to Case Origin settings
+	map<String, String> userdept2caseoriginmap = new map<String, String>
+	{
+		'CCC' => 'CSO',
+		'RS Community' => 'Community',
+		'RS Overhead' => 'Regional/Corporate Office',
+		'Marketing' => 'Regional/Corporate Office'
+	};
 	
 	public CaseComment newComment { get; set; }
 	public Boolean CreateCaseTask { get; set; }
@@ -18,10 +37,26 @@ public class Ext_CaseIssues {
 	
 	public Ext_CaseIssues(ApexPages.standardController stdcon)
 	{
+		thisUser = [select Id, Department, Profile.Name from User where Id = :Userinfo.getUserId()];
+		
+		//show escalated queue only for 'CCC' Profiles
+		ShowEscalatedQueue = FALSE;
+		if (thisUser.Profile.Name.contains('CCC'))
+		{
+			ShowEscalatedQueue = TRUE;
+		}
+		
 		if (thisCase == null)
 		{
 			thisCase = (Case)stdcon.getRecord();
 		}
+		
+		//populate case origin
+		thisCase.Origin = userdept2caseoriginmap.get(thisUser.Department);
+		
+		//check to see if this is a Prospect Account
+		checkCanCreate();
+		
 		makeCaseIssues();
 		makeAddresseeOptions();
 		makeOwnerOrQueueOptions();
@@ -59,6 +94,35 @@ public class Ext_CaseIssues {
 			this.WillSendEmail = FALSE;
 			this.WillCreateTask = FALSE;
 		}
+	}
+	
+	private void checkCanCreate()
+	{
+		Id accid = (Id)ApexPages.CurrentPage().getParameters().get('accid');
+		CanCreateCase = TRUE;
+		if (accid != null)
+		{
+			try
+			{
+				thisAcc = [select Id, Name, Status__c, AccountNumber, Account_ID__c
+					from Account
+					where Id = :accid];
+				thisCase.Account_Number__c = thisAcc.Account_ID__c;
+				
+				if ((thisAcc.Status__c == 'Prospect') && (thisCase.Id == null))
+				{
+					CanCreateCase = FALSE;
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'You may not create a Case on a Prospect Account.'));
+				}
+			} catch (Exception e)
+			{
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Supplied Account Id not found.'));
+			}
+		}
+	}
+	
+	private void popCaseOrigin()
+	{
 	}
 	
 	private void makeOwnerOrQueueOptions()
@@ -181,8 +245,10 @@ public class Ext_CaseIssues {
 
 		try
 		{
-			Contact con = [select AccountId from Contact where Id = :thisCase.ContactId];
-			thisCase.AccountId = con.AccountId;
+			thisCon = [select AccountId, FirstName, LastName 
+				from Contact 
+				where Id = :thisCase.ContactId];
+			thisCase.AccountId = thisCon.AccountId;
 			
 			database.upsert(new list<Case> { thisCase });
 			
@@ -216,7 +282,7 @@ public class Ext_CaseIssues {
 		}
 		catch (Exception e)
 		{
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, '214 ' + e.getMessage()));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Unable to save: ' + e.getMessage()));
 			Database.rollback(sp);
 		}
 		
@@ -320,12 +386,27 @@ public class Ext_CaseIssues {
 						namelist += em;
 					}
 					
+					String baseUrl = 'na4';
+					
+					String emailBody = thisUser.FirstName + ' ' + thisUser.LastName
+						+ ' wants to make you aware of the following case:'
+						+ '<br/><br/>Subject: ' + thisCase.Subject
+						+ '<br/>Contact: ' + thisCon.FirstName + ' ' + thisCon.LastName
+						+ '<br/>Account: ' + thisAcc.Name
+						+ '<br/>Feedback Level: ' + thisCase.Feedback_Level__c
+						+ '<br/>Priority: ' + thisCase.Priority
+						+ '<br/>Status: ' + thisCase.Status
+						+ '<br/>Comments:<br/>' + thisCase.Description
+						+ '<br/><br/>For more details, click the following link:'
+						+ '<br/>' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + thisCase.Id 
+						+ '<br/>Associates copied on this case include: ' + namelist;
+						
 					Messaging.SingleEmailMessage newemail = new Messaging.SingleEmailMessage();
 					newemail.setToAddresses(emailaddresses);
 					newemail.setWhatId(thisCase.Id);
 					//newemail.setTemplateId(templates[0].Id);
-					newemail.setHTMLBody('This email was sent automatically from Case ' + thisCase.CaseNumber + ' on Case Issue ' + xi.issue.Category__c + '.');
-					newemail.setSubject('Copy Associate from Case');
+					newemail.setHTMLBody(emailBody);
+					newemail.setSubject('Copy Associate on Case');
 					emailstosend.add(newemail);
 				
 					//save Email as Completed Task on Case

@@ -45,7 +45,7 @@ public with sharing class Ctl_AddGuestCard {
     			}
     			
     			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
-    			list<Account> naturalAccs = [select Id, Name, OwnerId
+    			list<Account> naturalAccs = [select Id, Name, OwnerId, IsLiveOnLM__c
     				from Account 
     				where Recordtype.Name = 'Community'
     					and IsLiveOnLM__c = TRUE
@@ -343,6 +343,7 @@ public with sharing class Ctl_AddGuestCard {
                         newContact.MailingPostalCode = thisGC.Address_Postal_Code__c;
                         newContact.MailingCity = thisGC.Address_City__c;
                         newContact.Primary_Contact__c = True;
+                        newContact.OwnerId = accid2accmap.get(chosenCommunityId).OwnerId;
                         
                         GuestCard_Ext.saveObj(newContact);  
                         
