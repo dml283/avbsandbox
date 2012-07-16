@@ -5,12 +5,14 @@ public with sharing class Ctl_AddGuestCard {
 
         Created By:     Jeremy Nottingham (Synaptic) 1/16/2012
         
-        Last Modified By:       Jeremy Nottingham (Synaptic) 3/7/2012
+        Last Modified By:       Jeremy Nottingham (Synaptic) 7/11/2012
         
-        Current Version:        v1.5
+        Current Version:        v2.1
         
         Revision Log:           v1.0 - (JN 1/16/12) Created this class
                                 v1.5 - (JN 030812) Handle clone properly, remove save validation step
+                                v2.0 - (JN 061512) Add callout to GuestCard_Ext to make extended list of Communities
+                                v2.1 - (JN 071112) Removed callout to GuestCard_Ext, only display naturally available Communities
                                                 
     */
     
@@ -21,7 +23,7 @@ public with sharing class Ctl_AddGuestCard {
     public Boolean ShowCreateButton { get; private set; }
     public Id thisGCId; 
     public Boolean HasPermissionToEdit { get; private set; }
-    map<Id, Account> accid2accmap;
+    map<Id, Account> accid2accmap = new map<Id, Account>();
     
     public list<SelectOption> communityOptions { 
     	get
@@ -30,10 +32,11 @@ public with sharing class Ctl_AddGuestCard {
     		{
     			communityOptions = new list<SelectOption>();
     			set<Id> commids = new set<Id>();
+    			map<String, Account> name2accmap = new map<String, Account>();
     			
+    			/* removed 071112 JN: Only display Communities the user naturally has access to
     			//Accounts retrieved based on Region/SPOD membership
     			list<Account> regionalAccs = GuestCard_Ext.getAvailableCommunities(Userinfo.getUserId());
-    			map<String, Account> name2accmap = new map<String, Account>();
     			accid2accmap = new map<Id, Account>(regionalAccs);
     			for (Account a : regionalAccs)
     			{
@@ -43,6 +46,7 @@ public with sharing class Ctl_AddGuestCard {
     					commids.add(a.Id);
     				}
     			}
+    			*/
     			
     			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
     			list<Account> naturalAccs = [select Id, Name, OwnerId, IsLiveOnLM__c

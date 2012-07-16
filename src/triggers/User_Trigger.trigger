@@ -24,19 +24,20 @@ trigger User_Trigger on User (after insert, after update) {
 			if (Trigger.IsUpdate)
 				olduser = Trigger.oldmap.get(u.Id);
 				
-			if ((!TaskAssignMent.IsRunningTaskAssignment)
+			if ((!TaskAssignment.IsRunningTaskAssignment)
 				&& ((Trigger.IsInsert) 
 				|| (u.IsActive != olduser.IsActive)
 				|| (u.Assigned_Task_Queues__c != olduser.Assigned_Task_Queues__c)))
 			{
 				//get all Task Queues that may be affected
-				taskQueuestoCheck.addall(u.Assigned_Task_Queues__c.split(';'));
-				if (Trigger.IsUpdate)
+				if (u.Assigned_Task_Queues__c != null)
+					taskQueuestoCheck.addall(u.Assigned_Task_Queues__c.split(';'));
+				if ((Trigger.IsUpdate) && (olduser.Assigned_Task_Queues__c != null))
 					taskQueuestoCheck.addall(olduser.Assigned_Task_Queues__c.split(';'));
 			}  
 		}
 		
-		if ((taskQueuestoCheck.size() > 0) && (!TaskAssignMent.IsRunningTaskAssignment))
+		if ((taskQueuestoCheck.size() > 0) && (!TaskAssignment.IsRunningTaskAssignment))
 			TaskAssignment.manageTaskQueues(taskQueuestoCheck);
 		
 		

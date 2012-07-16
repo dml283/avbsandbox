@@ -18,6 +18,26 @@ public class TaskAssignment {
 @future	
 	public static void manageTaskQueues(set<String> taskQueuestoManage)
 	{
+		//get full list of queues that may need to be managed, considering that some users are on other queues not mentioned here. 
+		//query for queue Users, then get all queues on those users
+		String directUserQuery = 'select Id, Assigned_Task_Queues__c'
+			+ ' from User where IsActive = TRUE and Assigned_Task_Queues__c includes (';
+		Integer ind = 0;
+		for (String qs : taskQueuestoManage)
+		{
+			directUserQuery += '\'' + qs + '\'';
+			if (ind < taskQueuestoManage.size() - 1)
+				directUserQuery += ', ';	
+			ind++;
+		}
+		directUserQuery += ')';
+system.debug('\n\n32 directUserQuery ' + directUserQuery);		
+		list<User> directQueueUsers = Database.query(directUserQuery);
+		for (User u : directQueueUsers)
+		{
+			taskQueuestoManage.addall(u.Assigned_Task_Queues__c.split(';'));
+		}
+		
 		list<String> taskqueueList = new list<String> (taskQueuestoManage);
 		list<Task> applicableTasks = [select Id, Task_Queue__c 
 			from Task 
@@ -39,7 +59,7 @@ public class TaskAssignment {
 			}
 		}
 system.debug('\n\n131 queue2tasklistmap ' + queue2tasklistmap);		
-		String userQuery = 'select Id, Assigned_Task_Queues__c, Max_Assigned_Tasks__c, Current_Assigned_Tasks__c, Available_Assigned_Tasks__c'
+		String userQuery = 'select Id, LastName, Assigned_Task_Queues__c, Max_Assigned_Tasks__c, Current_Assigned_Tasks__c, Available_Assigned_Tasks__c'
 			+ ' from User where IsActive = TRUE and Assigned_Task_Queues__c includes (';
 			
 		for (Integer i = 0; i < taskqueueList.size() ; i++)
@@ -54,28 +74,15 @@ system.debug('\n\n119 userQuery ' + userQuery);
 		map<Id, User> userid2usermap = new map<Id, User>(applicableUsers);
 		map<String, list<User>> queue2userlistmap = new map<String, list<User>>();
 		
-		//get accurate totals on open assigned queue tasks for these users
-		list<Task> existingTasks = [select Id, OwnerId
-			from Task
-			where Task_Queue__c != null
-				and Task_Assigned__c = TRUE
-				and IsClosed = FALSE
-				and OwnerId in :userid2usermap.keyset()];
-		
-		for (Task t : existingTasks)
-		{
-			User u = userid2usermap.get(t.OwnerId);
-			//count up how many tasks are for this particular user
-			if (u.Current_Assigned_Tasks__c == null)
-				u.Current_Assigned_Tasks__c = 1;
-			else
-				u.Current_Assigned_Tasks__c ++;
-		}
-		
-		//make lists of which users are for each queue		
-		
 		for (User u : applicableUsers)
 		{
+			//reset counters on User
+			u.Current_Assigned_Tasks__c = 0;
+			if (u.Max_Assigned_Tasks__c == null)
+				u.Max_Assigned_Tasks__c = 0;
+			u.Available_Assigned_Tasks__c = u.Max_Assigned_Tasks__c;
+			
+			// make lists of which users are for each queue
 			for (String qname : u.Assigned_Task_Queues__c.split(';'))
 			{
 				if (queue2userlistmap.containsKey(qname))
@@ -87,13 +94,21 @@ system.debug('\n\n119 userQuery ' + userQuery);
 					queue2userlistmap.put(qname, new list<User> { u });
 				}
 			}
-			
-			//update task assignment fields if necessary
-			if (u.Current_Assigned_Tasks__c == null)
-				u.Current_Assigned_Tasks__c = 0;
-			if (u.Max_Assigned_Tasks__c == null)
-				u.Max_Assigned_Tasks__c = 0;
-			u.Available_Assigned_Tasks__c = u.Max_Assigned_Tasks__c - u.Current_Assigned_Tasks__c;
+		}
+		
+		//get accurate totals on open assigned queue tasks for these users
+		list<Task> existingTasks = [select Id, OwnerId
+			from Task
+			where Task_Queue__c != null
+				and Task_Assigned__c = TRUE
+				and IsClosed = FALSE
+				and OwnerId in :userid2usermap.keyset()];
+		
+		for (Task t : existingTasks)
+		{
+			User u = userid2usermap.get(t.OwnerId);
+			u.Current_Assigned_Tasks__c ++;
+			u.Available_Assigned_Tasks__c --;
 		}
 		
 		//Assign tasks out
@@ -103,7 +118,7 @@ system.debug('\n\n119 userQuery ' + userQuery);
 		{
 			//get tasks for this queue. If none, move on.
 			list<Task> queueTasks = queue2tasklistmap.get(tq);
-			if (queueTasks.size() > 0)
+			if ((queueTasks != null) && (queueTasks.size() > 0))
 			{
 				//get Users for this queue. If none, move on.
 				list<User> queueUsers = queue2userlistmap.get(tq);

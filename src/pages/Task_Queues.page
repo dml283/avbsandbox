@@ -1,0 +1,125 @@
+<apex:page title="Queue Tasks" controller="TaskQueueCon" showheader="true">
+<style>
+#bigbox{
+    /*height: 240px; 
+    overflow: scroll; 
+    overflow: hidden;
+    width: 985px;
+    padding: 0px;
+    margin: 0px;*/
+}
+#header{
+	height: 20px; /* 20 */
+}
+#scrolltable{
+	/*height: 220px;
+	overflow: scroll;*/
+}
+.tasktable{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.viewcol{
+    width: 25px;
+}
+.editcol{
+    width: 25px;
+}
+.datecol{
+    width: 60px;
+}
+.statcol{
+    width: 75px;
+}
+.assoccol{
+    width: 100px;
+}
+.ownercol{
+    width: 75px;
+}
+.accidcol{
+    width: 90px;
+}
+.typecol{
+    width: 75px;
+}
+.subcol{
+    width: 150px;
+}
+.custgroupcol{
+    width: 150px;
+}
+</style>
+
+<apex:messages /> 
+
+<div id="bigbox"> 
+	<apex:form >
+	<apex:pageblock >
+    
+		<div id="header" style="font-size: 10px;">
+	        <apex:selectlist label="Display Queue" style="font-size: 10px;" size="1" value="{!queue}"> 
+	            <apex:selectOptions value="{!queueoptions}"/>
+	            <apex:actionsupport event="onchange" action="{!changefilter}" /> 
+	        </apex:selectlist>
+		</div> <!-- end header -->
+             
+    	<div id="scrolltable">
+            <apex:pageblocktable value="{!xtasklistpage}" var="xtask" 
+                cellpadding="2px">
+                <apex:column >
+                    <apex:outputlink value="/{!xtask.task.id}" target="_task">View</apex:outputlink>
+                </apex:column>
+                <apex:column >
+                    <apex:outputlink value="/{!xtask.task.id}/e" target="_task">Edit</apex:outputlink>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyDate}">Due Date</apex:commandlink> 
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.ActivityDate}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyCreatedDate}">Created</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.CreatedDate}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbySubject}">Subject</apex:commandlink>  
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Subject}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyStatus}">Status</apex:commandlink>  
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Status}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!Sortbyqueue}">Task Queue</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Task_Queue__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!Sortbysubcat}">Subcategory</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Subject_Sub_Category__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!Sortbyowner}">Owner</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Owner.Name}"/>
+                </apex:column>
+               
+        	</apex:pageblocktable>
+		</div> <!-- scrolltable -->
+	</apex:pageblock>
+</apex:form>
+</div><!-- end of bigbox -->     
+</apex:page>

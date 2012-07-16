@@ -5,11 +5,16 @@ public class Ext_CaseIssues {
 	User thisUser;
 	Contact thisCon;
 	
+	Id accid;
+	
 	//public list<Case_Issue__c> issues { get; set; }
 	public list<extIssue> xissues { get; set; }
 	
 	//Can this user copy associates?
 	public Boolean CanCopyAssociates { get; private set; }
+	public Boolean CaseCopyAssociates { get; set; }
+	public list<String> caseAddresseeIds { get; set; }
+	public String caseAdditionalEmails { get; set; }
 	
 	//Can we create a case on this Account?
 	public Boolean CanCreateCase { get; private set; }
@@ -37,18 +42,34 @@ public class Ext_CaseIssues {
 	
 	public Ext_CaseIssues(ApexPages.standardController stdcon)
 	{
-		thisUser = [select Id, Department, Profile.Name from User where Id = :Userinfo.getUserId()];
+		stdcon.addFields(new list<String> { 'AccountId' });
+		if (thisCase == null)
+		{
+			thisCase = (Case)stdcon.getRecord();
+		}
 		
+		thisUser = [select Id, FirstName, LastName, Department, Profile.Name from User where Id = :Userinfo.getUserId()];
+		if (thisCase.AccountId == null)
+		{
+			accid = (Id)ApexPages.CurrentPage().getParameters().get('accid');
+		}
+		else
+		{
+			accid = thisCase.AccountId;
+		}
+		
+		if (accid != null)
+		{
+			thisAcc = [select Id, Name, Status__c, AccountNumber, Account_ID__c
+				from Account
+				where Id = :accid];
+		}
+				
 		//show escalated queue only for 'CCC' Profiles
 		ShowEscalatedQueue = FALSE;
 		if (thisUser.Profile.Name.contains('CCC'))
 		{
 			ShowEscalatedQueue = TRUE;
-		}
-		
-		if (thisCase == null)
-		{
-			thisCase = (Case)stdcon.getRecord();
 		}
 		
 		//populate case origin
@@ -69,6 +90,9 @@ public class Ext_CaseIssues {
 		CanCopyAssociates = FALSE;
 		if (Development_Settings__c.getInstance().Can_Copy_Associates_on_Cases__c == TRUE)
 			CanCopyAssociates = TRUE;
+		
+		//Set default
+		caseAddresseeIds = new list<String> { 'n/a' };
 			
 	}
 	
@@ -93,20 +117,17 @@ public class Ext_CaseIssues {
 			this.OwnerOrQueue = 'Queue';
 			this.WillSendEmail = FALSE;
 			this.WillCreateTask = FALSE;
+			this.addresseeIds = new list<String> { 'n/a' };
 		}
 	}
 	
 	private void checkCanCreate()
 	{
-		Id accid = (Id)ApexPages.CurrentPage().getParameters().get('accid');
 		CanCreateCase = TRUE;
 		if (accid != null)
 		{
 			try
 			{
-				thisAcc = [select Id, Name, Status__c, AccountNumber, Account_ID__c
-					from Account
-					where Id = :accid];
 				thisCase.Account_Number__c = thisAcc.Account_ID__c;
 				
 				if ((thisAcc.Status__c == 'Prospect') && (thisCase.Id == null))
@@ -173,6 +194,7 @@ public class Ext_CaseIssues {
 				or Title like '%Legal%'];
 		
 		//construct addresseeOptions list
+		addresseeOptions.add(new SelectOption('n/a','n/a'));
 		for (User u : addresseeUsers)
 		{
 			String optionName = '';
@@ -328,34 +350,39 @@ public class Ext_CaseIssues {
 	
 	private void sendEmails()
 	{
-		//get Email Template
-		list<EmailTemplate> templates = [select Id 
-			from EmailTemplate 
-			where Name != null 
-			limit 1];
-		if (templates.size() > 0)
+		//collect email addresses for selected Users
+		set<Id> userids = new set<Id>();
+		for (extIssue xi : xissues)
 		{
-			//collect email addresses for selected Users
-			set<Id> userids = new set<Id>();
-			for (extIssue xi : xissues)
+			if ((xi.WillSendEmail) 
+				&& (xi.IsEditable) 
+				&& (xi.issue.Id != null)
+				&& (!(new set<String> (xi.addresseeIds)).contains('n/a')))
 			{
-				if ((xi.WillSendEmail) && (xi.IsEditable) && (xi.issue.Id != null))
-					userids.addall((list<Id>)xi.addresseeIds);
+				userids.addall((list<Id>)xi.addresseeIds);
 			}
-			map<Id, User> userid2usermap = new map<Id, User>([select Id, FirstName, LastName, Email 
-				from User 
-				where Id in :userids]);
-				
-			//Construct email messages (one for each checked Case Issue)
-			list<Messaging.SingleEmailMessage> emailstosend = new list<Messaging.SingleEmailMessage>();
-			list<Task> taskstoinsert = new list<Task>();
-			for (extIssue xi : xissues)
+		}
+		if ((caseCopyAssociates == TRUE)
+			&& (!(new set<String>(caseAddresseeIds)).contains('n/a')))
+		{
+			userids.addall((list<Id>)caseAddresseeIds);
+		}
+		map<Id, User> userid2usermap = new map<Id, User>([select Id, FirstName, LastName, Email 
+			from User 
+			where Id in :userids]);
+			
+		//Construct email messages (one for each checked Case Issue and one for the case)
+		list<Messaging.SingleEmailMessage> emailstosend = new list<Messaging.SingleEmailMessage>();
+		list<Task> taskstoinsert = new list<Task>();
+		for (extIssue xi : xissues)
+		{
+			String namelist = '';
+			if ((xi.WillSendEmail) && (xi.IsEditable) && (xi.issue.Id != null))
 			{
-				String namelist = '';
-				if ((xi.WillSendEmail) && (xi.IsEditable) && (xi.issue.Id != null))
+				list<String> emailaddresses = new list<String>();
+				Boolean firstEmail = TRUE;
+				if (!(new set<String> (xi.addresseeIds)).contains('n/a'))
 				{
-					list<String> emailaddresses = new list<String>();
-					Boolean firstEmail = TRUE;
 					for (Id userid : xi.addresseeIds)
 					{
 						User u = userid2usermap.get(userid);
@@ -371,11 +398,46 @@ public class Ext_CaseIssues {
 							
 							
 					}
-					if (xi.additionalEmails.length() > 0)
-						emailaddresses.addAll(xi.additionalEmails.split(';'));
-					
-					for (String em : emailaddresses)
+				}
+				if (xi.additionalEmails.length() > 0)
+					emailaddresses.addAll(xi.additionalEmails.split(';'));
+				
+				for (String em : emailaddresses)
+				{
+					if (firstEmail)
 					{
+						FirstEmail = FALSE;
+					} else
+					{
+						namelist += ', ';
+					}
+					namelist += em;
+				}
+				if (emailAddresses.size() > 0)
+				{
+					Messaging.SingleEmailMessage newemail = makeEmail(emailAddresses, namelist);
+					emailstosend.add(newemail);
+					taskstoinsert.add(makeEmailTask(newemail, namelist));
+				}	
+			}
+		}
+		
+		//if sending an email
+		if (CaseCopyAssociates)
+		{
+			String namelist = '';
+			list<String> emailaddresses = new list<String>();
+			Boolean firstEmail = TRUE;
+			if (!(new set<String>(caseAddresseeIds)).contains('n/a'))
+			{
+				for (Id userid : caseAddresseeIds)
+				{
+system.debug('\n\naddresseeid ' + userid);					
+					User u = userid2usermap.get(userid);
+system.debug('\n\nuser ' + u);					
+					if (u.Email != null)
+					{
+						emailaddresses.add(u.Email);
 						if (firstEmail)
 						{
 							FirstEmail = FALSE;
@@ -383,57 +445,88 @@ public class Ext_CaseIssues {
 						{
 							namelist += ', ';
 						}
-						namelist += em;
+						namelist += ((u.FirstName != null) ? u.FirstName : '') + ' ' + u.LastName;
 					}
-					
-					String baseUrl = 'na4';
-					
-					String emailBody = thisUser.FirstName + ' ' + thisUser.LastName
-						+ ' wants to make you aware of the following case:'
-						+ '<br/><br/>Subject: ' + thisCase.Subject
-						+ '<br/>Contact: ' + thisCon.FirstName + ' ' + thisCon.LastName
-						+ '<br/>Account: ' + thisAcc.Name
-						+ '<br/>Feedback Level: ' + thisCase.Feedback_Level__c
-						+ '<br/>Priority: ' + thisCase.Priority
-						+ '<br/>Status: ' + thisCase.Status
-						+ '<br/>Comments:<br/>' + thisCase.Description
-						+ '<br/><br/>For more details, click the following link:'
-						+ '<br/>' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + thisCase.Id 
-						+ '<br/>Associates copied on this case include: ' + namelist;
-						
-					Messaging.SingleEmailMessage newemail = new Messaging.SingleEmailMessage();
-					newemail.setToAddresses(emailaddresses);
-					newemail.setWhatId(thisCase.Id);
-					//newemail.setTemplateId(templates[0].Id);
-					newemail.setHTMLBody(emailBody);
-					newemail.setSubject('Copy Associate on Case');
-					emailstosend.add(newemail);
-				
-					//save Email as Completed Task on Case
-					String descrip = 'Copy Associate email sent on Case  Sent to: ' + namelist + system.today().format() + '.';
-					
-					Task newtask = new Task(
-						WhatId = thisCase.Id,
-						WhoId = thisCase.ContactId,
-						Status = 'Complete',
-						ActivityDate = system.today(),
-						Subject = 'Email: ' + newemail.getSubject(),
-						Description = descrip);
-					taskstoinsert.add(newtask);
 				}
-				
 			}
+			if (caseAdditionalEmails.length() > 0)
+				emailaddresses.addAll(caseAdditionalEmails.split(';'));
 			
-			//send email list
-			if (emailstosend.size() > 0)
-				Messaging.sendEmail(emailstosend);
+			for (String em : emailaddresses)
+			{
+				if (firstEmail)
+				{
+					FirstEmail = FALSE;
+				} else
+				{
+					namelist += ', ';
+				}
+				namelist += em;
+			}
+			if (emailAddresses.size() > 0)
+			{
+				Messaging.SingleEmailMessage newemail = makeEmail(emailAddresses, namelist);
+				emailstosend.add(newemail);
+				taskstoinsert.add(makeEmailTask(newemail, namelist));
+			}
+		}
+		
+		//send email list
+		if (emailstosend.size() > 0)
+			Messaging.sendEmail(emailstosend);
+		
+		//save email tasks
+		if (taskstoinsert.size() > 0)
+			insert taskstoinsert;
+		
+	}
+	
+	private Task makeEmailTask(Messaging.SingleEmailMessage email, String namelist)
+	{
+		//save Email as Completed Task on Case
+		String descrip = 'Copy Associate email sent on Case  Sent to: ' + namelist + system.today().format() + '.'
+			+ '<br/>' + email.getHtmlBody();
+		
+		Task newtask = new Task(
+			WhatId = thisCase.Id,
+			WhoId = thisCase.ContactId,
+			Status = 'Complete',
+			ActivityDate = system.today(),
+			Subject = 'Email: ' + email.getSubject(),
+			Description = descrip);
+		
+		return newtask;
+	}
+	
+	private Messaging.SingleEmailMessage makeEmail(list<String> emailAddresses, String namelist)
+	{
+system.debug('\n\nthisUser ' + thisUser);
+system.debug('\n\nthisCase ' + thisCase);
+system.debug('\n\nthisCon ' + thisCon);
+system.debug('\n\nthisAcc ' + thisAcc);
+system.debug('\n\namelist ' + namelist);
+
+		
+		String emailBody = ((thisUser.FirstName == null) ? '' : thisUser.FirstName + ' ') + thisUser.LastName
+			+ ' wants to make you aware of the following case:'
+			+ '<br/><br/>Subject: ' + ((thisCase.Subject == null) ? '' : thisCase.Subject)
+			+ '<br/>Contact: ' + ((thisCon.FirstName == null) ? '' : thisCon.FirstName + ' ') + thisCon.LastName
+			+ '<br/>Account: ' + thisAcc.Name
+			+ '<br/>Feedback Level: ' + ((thisCase.Feedback_Level__c == null) ? 'n/a' : thisCase.Feedback_Level__c)
+			+ '<br/>Priority: ' + ((thisCase.Priority == null) ? 'n/a' : thisCase.Priority)
+			+ '<br/>Status: ' + ((thisCase.Status == null) ? 'n/a' : thisCase.Status)
+			+ '<br/>Comments:<br/>' + ((thisCase.Description == null) ? 'n/a' : thisCase.Description)
+			+ '<br/><br/>For more details, click the following link:'
+			+ '<br/>' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + thisCase.Id 
+			+ '<br/>Associates copied on this case include: ' + namelist;
 			
-			//save email tasks
-			if (taskstoinsert.size() > 0)
-				insert taskstoinsert;
-			
-			
-		} //end if templates size > 0
+		Messaging.SingleEmailMessage newemail = new Messaging.SingleEmailMessage();
+		newemail.setToAddresses(emailaddresses);
+		newemail.setWhatId(thisCase.Id);
+		newemail.setHTMLBody(emailBody);
+		newemail.setSubject('Copy Associate on Case');
+		
+		return newemail;
 	}
 	
 	public PageReference saveIssues()
