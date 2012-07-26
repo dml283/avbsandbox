@@ -173,7 +173,8 @@ public class Ext_CaseIssues {
 			parentId = thisUserRole.parentRoleId;
 			
 			//add the user's own role to the set of roleids to query on	
-			roleidsUserAndAbove.add(thisUserRole.Id);
+			//removed 7/20/12 JN: Only include roles above the user, not the user's role
+			//roleidsUserAndAbove.add(thisUserRole.Id);
 		}
 		
 		//collect all user roles up the tree until there's a role with no parent role
@@ -256,9 +257,10 @@ public class Ext_CaseIssues {
 		Case eblastCase = new Case();
 		if (thisCase.Id != null)
 		{
-			eblastCase = [select Eblast_Audience_Distribution_list__c
+			list<Case> eblastCases = [select Eblast_Audience_Distribution_list__c
 				from Case
 				where Id = :thisCase.Id];
+			eblastCase = (eblastCases.size() > 0) ? eblastCases[0] : new Case();
 		}
 		if (eblastCase.Eblast_Audience_Distribution_list__c == null)
 			thisCase.Eblast_Audience_Distribution_list__c = 'required text';

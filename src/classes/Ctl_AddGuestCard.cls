@@ -25,52 +25,51 @@ public with sharing class Ctl_AddGuestCard {
     public Boolean HasPermissionToEdit { get; private set; }
     map<Id, Account> accid2accmap = new map<Id, Account>();
     
-    public list<SelectOption> communityOptions { 
-    	get
-    	{
-    		if (communityOptions == null)
-    		{
-    			communityOptions = new list<SelectOption>();
-    			set<Id> commids = new set<Id>();
-    			map<String, Account> name2accmap = new map<String, Account>();
-    			
-    			/* removed 071112 JN: Only display Communities the user naturally has access to
-    			//Accounts retrieved based on Region/SPOD membership
-    			list<Account> regionalAccs = GuestCard_Ext.getAvailableCommunities(Userinfo.getUserId());
-    			accid2accmap = new map<Id, Account>(regionalAccs);
-    			for (Account a : regionalAccs)
-    			{
-    				if (a.IsLiveOnLM__c == TRUE)
-    				{
-    					name2accmap.put(a.Name, a);
-    					commids.add(a.Id);
-    				}
-    			}
-    			*/
-    			
-    			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
-    			list<Account> naturalAccs = [select Id, Name, OwnerId, IsLiveOnLM__c
-    				from Account 
-    				where Recordtype.Name = 'Community'
-    					and IsLiveOnLM__c = TRUE
-    					and Id not in :commids];
-    			for (Account a : naturalAccs)
-    			{
-    				name2accmap.put(a.Name, a);
-	    			accid2accmap.put(a.Id, a);
-    			}
-    			
-    			list<String> accnames = new list<String>(name2accmap.keyset());
-    			accnames.sort();
-    			for (String a : accnames)
-    			{
-    				communityOptions.add(new SelectOption(name2accmap.get(a).Id, name2accmap.get(a).Name));
-    			}
-    			
-    		}
-    		return communityOptions;
-    	}
-    	private set; }
+    list<SelectOption> communityOptions;
+    public list<SelectOption> getcommunityOptions()
+    { 
+		if (communityOptions == null)
+		{
+			communityOptions = new list<SelectOption>();
+			set<Id> commids = new set<Id>();
+			map<String, Account> name2accmap = new map<String, Account>();
+			
+			/* removed 071112 JN: Only display Communities the user naturally has access to
+			//Accounts retrieved based on Region/SPOD membership
+			list<Account> regionalAccs = GuestCard_Ext.getAvailableCommunities(Userinfo.getUserId());
+			accid2accmap = new map<Id, Account>(regionalAccs);
+			for (Account a : regionalAccs)
+			{
+				if (a.IsLiveOnLM__c == TRUE)
+				{
+					name2accmap.put(a.Name, a);
+					commids.add(a.Id);
+				}
+			}
+			*/
+			
+			//Accounts retrieved based on natural sharing of records. If there are an additional here, they will be added to the list
+			list<Account> naturalAccs = [select Id, Name, OwnerId, IsLiveOnLM__c
+				from Account 
+				where Recordtype.Name = 'Community'
+					and IsLiveOnLM__c = TRUE
+					and Id not in :commids];
+			for (Account a : naturalAccs)
+			{
+				name2accmap.put(a.Name, a);
+    			accid2accmap.put(a.Id, a);
+			}
+			
+			list<String> accnames = new list<String>(name2accmap.keyset());
+			accnames.sort();
+			for (String a : accnames)
+			{
+				communityOptions.add(new SelectOption(name2accmap.get(a).Id, name2accmap.get(a).Name));
+			}
+			
+		}
+		return communityOptions;
+    }
     public Id chosenCommunityId { get; set; }
     
     //Just used to copy values from for new GC in a clone situation
@@ -356,7 +355,7 @@ public with sharing class Ctl_AddGuestCard {
                      
                     catch (Exception e)
                     {
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, '258 ' + e.getMessage()));
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, '258 Unable to save: ' + e.getMessage()));
                     }       
             
 system.debug('\n\n213 newAccount' + newAccount);

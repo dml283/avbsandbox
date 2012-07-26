@@ -48,6 +48,7 @@ private class Test_AddGuestCard {
         commAccount.Name = 'test account';
         commAccount.Community_ID__c = 'XYZ';
         commAccount.OwnerId = user.Id;
+        commAccount.IsLiveOnLM__c = TRUE;
         
         insert commAccount;
         
@@ -76,10 +77,11 @@ system.runas(user){
 	
 
         Ctl_AddGuestCard agc = new Ctl_AddGuestCard();
-        agc.searchGC.Email__c = 'test@avalonbay.com.test';
+        list<SelectOption> testOptionsa = agc.getcommunityOptions();
+		agc.searchGC.Email__c = 'test@avalonbay.com.test';
         
 
-        agc.doSearch();
+        //agc.doSearch();
 
       
         system.assertEquals(null, agc.doSearch());
@@ -135,6 +137,7 @@ system.runas(user){
         PageReference pageRef2 = Page.EditGuestCard;
         Test.setCurrentPageReference(pageRef2);
         
+        agc.chosenCommunityId = commAccount.ID;
         agc.thisContact.FirstName = 'testFirst';
         agc.thisContact.LastName = 'testLast'; 
 		agc.thisGC.Bed__c = decimal.Valueof(2);
@@ -309,12 +312,13 @@ system.runas(user2){
 //run test as user created
 system.runas(user3){
 	
-		Pagereference pageRef = Page.EditGuestCard;
+		Pagereference pageRef = Page.EditGuestCard; 
 		Test.setCurrentPage(pageRef);
 		
 		ApexPages.currentPage().getParameters().put('Id', gc2.Id);
 		ApexPages.currentPage().getParameters().put('mode', 'edit');
 		Ctl_AddGuestCard cagc2 = new Ctl_AddGuestCard();
+		list<SelectOption> testOptions = cagc2.getcommunityOptions();
 		gc2.Cell_Phone__c = '5555555555';
 		gc2.Home_Phone__c = '5555555555';
 		
