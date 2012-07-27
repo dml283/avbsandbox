@@ -15,15 +15,9 @@ public with sharing class TaskQueueCon {
 	public class xtask
 	{
 		public Task task { set; get; }
-		//public Guest_Card__c gc { get; set; }
-		//public ID AccountID { get; set; }
-		//public String AccountName { get; set; }
-		//public String gcRating { get; set; }
-		//public Boolean IsSelected { get; set; }
 		
 		public xtask(Task t) { 
 			this.task = t; 
-			//this.IsSelected = FALSE;
 		}
 	}
 	
