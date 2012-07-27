@@ -101,7 +101,7 @@ trigger GuestCard_Sharing on Guest_Card__c (before insert, before update, after 
             roleid2spodroleidmap.put(role.Id, null);
             
             //cjc 15JUN12: key on roles containing REGION instead of SPOD
-            if (role.Name.contains('SPOD')) {
+            if (role.Name.toUpperCase().contains('REGION')) {
                 spodid2subrolesmap.put(role.id, new set<id>());
             }
             //cjc 15JUN12: key on roles containing REGION instead of SPOD

@@ -59,10 +59,15 @@
 	<apex:pageblock >
     
 		<div id="header" style="font-size: 10px;">
-	        <apex:selectlist label="Display Queue" style="font-size: 10px;" size="1" value="{!queue}"> 
+	        <apex:outputlabel for="DisplayQueue" value="Display Queue: " />
+	        <apex:selectlist id="DisplayQueue" size="1" value="{!queue}"> 
 	            <apex:selectOptions value="{!queueoptions}"/>
 	            <apex:actionsupport event="onchange" action="{!changefilter}" /> 
 	        </apex:selectlist>
+	        <apex:selectlist style="font-size: 10px;" size="1" value="{!filter}"> 
+                <apex:selectOptions value="{!viewoptions}"/>
+                <apex:actionsupport event="onchange" action="{!changefilter}" /> 
+            </apex:selectlist>
 		</div> <!-- end header -->
              
     	<div id="scrolltable">

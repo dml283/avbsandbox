@@ -325,8 +325,10 @@ system.debug('\n\ncommunityName = -' + communityName + '-');
             }
             
             if (emailAsMap.get('Email').size() > 0)
-                newProspectAccount.PROSPECT_Email__c = emailAsMap.get('Email')[0].split(' ',2)[0].split('<',2)[0].split('Desired',2)[0].trim();
-            
+                //cjc 11JUL12: strip html line feeds
+                //newProspectAccount.PROSPECT_Email__c = emailAsMap.get('Email')[0].split(' ',2)[0].split('<',2)[0].split('Desired',2)[0].trim();
+                newProspectAccount.PROSPECT_Email__c = emailAsMap.get('Email')[0].split(' ',2)[0].split('<',2)[0].split('Desired',2)[0].trim().replace('<br>','');
+                //cjc 11JUL12: strip html line feeds
             
             if (emailAsMap.get('moveDate').size() > 0)
             {
@@ -777,6 +779,11 @@ system.debug('\n\n273 determine domain subject: ' + email.subject);
             {
                 fromDomain = 'apartments.com';
             }
+            /*
+            --cjc 11JUL12: default unidentified domains to avb.com
+            else
+                fromDomain = 'avb.com';
+            */
         }
     }
     private void initFieldMap()
