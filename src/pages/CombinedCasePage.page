@@ -86,6 +86,7 @@
 					<apex:inputfield value="{!newCaseTask.ActivityDate}" required="true"/>
 					<apex:inputfield value="{!newCaseTask.AVB_Type__c}" required="true"/>
 					<apex:inputfield value="{!newCaseTask.Subject_Sub_Category__c}" required="true"/>
+					<apex:inputfield value="{!newCaseTask.Task_Queue__c}" />
 					<apex:inputfield value="{!newCaseTask.AVB_Associate_First_Last_Name__c}" required="true"/>
 				</apex:pageblocksection>
 				

@@ -1,3 +1,480 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableFeeds>true</enableFeeds>
+    <fields>
+        <fullName>Assigned_Task_Queues__c</fullName>
+        <externalId>false</externalId>
+        <label>Assigned Task Queues</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Prior Resident Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Services Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Available_Assigned_Tasks__c</fullName>
+        <externalId>false</externalId>
+        <label>Available Assigned Tasks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Assigned_Tasks__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Assigned Tasks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_User__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>used to determine if a user should use the external MRI address for the RTS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>By checking this box, you will only be able to refresh data while outside the AVB network.</inlineHelpText>
+        <label>External User</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Managed_Task_Queues__c</fullName>
+        <description>Determines which Queues will be displayed on the Task Queues page</description>
+        <externalId>false</externalId>
+        <label>Managed Task Queues</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Prior Resident Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Services Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Max_Assigned_Tasks__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Max Assigned Tasks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Regional_PM_or_PD__c</fullName>
+        <description>Regional PM or PD field incidates which associate is responsible for approving Adjustment - Associate cases.  In most cases, the approver would be the user&apos;s manager.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Regional PM or PD for this associate\community.</inlineHelpText>
+        <label>POD</label>
+        <relationshipName>Users</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <listViews>
+        <fullName>LIMITEDACCActiveCommunityProfile</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>Regional_PM_or_PD__c</columns>
+        <columns>DELEGATED_APPROVER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>equals</operation>
+            <value>Community</value>
+        </filters>
+        <label>LIMITED ACC: Active - Community Profile</label>
+        <sharedTo>
+            <group>UserAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCActiveOSFAMgrsExecs</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>DELEGATED_APPROVER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USER_ROLE.NAME</field>
+            <operation>contains</operation>
+            <value>Executive,Manager</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>LIMITED ACC: Active - OSFA Mgrs &amp; Execs</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+            <group>UserAdministrators</group>
+            <role>CCCExecutive</role>
+            <role>CCCOSFAManager</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCActiveOSFATeamLeads</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>DELEGATED_APPROVER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>CCC - OSFA Team</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>LIMITED ACC: Active - OSFA Team Leads</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+            <group>UserAdministrators</group>
+            <role>CCCExecutive</role>
+            <role>CCCOSFAManager</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCActiveOtherCorp</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>DELEGATED_APPROVER</columns>
+        <columns>CORE.USERS.DEPARTMENT</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USER_ROLE.NAME</field>
+            <operation>contains</operation>
+            <value>Other Corporate</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>LIMITED ACC: Active - Other Corporate</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+            <group>UserAdministrators</group>
+            <role>CCCExecutive</role>
+            <role>CCCOSFAManager</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCActiveReadOnly</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>Regional_PM_or_PD__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>equals</operation>
+            <value>Inquiry Only,Read Only</value>
+        </filters>
+        <label>LIMITED ACC: Active - Read Only</label>
+        <sharedTo>
+            <group>UserAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCAllUsers</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>TIMEZONE</columns>
+        <columns>MANAGER</columns>
+        <columns>Regional_PM_or_PD__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>LIMITED ACC: All Users</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+            <group>UserAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCCommwNoManagerorPMPD</fullName>
+        <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>Regional_PM_or_PD__c</columns>
+        <columns>DELEGATED_APPROVER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MANAGER</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Regional_PM_or_PD__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>equals</operation>
+            <value>Read Only,Community</value>
+        </filters>
+        <filters>
+            <field>CORE.USER_ROLE.NAME</field>
+            <operation>notContain</operation>
+            <value>VP,PD,PM</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>LIMITED ACC:  Comm w\No Manager or PM\PD</label>
+        <sharedTo>
+            <group>UserAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LIMITEDACCInactiveAll</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>LIMITED ACC: Inactive - All</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+            <group>UserAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>PRIVATEActiveAdminAccessGranted</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>CORE.USERS.EMAIL</columns>
+        <columns>MANAGER</columns>
+        <columns>SU_ORG_ADMIN_EXPIRATION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SU_ORG_ADMIN_EXPIRATION</field>
+            <operation>greaterThan</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>PRIVATE: Active - Admin Access Granted</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>PUBLICAllActive</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.EMAIL</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>Regional_PM_or_PD__c</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USERS.INFO_EMAILS_ADMIN</columns>
+        <columns>CORE.USERS.INFO_EMAILS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>PUBLIC: All Active</label>
+    </listViews>
+    <listViews>
+        <fullName>Task_Queue_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>Assigned_Task_Queues__c</columns>
+        <columns>Available_Assigned_Tasks__c</columns>
+        <columns>Current_Assigned_Tasks__c</columns>
+        <columns>Max_Assigned_Tasks__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Assigned_Task_Queues__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Task Queue Users</label>
+    </listViews>
+    <listViews>
+        <fullName>Users_for_phase_2_lead_management_rollou</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>pilot</value>
+        </filters>
+        <label>Users in Lead management</label>
+        <sharedTo>
+            <group>SystemAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Users_with_No_Manager</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MANAGER</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>notContain</operation>
+            <value>CCC,system,integration</value>
+        </filters>
+        <label>Non-CCC Active Users with No Manager</label>
+        <sharedTo>
+            <group>UserAdministrators</group>
+        </sharedTo>
+    </listViews>
+    <validationRules>
+        <fullName>Prohibit_Community</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND( 
+OR(  
+PRIORVALUE(FirstName)  &lt;&gt; FirstName,
+PRIORVALUE(LastName)  &lt;&gt; LastName,
+PRIORVALUE( Email)  &lt;&gt; Email,
+PRIORVALUE( Alias )  &lt;&gt; Alias),
+$Profile.Name  &lt;&gt; &apos;System Administrator&apos;, 
+$User.Alias &lt;&gt; &quot;jfagerty&quot;)</errorConditionFormula>
+        <errorMessage>You are not authorized to make changes to the First Name, Last Name, Alias or Email fields.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Require_Department</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(Department = null,
+AND(
+NOT(CONTAINS(Department, &quot;CCC&quot;)),
+NOT(CONTAINS(Department, &quot;Internal Audit&quot;)),
+NOT(CONTAINS(Department, &quot;IS&quot;)),
+NOT(CONTAINS(Department, &quot;Law Firm&quot;)),
+NOT(CONTAINS(Department, &quot;AVB Legal&quot;)),
+NOT(CONTAINS(Department, &quot;SBS&quot;)),
+NOT(CONTAINS(Department, &quot;RS Overhead&quot;)),
+NOT(CONTAINS(Department, &quot;RS Community&quot;)),
+NOT(CONTAINS(Department, &quot;Marketing&quot;)),
+NOT(CONTAINS(Department, &quot;HR&quot;)),
+NOT(CONTAINS(Department, &quot;Other&quot;))))</errorConditionFormula>
+        <errorDisplayField>Department</errorDisplayField>
+        <errorMessage>Please enter a department:  
+AVB Legal, 
+CCC, 
+HR,
+Internal Audit, 
+IS, 
+Law Firm, 
+Marketing,
+Retail, 
+RS Community, 
+RS Overhead, 
+SBS,
+Other</errorMessage>
+    </validationRules>
+</CustomObject>

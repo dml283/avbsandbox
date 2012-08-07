@@ -1,3 +1,1765 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AVB_Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.Account_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AVB Account ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVB_Associate_First_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>AVB Associate (First &amp; Last Name)</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVB_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>AVB Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Affordable Housing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Associate Housing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Community Policies</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Escalated to Supervisor Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing Delinquency</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lead Pursuit Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Leasing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Notice Received</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maintenance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move In Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move In Process-Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move Out Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move Out Process-Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prior Collection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resident Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utilities</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Acknowledgement_of_Notice_to_Vacate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Acknowledgement of Notice to Vacate</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Activate_Electronic_Devices__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Activate Electronic Devices</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ActivityDueDate__c</fullName>
+        <description>expose Task.ActivityDate</description>
+        <externalId>false</externalId>
+        <label>Activity Due Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Apt_Re_Keyed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Apt Re-Keyed</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Balance_Due__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Balance Due</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Close Date</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Community_Orientation_Time__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Community Orientation Time</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Complete_Move_in_Checklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Complete Move in Checklist</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Discuss_Kingsley_Survey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Discuss Kingsley Survey?</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Document_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Acknowledgement of Notice to Vacate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Associate Priority Relinquish Discount Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Notice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing Changes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change of Remittance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Community Policy Revoke Discount Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consumer Report Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Copy of Lease</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Declined Application Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delinquency</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disposition Revoke Discount Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HAP Contract or Renewal Addendum to HAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing Authority Renewal Rent Increase Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incomplete Application Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Introduction to Statement Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Rent Notice (2 Day)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Rent Revoke Discount Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lease</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LOA - Pending Discount Revocation Reminder</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lottery - Add to Waitlist Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lottery - General Apartment Offer Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lottery - Notice Of Acceptance Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lottery - Selected In Lottery Notification Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lottery - Specific Apartment Offer Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Information Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move-In - Initial Certification Packet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move-In - Non-Qualification Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move-in PAF and License Agreement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice to Quit (3 Day)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice to Quit (5 Day)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice to Vacate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NSF Notice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open Enrollment Packet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pay or Quit (5 Day)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Dated Check</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Questionnaire/Application Packet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal - 30-day Final Notice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal - 60-day Reminder Notice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal - Non-Qualification Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal Offer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal Offer, PAF and License Agreement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resident Statement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retail - Late Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retail - Notice of Default</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Risk Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Terminated Associate Permission to Stay Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Terminated Associate Revoke Discount Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Transitional Fee Waived</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Transition Communication</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verification of Rent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - Apartment Available Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - Denial Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - First Placement Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - Notice of Incomplete Application</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - Remove From Waitlist Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - Waitlist Management Update Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Email_Recipients__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Recipients</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Escalated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checked if a call is escalated within the CCC to a Supervisor, TL, or Manager.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check here if the call was escalated from another associate within the CCC.</inlineHelpText>
+        <label>Escalated</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>File_Link__c</fullName>
+        <description>Create a hyperlink to access the file referenced in the File Path field.</description>
+        <externalId>false</externalId>
+        <formula>If (LEN(File_Path__c) &lt; 1, null,HYPERLINK(&quot;file://api_nt5/data/ccc/Resident_Communication/&quot; &amp;  File_Path__c, &quot;View File&quot;))</formula>
+        <label>File Link</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Path__c</fullName>
+        <description>USer will past file path here.</description>
+        <externalId>false</externalId>
+        <label>File Path</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Getting_to_Know_Apt_Pamphlet__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Getting to Know Apt Pamphlet</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Helpful_Moving_Tips__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Helpful Moving Tips</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Inspect_all_Rentable_Items__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Inspect all Rentable Items</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Magnet_on_Refrigerator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Magnet on Refrigerator</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Mention_Kingsley_Survey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Have you told the resident that a Move Out Survey will be sent to them?</inlineHelpText>
+        <label>Mention Kingsley Survey?</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Month__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(MONTH(DATEVALUE(CreatedDate)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Month Created</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Most_Recent_Resident_Statement__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Most Recent Resident Statement</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Move_In_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Move-In Date</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Move_In_Inspection_Checklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Move-In Inspection Checklist</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notice_of_Preliminary_Inspection_Right__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notice of Preliminary Inspection Right</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Originated_From__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+OR( 
+CreatedBy.ProfileId = &quot;00e60000000r2eO&quot;, 
+CreatedBy.ProfileId = &quot;00e60000000r9t4&quot;, 
+CreatedBy.ProfileId = &quot;00e60000000qfNp&quot;), 
+&quot;Community&quot;, &quot;CCC&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Originated From</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Outcome</label>
+        <picklist>
+            <controllingField>Subject_Sub_Category__c</controllingField>
+            <picklistValues>
+                <fullName>Satisfied</fullName>
+                <controllingFieldValues>MI Follow Up</controllingFieldValues>
+                <controllingFieldValues>Move Out Complete Follow Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Satisfied</fullName>
+                <controllingFieldValues>MI Follow Up</controllingFieldValues>
+                <controllingFieldValues>Move Out Complete Follow Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Response - Send Move Out Packet</fullName>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Could Not Save - Send Move Out Packet</fullName>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saved - Remove Notice From MRI</fullName>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spoke with Resident</fullName>
+                <controllingFieldValues>Move in Confirmation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Escalated - Do Not Close</fullName>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mgmt Request to Vacate - Send Move Out Packet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Preliminary_Inspection_Entered__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Preliminary Inspection Entered</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Prepare_Move_in_Packet__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Prepare Move in Packet</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Reached_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Reached By</label>
+        <picklist>
+            <controllingField>Subject_Sub_Category__c</controllingField>
+            <picklistValues>
+                <fullName>Phone</fullName>
+                <controllingFieldValues>Final Move Out Inspection/Estimates Inquiry</controllingFieldValues>
+                <controllingFieldValues>MI Follow Up</controllingFieldValues>
+                <controllingFieldValues>Move Out Complete Follow Up</controllingFieldValues>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Person</fullName>
+                <controllingFieldValues>Final Move Out Inspection/Estimates Inquiry</controllingFieldValues>
+                <controllingFieldValues>MI Follow Up</controllingFieldValues>
+                <controllingFieldValues>Move Out Complete Follow Up</controllingFieldValues>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Voice Message</fullName>
+                <controllingFieldValues>Final Move Out Inspection/Estimates Inquiry</controllingFieldValues>
+                <controllingFieldValues>MI Follow Up</controllingFieldValues>
+                <controllingFieldValues>Move Out Complete Follow Up</controllingFieldValues>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent Email</fullName>
+                <controllingFieldValues>Final Move Out Inspection/Estimates Inquiry</controllingFieldValues>
+                <controllingFieldValues>MI Follow Up</controllingFieldValues>
+                <controllingFieldValues>Move Out Complete Follow Up</controllingFieldValues>
+                <controllingFieldValues>Notice to Vacate Follow-Up</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Renters_Insurance__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Renters Insurance</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Schedule_CO_inspection__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Schedule Certificate of Occupancy inspection (if applicable)</inlineHelpText>
+        <label>Schedule CO inspection (if applicable)</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Schedule_lead_based_paint_inspection__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Schedule lead-based paint inspection (if applicable)</inlineHelpText>
+        <label>Schedule lead-based paint inspection</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>StartDate__c</fullName>
+        <externalId>false</externalId>
+        <label>StartDate</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Show</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subject_Sub_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub-Category</label>
+        <picklist>
+            <controllingField>AVB_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Abandoned Items Disposed</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Abandoned Items Stored</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Acknowledgement of Notice to Vacate</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Adjustment Case Clarification</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Billing Inquiry</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Missing Documents Received</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Move-in Inquiry</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Notice to Vacate</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Payment Inquiry</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Renewal Inquiry</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Renter&apos;s Insurance</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Saferent Results</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AH - Verification of Rent</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apartment Preparation</fullName>
+                <controllingFieldValues>Move In Process</controllingFieldValues>
+                <controllingFieldValues>Move In Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Associate Priority - Relinquish Discount</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Authorized Caller Added/Removed</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Auto-Rent or UserID</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Avalon Access</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Email 1</fullName>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Email 2</fullName>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Inquiry - not a dispute</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Transfers</fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balcony/Hallway</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing Dispute</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSA - Notice to Vacate</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Certification Packet Received</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change in NTV</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change of Billing Address</fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Charge Dispute</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Common Area</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Community Concern</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Community Inquiry</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Inquiry</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Report Inquiry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Damage Dispute</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Date Clarification</fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivery Package</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation Request</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Emailed Lease for Signature(s)</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Emailed PAF and License Agreement for Signature</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FCO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FCO/AVB Correspondence</fullName>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FCO Notice</fullName>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Feed Pet</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Move Out Inspection/Estimates Inquiry</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <controllingFieldValues>Move Out Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Follow-up</fullName>
+                <controllingFieldValues>Lead Pursuit Process</controllingFieldValues>
+                <controllingFieldValues>Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Forwarding Address</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Associate Inquiry</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Prospect Inquiry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Resident Inquiry</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing Authority Inquiry</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing - Balance Inquiry</fullName>
+                <controllingFieldValues>Housing Delinquency</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing - Credit Inquiry</fullName>
+                <controllingFieldValues>Housing Delinquency</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing - Legal Inquiry</fullName>
+                <controllingFieldValues>Housing Delinquency</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing - Payment Inquiry</fullName>
+                <controllingFieldValues>Housing Delinquency</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing - Portion Discrepancy</fullName>
+                <controllingFieldValues>Housing Delinquency</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housing - SODA Inquiry</fullName>
+                <controllingFieldValues>Housing Delinquency</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Income Certification Inquiry</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Followup</fullName>
+                <controllingFieldValues>Lead Pursuit Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Visit</fullName>
+                <controllingFieldValues>Lead Pursuit Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Items Left in Storage/Parking/Apartment</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Fee Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Fees</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Rent - Re-instate Discount</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Rent - Revocation Warning</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Late Rent - Revoke Discount</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lease Documents Incomplete</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lease Signed and Returned</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Action</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Fee Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Inquiry</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Process Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LOA - Re-instate Discount</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LOA - Revoke Discount</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Making Payment</fullName>
+                <controllingFieldValues>Legal Notice Received</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Material Non-Compliance</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MI Follow Up</fullName>
+                <controllingFieldValues>Move In Process</controllingFieldValues>
+                <controllingFieldValues>Move In Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Documents Received</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move in Confirmation</fullName>
+                <controllingFieldValues>Move In Process</controllingFieldValues>
+                <controllingFieldValues>Move In Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move in - Income Certification</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move Out Complete Follow Up</fullName>
+                <controllingFieldValues>Move Out Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Move Out Packet/Process Inquiry</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <controllingFieldValues>Move Out Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Neighbor Concern</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Service Request</fullName>
+                <controllingFieldValues>Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Noise</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Happy with Service - CCC</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Happy with Service - Community</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice of Consumer Reports</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice to Quit Follow Up</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice to Vacate</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notice to Vacate Follow-Up</fullName>
+                <controllingFieldValues>Move Out Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NSF Unblock Request</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open Enrollment Inquiry</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <controllingFieldValues>Legal Notice Received</controllingFieldValues>
+                <controllingFieldValues>Other</controllingFieldValues>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PAF and License Agreement Incomplete</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PAF Signed and Returned</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parking/Vehicle Issue</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment - Address/Process Inquiry</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment - Advised AVB of Future Payment</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment - AvalonAccess Deduction Question</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment - Has AVB Received Payment?</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Inquiry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Inquiry - Utilties</fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment - NSF and Deadline Inquiry</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Plan Declined</fullName>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Plan Inquiry</fullName>
+                <controllingFieldValues>Prior Collection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Reallocation</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment - Receipt Requested</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pay Over the Phone</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pet</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Policy Complaint</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Preliminary Inspection/Estimates Inquiry</fullName>
+                <controllingFieldValues>Move Out Process</controllingFieldValues>
+                <controllingFieldValues>Move Out Process-Manual</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prior Resident Collections Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prospect Website Payment</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prospect Website Question</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Question - Legal Letter</fullName>
+                <controllingFieldValues>Legal Notice Received</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Received in Error</fullName>
+                <controllingFieldValues>Legal Notice Received</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Remove Notice from MRI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal - Income Re-Certification</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal Offer</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renters insurance</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Request Payment Extension</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resident Referral Inquiry</fullName>
+                <controllingFieldValues>Resident Referral</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resident Referral Notification</fullName>
+                <controllingFieldValues>Resident Referral</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Return Visit</fullName>
+                <controllingFieldValues>Lead Pursuit Process</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Send Email</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Send Letter</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Send Quote</fullName>
+                <controllingFieldValues>Leasing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA - Charge Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA - Damage Dispute</fullName>
+                <controllingFieldValues>Escalated to Supervisor Queue</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA Inquiry</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA Payment-Advised AVB of Future Payment</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA Payment-Has AVB Received Payment</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA Payment-Pay Over the Phone</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA Payment- Receipt Requested</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA returned - balance due</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SODA returned - check included</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Statements</fullName>
+                <controllingFieldValues>Billing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Termination - Revoke Discount</fullName>
+                <controllingFieldValues>Associate Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trash</fullName>
+                <controllingFieldValues>Community Policies</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unhappy with Service Provided</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utilities</fullName>
+                <controllingFieldValues>Security Deposit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Billing Name Correction</fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Setup </fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verification of Rent</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VUCR</fullName>
+                <controllingFieldValues>Utilities</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waitlist - Application Inquiry</fullName>
+                <controllingFieldValues>Affordable Housing</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Task_Assigned__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, this Task has been assigned to a user automatically.</description>
+        <externalId>false</externalId>
+        <label>Task Assigned</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Task_Queue__c</fullName>
+        <externalId>false</externalId>
+        <label>Task Queue for Assignment</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Prior Resident Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Services Queue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Task_Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Task Subject</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Initial Visit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Return Visit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Update_Community_On_Progress__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Update Community On Progress</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Year__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(YEAR(DATEVALUE(CreatedDate)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Year Created</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>All_Tasks_in_Task_Queues</fullName>
+        <columns>Task_Queue__c</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>Subject_Sub_Category__c</columns>
+        <columns>AVB_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Task_Queue__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Task_Assigned__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>All Tasks in Task Queues</label>
+    </listViews>
+    <listViews>
+        <fullName>Glendale_s</fullName>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>EVENT.START_DATE_TIME</columns>
+        <columns>EVENT.END_DATE_TIME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Subject_Sub_Category__c</field>
+            <operation>equals</operation>
+            <value>Initial Visit,Return Visit</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ALIAS</field>
+            <operation>contains</operation>
+            <value>ca068</value>
+        </filters>
+        <label>Glendale&apos;s</label>
+    </listViews>
+    <listViews>
+        <fullName>MyActivities</fullName>
+        <filterScope>Mine</filterScope>
+        <label>My Activities</label>
+    </listViews>
+    <listViews>
+        <fullName>MyTeamsActivities</fullName>
+        <filterScope>Team</filterScope>
+        <label>My Team&apos;s Activities</label>
+    </listViews>
+    <listViews>
+        <fullName>My_Team_Tasks</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Complete</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>OWNER_ROLE</field>
+            <operation>equals</operation>
+            <value>{!$Profile.Id}</value>
+        </filters>
+        <label>My Team Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>TodaysTasks</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>lessThan</operation>
+            <value>TOMORROW</value>
+        </filters>
+        <label>Today&apos;s Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>UpcomingEvents</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>greaterThan</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <label>Upcoming Events</label>
+    </listViews>
+    <listViews>
+        <fullName>activities__Overdue_Tasks</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Overdue Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>activities__Today_Overdue_Tasks</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>lessOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today + Overdue Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>activities__TodaysTasks</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>lessThan</operation>
+            <value>TOMORROW</value>
+        </filters>
+        <label>Today&apos;s Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>activities__Tomorrow_s_Tasks</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>equals</operation>
+            <value>TOMORROW</value>
+        </filters>
+        <label>Tomorrow&apos;s Tasks</label>
+    </listViews>
+</CustomObject>

@@ -31,7 +31,7 @@ trigger Task_Queues on Task (after insert, after update, after delete) {
 			}
 		}
 		
-		if (taskqueuestomanage.size() > 0)
+		if ((taskqueuestomanage.size() > 0) && (TaskAssignment.IsRunningTaskAssignment == FALSE))
 			TaskAssignment.manageTaskQueues(taskqueuestomanage);
 	}
 }

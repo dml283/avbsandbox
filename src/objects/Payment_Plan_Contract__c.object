@@ -1,3 +1,586 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Payment Plan Contracts for previous resident that enter into payment arrangements before the file is electronically sent to FCO for collections.</description>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>AccountLateCount__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>AccountLateCount</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Plan Contracts (AccountLateCount)</relationshipLabel>
+        <relationshipName>Payment_Plan_Contracts2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Account_Balance_Due__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Balance Due- add write offs</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Plan Contracts (Account Balance Due- add write offs)</relationshipLabel>
+        <relationshipName>Payment_Plan_Contracts4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Account_NSF_Count__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account NSF Count</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Plan Contracts (Account NSF Count)</relationshipLabel>
+        <relationshipName>Payment_Plan_Contracts3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Account_Write_Offs__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Write Offs</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Plan Contracts (Account Write Offs)</relationshipLabel>
+        <relationshipName>Payment_Plan_Contracts5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Account Name</inlineHelpText>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Plan Contracts</relationshipLabel>
+        <relationshipName>Payment_Plan_Contracts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Amount_10__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 10th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 10</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_11__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 11th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 11</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_12__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 12th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 12</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_13__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 13th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 13</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_1__c</fullName>
+        <description>Amount due on first agreed upon date.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on first agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 1</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_2__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on 10th payment installment. After this amount is received and posted in MRI, this box shall be checked reducing the overall amount due by this field&apos;s amount.</inlineHelpText>
+        <label>Amount 2</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_3__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 3rd agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 3</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_4__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 4th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 4</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_5__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 5th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 5</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_6__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 6th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 6</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_7__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 7th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 7</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_8__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 8th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 8</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_9__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount due on the 9th agreed upon due date.  After this amount is submitted and posted in MRI, check the corresponding box and the &apos;Total Due&apos; box will be reduced by this amount.</inlineHelpText>
+        <label>Amount 9</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Specific Contact of the account that agreed to and signed the payment plan contract.  Note: If you have more than one signature, only one need be entered here.  When possible, use the Primary resident.</inlineHelpText>
+        <label>Contact</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Plan Contracts (Contact)</relationshipLabel>
+        <relationshipName>Payment_Plan_Contracts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Date_10__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 10th payment is due to AVB.</inlineHelpText>
+        <label>Date 10</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_11__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 11th payment is due to AVB.</inlineHelpText>
+        <label>Date 11</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_12__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 12th payment is due to AVB.</inlineHelpText>
+        <label>Date 12</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_13__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 13th payment is due to AVB.</inlineHelpText>
+        <label>Date 13</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_1__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date first payment is due.</inlineHelpText>
+        <label>Date 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_2__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 2nd payment is due.</inlineHelpText>
+        <label>Date 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_3__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 3rd payment is due to AVB.</inlineHelpText>
+        <label>Date 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_4__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 4th payment is due to AVB.</inlineHelpText>
+        <label>Date 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_5__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 5th payment is due to AVB.</inlineHelpText>
+        <label>Date 5</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_6__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 6th payment is due to AVB.</inlineHelpText>
+        <label>Date 6</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_7__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 7th payment is due to AVB.</inlineHelpText>
+        <label>Date 7</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_8__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 8th payment is due to AVB.</inlineHelpText>
+        <label>Date 8</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_9__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date 9th payment is due to AVB.</inlineHelpText>
+        <label>Date 9</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PPC_Comments__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter any comments that will help a user to quickly identify specifics and or circumstances of this contract. Any dates/amounts to be entered in date/amount fields.</inlineHelpText>
+        <label>PPC Comments</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Received_10__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 10 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_11__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 11 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_12__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 12 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_13__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 13 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 1 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 2 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_3__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 3 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_4__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 4 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_5__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 5 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_6__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 6 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_7__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 7 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_8__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 8 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Received_9__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Click checkbox when payment is received.</inlineHelpText>
+        <label>Received 9 ?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Signatures_Received__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check only if signatures have been received by all parties listed on contract.</inlineHelpText>
+        <label>Signatures Received?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Current Status of Payment Plan Contract</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Default</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paid In Full</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Due__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Amount_13__c  - IF( Received_13__c = true,  Amount_13__c , 0) )
++ (Amount_12__c  - IF( Received_12__c = true,  Amount_12__c , 0) )
++ (Amount_11__c  - IF( Received_11__c = true,  Amount_11__c , 0) )
++ (Amount_10__c  - IF( Received_10__c = true,  Amount_10__c , 0) )
++ (Amount_9__c  - IF( Received_9__c = true,  Amount_9__c , 0) )
++ (Amount_8__c  - IF( Received_8__c = true,  Amount_8__c , 0) )
++ (Amount_7__c  - IF( Received_7__c = true,  Amount_7__c , 0) )
++ (Amount_6__c  - IF( Received_6__c = true,  Amount_6__c , 0) )
++ (Amount_5__c  - IF( Received_5__c = true,  Amount_5__c , 0) )
++ (Amount_4__c  - IF( Received_4__c = true,  Amount_4__c , 0) )
++ (Amount_3__c  - IF( Received_3__c = true,  Amount_3__c , 0) )
++ (Amount_2__c  - IF( Received_2__c = true,  Amount_2__c , 0) )
++ (Amount_1__c  - IF( Received_1__c = true,  Amount_1__c , 0) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount Due</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <label>Collections</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>PPC-{00000}</displayFormat>
+        <label>Payment Plan Contract Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Collections</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Amount_Due__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Signatures_Received__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

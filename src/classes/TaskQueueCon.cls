@@ -1,6 +1,6 @@
 public with sharing class TaskQueueCon {
 	list<Task> tasklist; //main list for Task view
-	list<xtask> xtasklist; //wrapper class list for Task view, includes info from attached object records
+	public list<xtask> xtasklist { get; private set; } //wrapper class list for Task view, includes info from attached object records
 	
 	public list<SelectOption> queueoptions { get; private set; } //filter picklist values
 	public String queue { get; set; }
@@ -25,6 +25,7 @@ public with sharing class TaskQueueCon {
 	{
 		//get date view options
 		refreshviewoptions();
+		datefilter = 8; //all open by default
 		
 		//get all queues for option list
 		refreshqueueoptions(); 
@@ -78,9 +79,9 @@ public with sharing class TaskQueueCon {
 		
 		//Added query for only users with same UserRole as current user 040611 JN.
 		String query = 'select OwnerId, Owner.Alias, Owner.Name, Subject_Sub_Category__c, Status, ActivityDate, CreatedDate, AVB_Type__c,' 
-			+ ' AVB_Associate_First_Last_Name__c, AVB_Account_ID__c, AccountID, Account.Name, What.Name, What.Type, Task_Queue__c, Subject'
+			+ ' AVB_Associate_First_Last_Name__c, AVB_Account_ID__c, AccountID, Account.Name, What.Name, What.Type, Task_Queue__c, Subject, Task_Assigned__c'
 			+ ' from Task'
-			+ ' where Task_Queue__c != null';
+			+ ' where isClosed = FALSE and Task_Queue__c != null';
 
 		if (datefilter == 1) { //Overdue
 			query += ' and ActivityDate < ' + date2string(system.today());
@@ -139,10 +140,6 @@ public with sharing class TaskQueueCon {
 		return pr;
 	}
 
-	public list<xtask> getxtasklistpage() { 
-		return xtasklist;
-	}
-	
 	public PageReference SortbyDate()
 	{
 		SortBy('ActivityDate');
@@ -170,6 +167,12 @@ public with sharing class TaskQueueCon {
 	public PageReference SortbyQueue()
 	{
 		SortBy('Task_Queue__c');
+		return null;
+	}
+	
+	public PageReference SortbyAssigned()
+	{
+		SortBy('Task_Assigned__c');
 		return null;
 	}
 	
@@ -209,9 +212,7 @@ public with sharing class TaskQueueCon {
 				and IsClosed = FALSE 
 			group by Task_Queue__c])
 		{
-			String q = (String)ar.get('Task_Queue__c');
-			if ((thisUser.Managed_Task_Queues__c.contains(q)) || (thisUser.Profile.Name == 'System Administrator'))
-				queueset.add((String)ar.get('Task_Queue__c'));
+			queueset.add((String)ar.get('Task_Queue__c'));
 		}
 		
 		list<String> queuelist = new list<String>(queueset);
@@ -220,8 +221,11 @@ public with sharing class TaskQueueCon {
 		queueoptions.add(new SelectOption('All', 'All'));
 		for (String q : queuelist) 
 		{
-			if (thisUser.Managed_Task_Queues__c.contains(q))
+			if ((thisUser.Profile.Name == 'System Administrator')
+				|| ((thisUser.Managed_Task_Queues__c != null) && (thisUser.Managed_Task_Queues__c.contains(q))))
+			{
 				queueoptions.add(new SelectOption(q, q));
+			}
 		}
 		queue = 'All';
 	}
@@ -234,13 +238,38 @@ public with sharing class TaskQueueCon {
 	{
 		Date testdate1 = Date.newInstance(2010, 6, 22);
 		Date testdate2 = Date.newInstance(2010, 11, 3);
+		User adminUser = [select Id from User where IsActive = TRUE and Profile.Name = 'System Administrator' limit 1];
 		User u = [select id, UserRoleId from User where IsActive = true limit 1];
-		if (u.UserRoleId == null) {
-			u.UserRoleId = [select id from UserRole limit 1].id;
-			update u;
+		system.runAs(adminUser)
+		{
+			if (u.UserRoleId == null) {
+				u.UserRoleId = [select id from UserRole limit 1].id;
+				update u;
+			}
 		}
 		map<id, User> allusermap = new map<id, User>([select id from User where UserRoleId = :u.UserRoleId]);
 		Integer comparecount = [select count() from Task where IsClosed = false and OwnerId in :allusermap.keyset() limit 100]; //Id to OwnerId
+		
+		list<Task> testtasks = new list<Task>();
+		testtasks.add(new Task(
+			ActivityDate = system.today().addDays(-1), 
+			Status = 'In Progress', 
+			AVB_Associate_First_Last_Name__c = 'Assoc A', 
+			OwnerID = u.id, 
+			AVB_Type__c = 'Move In Process', 
+			Subject_Sub_Category__c = 'Avalon Access',
+			Task_Queue__c = 'Task Queue 1' 
+			));
+		testtasks.add(new Task(
+			ActivityDate = system.today().addDays(1), 
+			Status = 'Not Started', 
+			AVB_Associate_First_Last_Name__c = 'Assoc Z', 
+			OwnerID = u.id, 
+			AVB_Type__c = 'Move In Process', 
+			Subject_Sub_Category__c = 'Send Letter',
+			Task_Queue__c = 'Task Queue 2'  
+			));
+		insert testtasks;
 		
 test.startTest();		
 		System.runAs(u) {
@@ -266,7 +295,23 @@ test.startTest();
 			system.assertEquals('3',testfilter);//storing filter properly
 			
 			list<Task> fulllist = t.gettasklist();
-			system.assertEquals(comparecount, fulllist.size());//got full tasklist
+			system.assertEquals(2, fulllist.size());//got full tasklist
+			
+			t.queue = 'Task Queue 1';
+			t.refreshtasklist();
+			
+			fulllist = t.gettasklist();
+			system.assertEquals(1, fulllist.size());//got full filtered tasklist
+			
+			t.tasklist = new list<Task>();
+			Task newt = new Task(Subject = 'newtask');
+			t.tasklist.add(newt);
+			t.tasklist2xtasklist();
+			system.assertEquals(newt.Subject, t.xtasklist[0].task.Subject);
+			
+			system.assertEquals(null, t.changefilter());
+			system.assertEquals(null, t.clearfilters());
+			
 		} //end runAs
 			
 	test.stopTest();
@@ -290,7 +335,8 @@ test.startTest();
 			    timezonesidkey='America/Los_Angeles', 
 			    UserRoleId = uroleid,
 	            username='testuser7844584552' + i + '@example.com',
-	            Department = 'RS Community'
+	            Department = 'RS Community',
+	            Managed_Task_Queues__c = 'Task Queue 1;Task Queue 2'
 	            );
 			testusers.add(u);
 		} 
@@ -321,7 +367,8 @@ test.startTest();
 			AVB_Associate_First_Last_Name__c = 'Assoc A', 
 			OwnerID = testusers[0].id, 
 			AVB_Type__c = 'Move In Process', 
-			Subject_Sub_Category__c = 'Avalon Access' 
+			Subject_Sub_Category__c = 'Avalon Access',
+			Task_Queue__c = 'Task Queue 1' 
 			));
 		sorttasks.add(new Task(
 			whoid = sortcontacts[1].id, 
@@ -331,7 +378,8 @@ test.startTest();
 			AVB_Associate_First_Last_Name__c = 'Assoc Z', 
 			OwnerID = testusers[1].id, 
 			AVB_Type__c = 'Move In Process', 
-			Subject_Sub_Category__c = 'Send Letter' 
+			Subject_Sub_Category__c = 'Send Letter',
+			Task_Queue__c = 'Task Queue 2'  
 			));
 		insert sorttasks;
 		
@@ -343,13 +391,13 @@ system.debug('\n\ntasklist ' + tc.gettasklist());
 		
 		
 		//starts out sorted by date ascending
-		//system.assert(tc.gettasklist()[0].ActivityDate <= tc.gettasklist()[1].ActivityDate);
-		ref = tc.SortByDate(); //should be descending
-		//system.assert(tc.gettasklist()[0].ActivityDate >= tc.gettasklist()[1].ActivityDate);
-		ref = tc.SortByOwner();
-		//system.assert(tc.gettasklist()[0].Owner.alias <= tc.gettasklist()[1].Owner.alias);
-		ref = tc.SortBySubCat(); //reverse sort
-		//system.assert(tc.gettasklist()[0].Subject_Sub_Category__c >= tc.gettasklist()[1].Subject_Sub_Category__c);
+		system.assertEquals(null, tc.SortByDate()); //should be descending
+		system.assertEquals(null, tc.SortByOwner());
+		system.assertEquals(null, tc.SortByCreatedDate());
+		system.assertEquals(null, tc.SortbyStatus());
+		system.assertEquals(null, tc.SortbyQueue());
+		system.assertEquals(null, tc.SortbySubject());
+		system.assertEquals(null, tc.SortBySubCat()); //reverse sort
 		
 test.stoptest();
 		

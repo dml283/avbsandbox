@@ -18,6 +18,7 @@ trigger User_Trigger on User (after insert, after update) {
 	{
 		list<User> taskQueueUsers = new list<User>();
 		set<String> taskQueuestoCheck = new set<String>();
+		set<Id> useridstocheckQueues = new set<Id>();
 		for (User u : Trigger.new)
 		{
 			User olduser;
@@ -31,14 +32,22 @@ trigger User_Trigger on User (after insert, after update) {
 			{
 				//get all Task Queues that may be affected
 				if (u.Assigned_Task_Queues__c != null)
+				{
 					taskQueuestoCheck.addall(u.Assigned_Task_Queues__c.split(';'));
+					useridstocheckQueues.add(u.Id);
+				}
 				if ((Trigger.IsUpdate) && (olduser.Assigned_Task_Queues__c != null))
+				{
 					taskQueuestoCheck.addall(olduser.Assigned_Task_Queues__c.split(';'));
+					useridstocheckQueues.add(u.Id);
+				}
 			}  
 		}
 		
-		if ((taskQueuestoCheck.size() > 0) && (!TaskAssignment.IsRunningTaskAssignment))
-			TaskAssignment.manageTaskQueues(taskQueuestoCheck);
+		//if ((taskQueuestoCheck.size() > 0) && (!TaskAssignment.IsRunningTaskAssignment))
+		//	TaskAssignment.manageTaskQueues(taskQueuestoCheck);
+		if (useridstocheckQueues.size() > 0)
+			TaskAssignment.manageTaskQueuesonUser(useridstocheckQueues);
 		
 		
 	}

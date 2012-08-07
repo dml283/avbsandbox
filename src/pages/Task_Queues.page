@@ -58,20 +58,22 @@
 	<apex:form >
 	<apex:pageblock >
     
-		<div id="header" style="font-size: 10px;">
+		<div id="header" >
 	        <apex:outputlabel for="DisplayQueue" value="Display Queue: " />
 	        <apex:selectlist id="DisplayQueue" size="1" value="{!queue}"> 
 	            <apex:selectOptions value="{!queueoptions}"/>
 	            <apex:actionsupport event="onchange" action="{!changefilter}" /> 
-	        </apex:selectlist>
-	        <apex:selectlist style="font-size: 10px;" size="1" value="{!filter}"> 
+	        </apex:selectlist> 
+	        
+	        <apex:outputlabel for="FilterOption" value="Filter By Date: " />
+	        <apex:selectlist id="FilterOption" size="1" value="{!filter}"> 
                 <apex:selectOptions value="{!viewoptions}"/>
                 <apex:actionsupport event="onchange" action="{!changefilter}" /> 
             </apex:selectlist>
 		</div> <!-- end header -->
-             
+        <br/>    
     	<div id="scrolltable">
-            <apex:pageblocktable value="{!xtasklistpage}" var="xtask" 
+            <apex:pageblocktable value="{!xtasklist}" var="xtask" 
                 cellpadding="2px">
                 <apex:column >
                     <apex:outputlink value="/{!xtask.task.id}" target="_task">View</apex:outputlink>
@@ -108,6 +110,12 @@
                         <apex:commandlink action="{!Sortbyqueue}">Task Queue</apex:commandlink>
                     </apex:facet>
                     <apex:outputfield value="{!xtask.task.Task_Queue__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandlink action="{!SortbyAssigned}">Assigned</apex:commandlink>
+                    </apex:facet>
+                    <apex:outputfield value="{!xtask.task.Task_Assigned__c}"/>
                 </apex:column>
                 <apex:column >
                     <apex:facet name="header">

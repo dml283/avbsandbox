@@ -346,6 +346,107 @@ test.stopTest();
 				system.assertEquals(2, u.Available_Assigned_Tasks__c);
 			
 		}
-
+		
 	}	
+	
+	static testmethod void testManageTaskQueuesonUser()
+	{
+		TaskAssignment.IsRunningTaskAssignment = TRUE;
+		Profile prof = [select Id from Profile limit 1];
+		
+		list<User> testusers = new list<User>();
+		User testuser0 = new User(
+			LastName = 'testuser1',
+			Max_Assigned_Tasks__c = 5,
+            Current_Assigned_Tasks__c = 0,
+			Available_Assigned_Tasks__c = 5,
+            Assigned_Task_Queues__c = null,
+			alias = 't0user', 
+        	email='standarduser@example.com', 
+        	emailencodingkey='UTF-8', 
+            languagelocalekey='en_US', 
+            localesidkey='en_US', 
+            ProfileId = prof.Id,
+		    timezonesidkey='America/Los_Angeles',
+            username='testuser078445845521@avalonbay.com.testing',
+            Department = 'RS Community'
+            );
+    	testusers.add(testuser0);
+		User testuser1 = new User(
+			LastName = 'testuser1',
+			Max_Assigned_Tasks__c = 5,
+            Current_Assigned_Tasks__c = 0,
+			Available_Assigned_Tasks__c = 5,
+            Assigned_Task_Queues__c = 'queue 1',
+			alias = 't1user', 
+        	email='standarduser@example.com', 
+        	emailencodingkey='UTF-8', 
+            languagelocalekey='en_US', 
+            localesidkey='en_US', 
+            ProfileId = prof.Id,
+		    timezonesidkey='America/Los_Angeles',
+            username='testuser78445845521@avalonbay.com.testing',
+            Department = 'RS Community'
+            );
+    	testusers.add(testuser1);
+		User testuser2 = new User(
+			LastName = 'testuser2',
+			Max_Assigned_Tasks__c = 5,
+            Assigned_Task_Queues__c = 'queue 2',
+			alias = 't2user', 
+        	email='standarduser@example.com', 
+        	emailencodingkey='UTF-8', 
+            languagelocalekey='en_US', 
+            localesidkey='en_US', 
+            ProfileId = prof.Id,
+		    timezonesidkey='America/Los_Angeles',
+            username='testuser78445845522@avalonbay.com.testing',
+            Department = 'RS Community'
+            );
+    	testusers.add(testuser2);
+		insert testusers;
+		
+		Account testacc = new Account(Name = 'testacc');
+		insert testacc;
+		
+		Contact testcon = new Contact(LastName = 'testcon', AccountId = testacc.Id);
+		insert testcon;
+		
+		list<Task> oldtasks = new list<Task>();
+		for (User u : testusers)
+		{
+		oldtasks.add(new Task(
+			OwnerId = u.Id,
+			Task_Queue__c = 'queue 1',
+			WhoId = testcon.Id,
+			Task_Assigned__c = TRUE,
+			ActivityDate = system.today()));
+		oldtasks.add(new Task(
+			OwnerId = u.Id,
+			Task_Queue__c = 'queue 2',
+			Task_Assigned__c = TRUE,
+			WhoId = testcon.Id,
+			ActivityDate = system.today()));
+		}
+		insert oldTasks;
+		
+		set<Id> userids = (new map<Id, User>(testusers)).keyset();
+		
+test.startTest();
+		TaskAssignment.manageTaskQueuesonUser(userids);
+test.stopTest();		
+		list<Task> testtasks = [select Id, Task_Queue__c, OwnerId from Task where Id in :oldtasks];
+		for (Task t : testtasks)
+		{
+			if (t.Task_Queue__c == 'queue 1')
+			{
+				system.assertEquals(testuser1.Id, t.OwnerId);
+			} else if (t.Task_Queue__c == 'queue 2')
+			{
+				system.assertEquals(testuser2.Id, t.OwnerId);
+			}
+		}
+		
+		
+	}
 }

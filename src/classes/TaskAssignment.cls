@@ -14,9 +14,15 @@ public class TaskAssignment {
 	
 	//public static Boolean IsTestingTaskAssignment = FALSE;
 	public static Boolean IsRunningTaskAssignment = FALSE;
-	
+
 @future	
 	public static void manageTaskQueues(set<String> taskQueuestoManage)
+	{
+		//call main method
+		TaskAssignment.manageTaskQueuesSynchronous(taskQueuestoManage);
+	}	
+
+	public static void manageTaskQueuesSynchronous(set<String> taskQueuestoManage)
 	{
 		//get full list of queues that may need to be managed, considering that some users are on other queues not mentioned here. 
 		//query for queue Users, then get all queues on those users
@@ -195,7 +201,80 @@ system.debug('\n\n129 u ' + u);
 			update applicableUsers;
 		}
 	}
-	
+
+@future	
+	public static void manageTaskQueuesonUser(set<Id> userids)
+	{
+		IsRunningTaskAssignment = TRUE;
+		map<Id, User> userid2usermap = new map<Id, User>([select Id, Assigned_Task_Queues__c, Max_Assigned_Tasks__c, Current_Assigned_Tasks__c, 
+			Available_Assigned_Tasks__c, IsActive
+			from User
+			where Id in :userids]);
+		
+		list<Task> assignedTasks = [select Id, OwnerId, Task_Queue__c
+			from Task
+			where Task_Queue__c != null
+				and Task_Assigned__c = TRUE
+				and IsClosed = FALSE
+				and OwnerId in :userid2usermap.keyset()
+			order by OwnerId, Task_Queue__c];
+		
+		map<Id, list<Task>> ownerid2tasklistmap = new map<Id, list<Task>>();
+		for (Task t : assignedTasks)
+		{
+			if (ownerid2tasklistmap.containsKey(t.OwnerId))
+				ownerid2tasklistmap.get(t.OwnerId).add(t);
+			else
+				ownerid2tasklistmap.put(t.OwnerId, new list<Task> { t });
+		}
+		
+		list<Task> taskstoupdate = new list<Task>();
+		set<String> taskQueuestoManage = new set<String>();
+		
+		for (User u : userid2usermap.values())
+		{
+			if (u.Assigned_Task_Queues__c != null)
+				taskQueuestoManage.addall(u.Assigned_Task_Queues__c.split(';'));
+			
+			list<Task> theseTasks = ownerid2tasklistmap.get(u.Id);
+			Decimal MaxTasks = (u.Max_Assigned_Tasks__c == null) ? 0 : u.Max_Assigned_Tasks__c;
+			Decimal NumAssignedTasks = 0;
+			if (theseTasks != null)
+			{
+				for (Task t : theseTasks)
+				{
+					if ((u.IsActive == FALSE)
+						|| (NumAssignedTasks >= MaxTasks)
+						|| (u.Assigned_Task_Queues__c == null) 
+						|| (!u.Assigned_Task_Queues__c.contains(t.Task_Queue__c)))
+					{
+						t.Task_Assigned__c = FALSE;
+						taskQueuestoManage.add(t.Task_Queue__c);
+						taskstoupdate.add(t);
+					}
+					
+					//this task is fine to stay with this user
+					else
+					{
+						NumAssignedTasks ++;
+					}
+				} //end for Task t
+			} //end if theseTasks != null
+			u.Current_Assigned_Tasks__c = NumAssignedTasks;
+			u.Available_Assigned_Tasks__c = MaxTasks - NumAssignedTasks;
+		}
+		
+		IsRunningTaskAssignment = TRUE;
+		update userid2usermap.values();
+		
+		if (taskstoupdate.size() > 0)
+			update taskstoupdate;
+		IsRunningTaskAssignment = FALSE;
+system.debug('\n\n270 taskQueuestoManage ' + taskQueuestoManage);		
+		//manage queues for any we put Tasks back into
+		manageTaskQueuesSynchronous(taskQueuestoManage);
+		
+	}	
 /*	
 	public static void closeAssignedTasks(list<Task> tasksclosed)
 	{

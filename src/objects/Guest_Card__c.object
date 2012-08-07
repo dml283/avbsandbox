@@ -1,3 +1,1977 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>NewGCRedirect</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>AVB_Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(SHARED__c, &quot;No&quot;),  Prospect_Account__r.Account_ID__c , &quot;No&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AVB Account ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVB_Associate__c</fullName>
+        <externalId>false</externalId>
+        <label>AVB Associate</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_City__c</fullName>
+        <externalId>false</externalId>
+        <label>Address City</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Postal_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Address Postal Code</label>
+        <length>20</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_State__c</fullName>
+        <externalId>false</externalId>
+        <label>Address State</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AZ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ID</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ME</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NV</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NJ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WV</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Address_Street_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Address Street 1</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Street_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Address Street 2</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AgeInDays__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOW() -  CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Age in days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AgeInMinutes__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NOW() -  CreatedDate)*1440</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Age in minutes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bath__c</fullName>
+        <externalId>false</externalId>
+        <label>Bath</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bed__c</fullName>
+        <externalId>false</externalId>
+        <label>Bed</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cell_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Cell Phone</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Class_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Desired Unit Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2T</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3T</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>MultiselectPicklist</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CommunityBrand__c</fullName>
+        <externalId>false</externalId>
+        <formula>Text(Community__r.CommunityBrand__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Community Brand</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CommunityEmail__c</fullName>
+        <externalId>false</externalId>
+        <formula>Community__r.CommunityEmail__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Community Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CommunityPhone__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;(&quot; + mid(Community__r.CommunityPhone__c, 1, 3) + &quot;) &quot; + mid(Community__r.CommunityPhone__c, 4, 3) + &quot;-&quot; + mid(Community__r.CommunityPhone__c, 7, 4)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Community Phone</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Community__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Community</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Guest Cards (Community)</relationshipLabel>
+        <relationshipName>Guest_Cards1</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact First Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Info_has_been_edited__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Contact Info has been edited?</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Last Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Guest Cards</relationshipLabel>
+        <relationshipName>Guest_Cards</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Days_Active__c</fullName>
+        <externalId>false</externalId>
+        <formula>TODAY() - datevalue(CreatedDate)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label># Days Active</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fax__c</fullName>
+        <externalId>false</externalId>
+        <label>Fax</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Guest_Card_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Guest Card Details</label>
+        <length>2000</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Have_a_pet_other_than_a_service_animal__c</fullName>
+        <externalId>false</externalId>
+        <label>Have a pet other than a service animal?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Home_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Phone</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>How_Many_Occupants__c</fullName>
+        <externalId>false</externalId>
+        <label>How many people will occupy the home?</label>
+        <length>2</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>How_did_you_hear_about_us__c</fullName>
+        <externalId>false</externalId>
+        <label>How did you hear about us?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Affordable Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AptFndr/AptMag PRINT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apt Guide/ASG PRINT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apt Showcase PRINT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AvalonCommMobile</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AVB Company Website</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AVB SisterCommRefer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Banners</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Corporate Apartment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Direct Mail/Brochure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email Blast</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>For Rent Mag PRINT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-4Walls.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Apartments.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-AptFinder.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-AptGuide.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-AptMarketer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-AptSearch.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-AptShowcase.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Craigslist.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Facebook</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-ForRent.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Hotpads.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Internet Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Local Searches</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Move.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-MyNewPlace.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Oodle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Rent.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-RentJungle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Twitter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Yelp.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT-Zillow.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Leasing Office Signage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Locator Serv/Broker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Media/Billboard Ad</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Newspaper</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Printed Guides</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Outreach/Emp Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Property Solutions</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resident Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retail/ Wndw Graphic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Same Comm Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Walk-In</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Inactivated_in_MRI__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Inactivated in MRI</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Inactive_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Inactive Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Additonal Deposit/Guarantor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apt Price</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Conviction of Felony</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Rating</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Duplicate Prospect</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Employment still pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Family Status Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Purchase</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Income Level</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Location</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non Response/Unknown</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Moving</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Objected to Community</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Objection to Construction</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Objection to Floorplan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Object to Smoke-Free Community</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Rental Option</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pet Issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shopping for Friend or Relative</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unit Unavailable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unqualified</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waiting for Home to Sell</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Auto Inactivated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>InitialVisitAge__c</fullName>
+        <externalId>false</externalId>
+        <formula>floor(now() - Initial_Visit_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Initial Visit Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Initial_Lead_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Initial Lead Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Web Chat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Walk In</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Initial_Visit_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Initial Visit Date</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Initial_Visit_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  ISBLANK(Initial_Visit_Date__c),
+  0,
+  1)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Initial Visit Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Contact_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Contact Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Lead_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Lead Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lease_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Lease Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Lease_term_desired__c</fullName>
+        <externalId>false</externalId>
+        <label>Lease term desired?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>8</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>9</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>11</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>13</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>14</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>15</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>16</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>17</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>18</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Leased_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  ISPICKVAL(Status__c, &apos;Leased&apos;),
+  1,
+  0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Leased Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Level_One_Appointment_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Appointment Created</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>MRI_Leasing_Associate_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( MRI_Leasing_Associate__c = &quot;&quot;, &quot;sflead&quot;,  MRI_Leasing_Associate__r.LeasingAssociateID__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MRI Leasing Associate ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRI_Leasing_Associate__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>MRI Leasing Associate</label>
+        <referenceTo>MRILeasingAssociate__c</referenceTo>
+        <relationshipLabel>Guest Cards</relationshipLabel>
+        <relationshipName>Guest_Cards</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Needs_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Needs Contact</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Other_communities_being_considered__c</fullName>
+        <externalId>false</externalId>
+        <label>Other communities being considered?</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_resident_email_s__c</fullName>
+        <externalId>false</externalId>
+        <label>Other resident email(s)</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_resident_phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Other resident phone</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_residents__c</fullName>
+        <externalId>false</externalId>
+        <label>Other resident name(s)</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pet_Type_Breed__c</fullName>
+        <externalId>false</externalId>
+        <label>Pet Type &amp; Breed</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Price_Range_Desired__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Range Desired</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Primary_Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>Primary Contact</label>
+        <length>200</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prospect_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Prospect Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Guest Cards</relationshipLabel>
+        <relationshipName>Guest_Cards</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Prospect_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Prospect_Account__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Prospect Status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rating__c</fullName>
+        <description>If (Class ID=Community Target Class ID) AND (Expected Move in Date &lt;15 days away)=Hot;  Expected Move In Date&lt;30Days away=Warm;  else=Future</description>
+        <externalId>false</externalId>
+        <label>Rating</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Hot</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Warm</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Future</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reason_for_relocating__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason for relocating?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Corporate/ Seasonal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Family Status/ Roommate Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home/Condo Sale</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Military Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Relocation Job</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renovation/ Insurance Claim</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unhappy with Community</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ReturnVisitDate__c</fullName>
+        <externalId>false</externalId>
+        <label>Return Visit Date</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>SHARED__c</fullName>
+        <externalId>false</externalId>
+        <label>SHARED</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes - enter into MRI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Secondary_Marketing_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Secondary Marketing Source</label>
+        <picklist>
+            <picklistValues>
+                <fullName>affordable program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>apt guide/asg (print)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>avaloncommmobile</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>avb company website</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>banners</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>corporate apt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>direct mail/brochure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>email blast</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>for rent mag (print)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-apartments.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-apt marketer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-apt finder.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-aptguide.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-craigslist.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-forrent.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int- local searches</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-move.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-mynewplace.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>int-rent.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>leasing off signage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>locator service/broker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>media/billboard ad</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>newspaper</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>outreach/emp call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>resident referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>retail/wndw graphic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>same comm transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>walk-in</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apartment Showcase (print)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apartment Finder/Apartment Magazine (print)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ApartmentShowcase.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4Walls.com</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oodle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>YELP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Facebook</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Twitter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Stale__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(((ISPICKVAL(Status__c, &quot;Active&quot;) || ISPICKVAL(Status__c, &quot;Waitlist&quot;)) &amp;&amp; (When_will_you_be_moving_in__c  &lt; TODAY())), &quot;Yes&quot;, &quot;No&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Stale</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Manually set to Active, Inactive or Wait list.  Leased will be set for you automatically</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wait List</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Leased</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>TestEmail__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;cjcindc@gmail.com&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Test Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VisitAgeInDays__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOW()- Initial_Visit_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Visit Age in days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>What_features_are_most_important__c</fullName>
+        <externalId>false</externalId>
+        <label>What features are most important?</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>What_is_most_important_to_you__c</fullName>
+        <externalId>false</externalId>
+        <label>What is most important to you?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Move In Date</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lease Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Price</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>When_will_you_be_moving_in__c</fullName>
+        <externalId>false</externalId>
+        <label>When will you be moving in?</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Where_else_did_you_lease__c</fullName>
+        <externalId>false</externalId>
+        <label>Where else did you lease?</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Phone_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Phone 2</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Work_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Phone</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>action__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(hasAccount__c = &quot;true&quot;, 
+if(Inactivated_in_MRI__c, 
+&quot;inactivated&quot;, 
+if(isValidGuestCard__c = &quot;true&quot;, if(inactivate__c = &quot;true&quot;, if(existsInMRI__c = &quot;true&quot;, &quot;inactivate&quot;, &quot;insert&quot;), if(isValidUser__c = &quot;true&quot;, if(existsInMRI__c = &quot;true&quot;, &quot;update&quot;, &quot;insert&quot;), &quot;updated&quot;)), &quot;unintegrated&quot;)), 
+&quot;invalid&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>action</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>existsInMRI__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(Prospect_Account__r.Exists_in_MRI__c, &quot;true&quot;, &quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>existsInMRI</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>hasAccount__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( Prospect_Account__c = &quot;&quot;,&quot;false&quot;,&quot;true&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>hasAccount</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>hasContact__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(Contact__c != &quot;&quot;, &quot;true&quot;, &quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>hasContact</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>hasVisitDate__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( ISBLANK( Initial_Visit_Date__c), &quot;false&quot;, &quot;true&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>hasVisitDate</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>inactivate__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(!ISPICKVAL(Inactive_Reason__c , &quot;&quot;), 
+if(Inactivated_in_MRI__c, 
+&quot;false&quot;, 
+&quot;true&quot;), 
+&quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>inactivate</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>isAVBLead__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( ispickval(How_did_you_hear_about_us__c, &quot;AVB Company Website&quot;), &quot;true&quot;, &quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>isAVBLead</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>isEmailLead__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( ISPICKVAL( Initial_Lead_Type__c , &quot;Email&quot;), &quot;true&quot;, &quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>isEmailLead</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>isValidGuestCard__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(and( hasAccount__c = &quot;true&quot;, hasContact__c = &quot;true&quot;, or(isEmailLead__c = &quot;false&quot;, and(isEmailLead__c = &quot;true&quot;, or( isAVBLead__c = &quot;true&quot;, hasVisitDate__c = &quot;true&quot;)))), &quot;true&quot;, &quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>isValidGuestCard</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>isValidUser__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(or( Prospect_Account__r.LastModifiedBy.FirstName + &quot; &quot; + Prospect_Account__r.LastModifiedBy.LastName != &quot;Integration Data Process&quot;, Contact__r.LastModifiedBy.FirstName + &quot; &quot; + Contact__r.LastModifiedBy.LastName != &quot;Integration Data Process&quot;, LastModifiedBy.FirstName + &quot; &quot; + LastModifiedBy.LastName != &quot;Integration Data Process&quot;), &quot;true&quot;, &quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>isValidUser</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>leasingAssociate__c</fullName>
+        <externalId>false</externalId>
+        <formula>MRI_Leasing_Associate__r.LeasingAssociateID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>leasingAssociate</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>searchPhone__c</fullName>
+        <externalId>false</externalId>
+        <label>Any Phone</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>updateBy__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(LastModifiedBy.FirstName + &quot; &quot; + LastModifiedBy.LastName != &quot;Integration Data Process&quot;, 
+LastModifiedBy.FirstName + &quot; &quot; + LastModifiedBy.LastName, 
+if(Contact__r.LastModifiedBy.FirstName + &quot; &quot; + Contact__r.LastModifiedBy.LastName != &quot;Integration Data Process&quot;, Contact__r.LastModifiedBy.FirstName + &quot; &quot; + Contact__r.LastModifiedBy.LastName + &quot; :C&quot;, 
+Prospect_Account__r.LastModifiedBy.FirstName + &quot; &quot; + Prospect_Account__r.LastModifiedBy.LastName + if(Prospect_Account__r.LastModifiedBy.FirstName + &quot; &quot; + Prospect_Account__r.LastModifiedBy.LastName != &quot;Integration Data Process&quot;,&quot; :A&quot;, &quot;&quot;)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>updateBy</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>updatedBy__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(LastModifiedBy.FirstName + &quot; &quot; + LastModifiedBy.LastName != &quot;Integration Data Process&quot;, 
+    LastModifiedBy.FirstName + &quot; &quot; + LastModifiedBy.LastName, 
+if(Contact__r.LastModifiedBy.FirstName + &quot; &quot; + Contact__r.LastModifiedBy.LastName != &quot;Integration Data Process&quot;,            Contact__r.LastModifiedBy.FirstName + &quot; &quot; + Contact__r.LastModifiedBy.LastName + &quot; :C&quot;,  
+Prospect_Account__r.LastModifiedBy.FirstName + &quot; &quot; + Prospect_Account__r.LastModifiedBy.LastName + if(Prospect_Account__r.LastModifiedBy.FirstName + &quot; &quot; + Prospect_Account__r.LastModifiedBy.LastName != &quot;Integration Data Process&quot;,&quot; :A&quot;, &quot;&quot;)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>updatedBy</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Guest Card</label>
+    <listViews>
+        <fullName>Affordable_Guest_Cards</fullName>
+        <columns>NAME</columns>
+        <columns>Community__c</columns>
+        <columns>AVB_Associate__c</columns>
+        <columns>When_will_you_be_moving_in__c</columns>
+        <columns>Class_ID__c</columns>
+        <columns>How_did_you_hear_about_us__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>How_did_you_hear_about_us__c</field>
+            <operation>startsWith</operation>
+            <value>Affordable</value>
+        </filters>
+        <label>Affordable Guest Cards</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Waitlist</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>NAME</columns>
+        <columns>AVB_Associate__c</columns>
+        <columns>When_will_you_be_moving_in__c</columns>
+        <columns>Class_ID__c</columns>
+        <columns>How_Many_Occupants__c</columns>
+        <columns>Community__c</columns>
+        <columns>Price_Range_Desired__c</columns>
+        <columns>Lease_term_desired__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Wait List</value>
+        </filters>
+        <label>All Waitlist</label>
+    </listViews>
+    <listViews>
+        <fullName>CCC_Web_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>How_did_you_hear_about_us__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_ACTIVITY</columns>
+        <columns>Community__c</columns>
+        <columns>Guest_Card_Details__c</columns>
+        <columns>Home_Phone__c</columns>
+        <columns>Cell_Phone__c</columns>
+        <columns>Bath__c</columns>
+        <columns>Bed__c</columns>
+        <columns>Price_Range_Desired__c</columns>
+        <columns>Email__c</columns>
+        <columns>Lease_term_desired__c</columns>
+        <columns>When_will_you_be_moving_in__c</columns>
+        <columns>AVB_Associate__c</columns>
+        <filterScope>Queue</filterScope>
+        <label>CCC Web Leads</label>
+        <queue>CCC_Web_Leads</queue>
+    </listViews>
+    <listViews>
+        <fullName>Email_Guest_Cards_Yesterday_Today</fullName>
+        <columns>NAME</columns>
+        <columns>Community__c</columns>
+        <columns>Initial_Lead_Type__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>AVB_Associate__c</columns>
+        <columns>When_will_you_be_moving_in__c</columns>
+        <columns>Level_One_Appointment_Created__c</columns>
+        <columns>How_did_you_hear_about_us__c</columns>
+        <columns>Email__c</columns>
+        <columns>Rating__c</columns>
+        <columns>Bed__c</columns>
+        <columns>Stale__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY,YESTERDAY</value>
+        </filters>
+        <filters>
+            <field>Initial_Lead_Type__c</field>
+            <operation>equals</operation>
+            <value>Email</value>
+        </filters>
+        <label>Email Guest Cards Yesterday &amp; Today</label>
+    </listViews>
+    <listViews>
+        <fullName>Guest_cards_created_AVB_calendar_week</fullName>
+        <columns>NAME</columns>
+        <columns>AVB_Associate__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Community__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>Guest cards created AVB calendar week</label>
+    </listViews>
+    <listViews>
+        <fullName>Level_One_Guest_cards_over_5_days_old</fullName>
+        <booleanFilter>(1 or 2) and 3 and 4 and 5</booleanFilter>
+        <columns>Community__c</columns>
+        <columns>NAME</columns>
+        <columns>AVB_Associate__c</columns>
+        <columns>AgeInDays__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>AVB_Associate__c</field>
+            <operation>equals</operation>
+            <value>Level One</value>
+        </filters>
+        <filters>
+            <field>AVB_Associate__c</field>
+            <operation>equals</operation>
+            <value>Not Yet Assigned</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>lessOrEqual</operation>
+            <value>LAST_N_DAYS:5</value>
+        </filters>
+        <filters>
+            <field>Initial_Lead_Type__c</field>
+            <operation>notEqual</operation>
+            <value>Email</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>Active unassinged leads over 5 days</label>
+    </listViews>
+    <listViews>
+        <fullName>Today_s_guest_cards</fullName>
+        <columns>NAME</columns>
+        <columns>Community__c</columns>
+        <columns>Level_One_Appointment_Created__c</columns>
+        <columns>AVB_Associate__c</columns>
+        <columns>When_will_you_be_moving_in__c</columns>
+        <columns>Rating__c</columns>
+        <columns>Initial_Lead_Type__c</columns>
+        <columns>Bed__c</columns>
+        <columns>Email__c</columns>
+        <columns>How_did_you_hear_about_us__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Stale__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today&apos;s guest cards</label>
+    </listViews>
+    <listViews>
+        <fullName>ccc_wl</fullName>
+        <columns>NAME</columns>
+        <filterScope>Queue</filterScope>
+        <filters>
+            <field>OWNER.ALIAS</field>
+            <operation>equals</operation>
+            <value>CCC Web Leads</value>
+        </filters>
+        <label>ccc wl</label>
+        <queue>CCC_Web_Leads</queue>
+    </listViews>
+    <nameField>
+        <label>Guest Card Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Guest Cards</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>AVB_Account_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>AVB_Associate__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>Prospect_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Community__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>AVB_Associate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Rating__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Bath__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Bed__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OWNER.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <sharingReasons>
+        <fullName>Community__c</fullName>
+        <label>Role</label>
+    </sharingReasons>
+    <sharingReasons>
+        <fullName>POD__c</fullName>
+        <label>POD</label>
+    </sharingReasons>
+    <validationRules>
+        <fullName>Initial_Visit_Date</fullName>
+        <active>false</active>
+        <description>Initial Visit Date must be within last 3 days</description>
+        <errorConditionFormula>If  (ISNEW() , 
 
+Initial_Visit_Date__c &lt; Now()-3 ,
+
+Initial_Visit_Date__c &lt; CreatedDate -3)</errorConditionFormula>
+        <errorMessage>Initial visit date must be within the last 3 days of the Created Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Limit_changing_status_to_Leased</fullName>
+        <active>true</active>
+        <description>Guest Card status can only be changed to &quot;Leased&quot; through MRI.</description>
+        <errorConditionFormula>AND(
+  ($Profile.Name != &quot;System Administrator&quot;),
+  ($Profile.Name != &quot;Integration Administrator&quot;),
+  ISCHANGED( Status__c ),
+  ISPICKVAL( Status__c, &quot;Leased&quot;)
+  )</errorConditionFormula>
+        <errorMessage>Guest Card status can only be changed to &quot;Leased&quot; through MRI.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Limit_use_of_Auto_Inactivated</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(($Profile.Name != &quot;System Administrator&quot;), 
+        ($Profile.Name != &quot;Integration Administrator&quot;), 
+	(ISPICKVAL( Inactive_Reason__c , &apos;Auto Inactivated&apos;)),
+	NOT(
+		(ISPICKVAL(Initial_Lead_Type__c, &apos;Email&apos;))
+		&amp;&amp; ((TODAY() -  When_will_you_be_moving_in__c) &gt;= 30)
+		)
+	)</errorConditionFormula>
+        <errorDisplayField>Inactive_Reason__c</errorDisplayField>
+        <errorMessage>Auto Inactivated cannot be chosen manually.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Require_AVB_Associate</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISBLANK( AVB_Associate__c )</errorConditionFormula>
+        <errorDisplayField>AVB_Associate__c</errorDisplayField>
+        <errorMessage>Please enter the name of the assigned AVB Associate.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Require_Do_you_have_a_pet_with_pet_type</fullName>
+        <active>false</active>
+        <description>If someone fills out the pet type and breed field they must also have a value in the Do you have a pet other than a service animal field.</description>
+        <errorConditionFormula>OR(ISBLANK(TEXT(Have_a_pet_other_than_a_service_animal__c )) &amp;&amp; NOT(ISBLANK( Pet_Type_Breed__c )), NOT(ISBLANK(TEXT(Have_a_pet_other_than_a_service_animal__c ))) &amp;&amp;  ISBLANK( Pet_Type_Breed__c ))</errorConditionFormula>
+        <errorMessage>The &apos;Have a pet other than a service animal&apos; and the &apos;Pet Type Breed&apos; fields must both be populated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Require_Inactive_Reason</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISPICKVAL(Status__c , &apos;Inactive&apos;),
+  ISBLANK( TEXT( Inactive_Reason__c) )
+  )</errorConditionFormula>
+        <errorDisplayField>Inactive_Reason__c</errorDisplayField>
+        <errorMessage>Please select an Inactive Reason.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Clone</fullName>
+        <availability>online</availability>
+        <description>New Clone button to support the Guest Card Wizzard</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Share</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/editguestcard?id={!Guest_Card__c.Id}&amp;mode=clone&amp;retURL=%2F{!Guest_Card__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Shared_Guest_CArd</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Create Shared Guest Card</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/CloneGuestCard?id={!Guest_Card__c.Id}&amp;clone=1</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Edit</fullName>
+        <availability>online</availability>
+        <description>New edit button to support Guest Card Wizzard</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Edit</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/editguestcard?id={!Guest_Card__c.Id}&amp;mode=edit&amp;returl=%2F{!Guest_Card__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Printable_View</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Printable View</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/PrintableGuestCard?id={!Guest_Card__c.Id}</url>
+    </webLinks>
+</CustomObject>

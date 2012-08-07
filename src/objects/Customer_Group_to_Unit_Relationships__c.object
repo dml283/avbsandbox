@@ -1,3 +1,295 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <content>Prevent_Deletion_of_Customer_Group_to_Unit</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Scontrol</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>AVB Custom Object - This is a join table to allow many to many relationships between Customer Groups (Accounts) and Units.</description>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>AVB_Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Customer_Group__r.Account_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AVB Account ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancelled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Will be checked on MRI import record if this is a Move In cancellation.</description>
+        <externalId>false</externalId>
+        <label>Cancelled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Current_LBD__c</fullName>
+        <description>Current lease begin date</description>
+        <externalId>false</externalId>
+        <label>Current LBD</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Group__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Customer Group is the record type of the Account object that will be related to Units as customers to units.</description>
+        <externalId>false</externalId>
+        <label>Customer Group</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Customer_Group_to_Unit_Relationships</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Group_s_Parent_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>Customer_Group__r.Parent.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Group&apos;s Parent Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expected_Move_Out_Date__c</fullName>
+        <description>Populated from MRI on new Move Out.
+Clear on Cancel Move Out
+Change on Resched Move Out</description>
+        <externalId>false</externalId>
+        <label>Expected Move Out Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Financial_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial End Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Exists in FND?</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_MRI__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is MRI?</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Move_In_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Move In Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Move_Out_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Actual Move Out Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Move_Out_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Move Out Reason</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NTV_Date__c</fullName>
+        <description>Notice To Vacate Date. Populated from MRI. 
+Populate on new Move Out, clear on cancelled Move Out</description>
+        <externalId>false</externalId>
+        <label>Notice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PBU__c</fullName>
+        <description>This field created to support searching on this Custom Object.  To do this without requiring the user to used Advanced Searching the field needs to be either the Name of the record or an External ID.   This is NOT to be used as an External ID field.  The value will be set with a field update.</description>
+        <externalId>true</externalId>
+        <label>PBU</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Preliminary_Inspection_Date__c</fullName>
+        <description>Preliminary Inspection Date prior to move out</description>
+        <externalId>false</externalId>
+        <label>Preliminary Inspection Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Prior__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Financial_End_Date__c &lt; TODAY(), &quot;Yes&quot;, &quot;No&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Prior?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PropPhaseID__c</fullName>
+        <externalId>false</externalId>
+        <label>Property Phase ID</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Responsible_Associate__c</fullName>
+        <externalId>false</externalId>
+        <label>Responsible Associate</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unique_Record_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Concatenation of customer group account number and unique unit ID to provide a unique record ID that can be used during upserting.</description>
+        <externalId>true</externalId>
+        <label>Unique Record Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Unit</label>
+        <referenceTo>Unit__c</referenceTo>
+        <relationshipName>Customer_Group_to_Unit_Relationships</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Unit_s_Parent_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>Unit__r.Community__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit&apos;s Parent Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Customer Group Units</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Unit__c</columns>
+        <columns>Unit_s_Parent_Account__c</columns>
+        <columns>Customer_Group__c</columns>
+        <columns>Customer_Group_s_Parent_Account__c</columns>
+        <columns>Move_In_Date__c</columns>
+        <columns>Current_LBD__c</columns>
+        <columns>Move_Out_Date__c</columns>
+        <columns>Financial_End_Date__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>Unit-{000000}</displayFormat>
+        <label>Customer Group to Unit</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Customer Group Units</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Unit__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Customer_Group__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Move_In_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Move_Out_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Financial_End_Date__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Unit__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Customer_Group__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Move_In_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Move_Out_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Financial_End_Date__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>Unit__c</searchFilterFields>
+        <searchFilterFields>Customer_Group__c</searchFilterFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>PBU__c</searchFilterFields>
+        <searchResultsAdditionalFields>Unit__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Customer_Group__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Move_In_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Move_Out_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Financial_End_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

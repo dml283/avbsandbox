@@ -1,3 +1,1021 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Subject</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Follow Up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Follow Up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <recordTypes>
+        <fullName>Default_Event</fullName>
+        <active>true</active>
+        <label>Default Event</label>
+        <picklistValues>
+            <picklist>AVB_Type__c</picklist>
+            <values>
+                <fullName>Affordable Housing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Community Policies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Escalated to Supervisor Queue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing Delinquency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lead Pursuit Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Leasing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Notice Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move In Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move In Process-Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move Out Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move Out Process-Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prior Collection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resident Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Utilities</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Document_Type__c</picklist>
+            <values>
+                <fullName>Acknowledgement of Notice to Vacate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Balance Notice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing Changes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of Remittance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Copy of Lease</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined Application Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delinquency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAP Contract or Renewal Addendum to HAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing Authority Renewal Rent Increase Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incomplete Application Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction to Statement Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Late Rent Notice %282 Day%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lease</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lottery - Add to Waitlist Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lottery - General Apartment Offer Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lottery - Notice Of Acceptance Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lottery - Selected In Lottery Notification Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lottery - Specific Apartment Offer Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Missing Information Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move-In - Initial Certification Packet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move-In - Non-Qualification Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NSF Notice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notice to Quit %283 Day%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notice to Quit %285 Day%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notice to Vacate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Enrollment Packet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pay or Quit %285 Day%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Dated Check</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Questionnaire%2FApplication Packet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal - 30-day Final Notice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal - 60-day Reminder Notice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal - Non-Qualification Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal Offer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resident Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail - Late Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail - Notice of Default</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Risk Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transition Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transitional Fee Waived</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Utility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verification of Rent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - Apartment Available Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - Denial Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - First Placement Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - Notice of Incomplete Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - Remove From Waitlist Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - Waitlist Management Update Letter</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Outcome__c</picklist>
+            <values>
+                <fullName>Could Not Save - Send Move Out Packet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Escalated - Do Not Close</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Response - Send Move Out Packet</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Not Satisfied</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfied</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saved - Remove Notice From MRI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spoke with Resident</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reached_By__c</picklist>
+            <values>
+                <fullName>In Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phone</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Sent Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voice Message</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Show</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initial Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject_Sub_Category__c</picklist>
+            <values>
+                <fullName>Abandoned Items Disposed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Abandoned Items Stored</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Acknowledgement of Notice to Vacate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Adjustment Case Clarification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apartment Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Authorized Caller Added%2FRemoved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auto-Rent or UserID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Avalon Access</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSA - Notice to Vacate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Balance Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Balance Email 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Balance Email 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Balance Inquiry - not a dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Balcony%2FHallway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Certification Packet Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in NTV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of Billing Address</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Charge Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Common Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Community Concern</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Community Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Report Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Damage Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Date Clarification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Package</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Documentation Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emailed Lease for Signature%28s%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FCO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FCO Notice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FCO%2FAVB Correspondence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Feed Pet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Final Move Out Inspection%2FEstimates Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forwarding Address</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Resident Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing - Balance Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing - Credit Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing - Legal Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing - Payment Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing - Portion Discrepancy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing - SODA Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Housing Authority Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Income Certification Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initial Visit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Items Left in Storage%2FParking%2FApartment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Late Fee Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Late Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lease Documents Incomplete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lease Signed and Returned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Fee Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Process Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MI Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Making Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Material Non-Compliance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Missing Documents Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move Out Complete Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move Out Packet%2FProcess Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move in - Income Certification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Move in Confirmation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NSF Unblock Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Neighbor Concern</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Service Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Noise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Happy with Service - CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Happy with Service - Community</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notice to Quit Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notice to Vacate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notice to Vacate Follow-Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Enrollment Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parking%2FVehicle Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pay Over the Phone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment - Address%2FProcess Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment - Advised AVB of Future Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment - AvalonAccess Deduction Question</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment - Has AVB Received Payment%3F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment - NSF and Deadline Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment - Receipt Requested</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Plan Declined</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Plan Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Policy Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preliminary Inspection%2FEstimates Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prior Resident Collections Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Question - Legal Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Received in Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remove Notice from MRI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal - Income Re-Certification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal Offer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renters insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Request Payment Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resident Referral Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resident Referral Notification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Return Visit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA - Charge Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA - Damage Dispute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA Inquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA Payment- Receipt Requested</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA Payment-Advised AVB of Future Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA Payment-Has AVB Received Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SODA Payment-Pay Over the Phone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Quote</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unhappy with Service Provided</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Utilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verification of Rent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waitlist - Application Inquiry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Task_Queue__c</picklist>
+            <values>
+                <fullName>Payment Services Queue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prior Resident Queue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Task_Subject__c</picklist>
+            <values>
+                <fullName>Initial Visit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Return Visit</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <validationRules>
+        <fullName>Conditionally_Require_WhoId_Event</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+	ISBLANK(WhoId),
+	NOT(ISPICKVAL(AVB_Type__c, &apos;Lead Pursuit Process&apos;))
+	)</errorConditionFormula>
+        <errorDisplayField>WhoId</errorDisplayField>
+        <errorMessage>You must enter a Contact on this Event</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Conditionally_require_Sub_Category</fullName>
+        <active>true</active>
+        <description>On Lead Pursuit Process Events, require entry in Sub Category field.</description>
+        <errorConditionFormula>AND(
+  ISBLANK( TEXT(Subject_Sub_Category__c) ),
+  ISPICKVAL( AVB_Type__c, &quot;Lead Pursuit Process&quot;)
+  )</errorConditionFormula>
+        <errorDisplayField>Subject_Sub_Category__c</errorDisplayField>
+        <errorMessage>Please enter a Sub Category.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Reject_marking_future_Event_Complete</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISPICKVAL( Status__c , &apos;Complete&apos;),
+  ( StartDate__c &gt;  TODAY() )
+  )</errorConditionFormula>
+        <errorMessage>Future appointment should not be marked &apos;Complete.&apos;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_AVB_Associate_Name</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR( 
+NOT CONTAINS(AVB_Associate_First_Last_Name__c, &quot; &quot;), 
+AND ( 
+LEN(AVB_Associate_First_Last_Name__c) = 0, 
+OR( 
+CONTAINS( $Profile.Name , &quot;Community&quot;), 
+CONTAINS( $User.LastName , &quot;Visitor&quot;) 
+) 
+) 
+)</errorConditionFormula>
+        <errorDisplayField>AVB_Associate_First_Last_Name__c</errorDisplayField>
+        <errorMessage>Please enter your first and last name.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>New_Event_GuestCard</fullName>
+        <availability>online</availability>
+        <description>fills in Subject with &apos;Will Auto-populate&apos;</description>
+        <displayType>massActionButton</displayType>
+        <linkType>url</linkType>
+        <masterLabel>New Event</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/00U/e?what_id={!Guest_Card__c.Id}
+&amp;who_id={!Guest_Card__c.ContactId__c}
+&amp;retURL={!Guest_Card__c.Id}
+&amp;evt5=Will%20auto-populate
+&amp;00N60000001YKl9={!Guest_Card__c.AVB_Associate__c}
+&amp;00N60000001WUdz=Lead Pursuit Process
+&amp;00N60000002Us9c=Scheduled</url>
+    </webLinks>
+</CustomObject>

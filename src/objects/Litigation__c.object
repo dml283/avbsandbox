@@ -1,3 +1,573 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>Litigation_Activity_Edit_Override</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Scontrol</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>Litigation_Activity_New_Override</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Scontrol</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>AVB Custom Object - This object is used to store information related to current litigation activities.</description>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Litigation</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Auto_Response_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Auto-Response Email</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Litigation Activity Opened: &quot;If applicable, please send any necessary paperwork...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Court Date: &quot;The associate who signed the proof of service will need to appear at court...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Court Date: &quot;An associate will need to be on-call to appear at court...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Court Date: &quot;An associate is required to be present at court...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lock-out: &quot;Please be sure to have the appropriate amount of petty cash available to pay...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lock-out: &quot;Please remember it is very important to wait for the Constable/Marshall/Sheriff...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lock-out: &quot;It is very important the actual date and time of the lock-out is not known by the resident...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lock-out: &quot;Please have the appropriate number of associates available to perform the lock-out...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lock-out: &quot;Please be prepared to change the locks once the Constable/Marshall/Sheriff has returned...&quot;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>1000</length>
+        <trackHistory>true</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>15</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Community__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Parent.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Community</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Court_Date_Old__c</fullName>
+        <description>Old Court Date Field</description>
+        <externalId>false</externalId>
+        <label>Court Date Old</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Court_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Court Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Court_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Court Time</label>
+        <length>11</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Default_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Email_Recipients__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Multiple emails need to be seperated by a semi colon</inlineHelpText>
+        <label>Email Recipients</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>FED__c</fullName>
+        <externalId>false</externalId>
+        <label>FED</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Judgment_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Judgment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Last_Modified_By_Foundation_User__c</fullName>
+        <description>This does not represent the Salesforce user.  It represents the Foundation user who entered a Litigation Record in Foundation.</description>
+        <externalId>false</externalId>
+        <label>Last Modified By Foundation User</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Modified_Date_Time_in_Foundation__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Modified Date\Time in Foundation</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Law_Firm__c</fullName>
+        <externalId>false</externalId>
+        <label>Law Firm</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Barbara Harris</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Barokas Martin &amp; Tomlinson</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BH Law</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Binder and Malter, LLP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Collier Halpern</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Freeborn &amp; Peters LLP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Griffin Griffin &amp; Alexander</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gross and Romanick</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Henry Raphaelson Esquire</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Holland &amp; Knight</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>James A. Polon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>John R. Harness</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Keen &amp; Matney LLC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kimball Tirey &amp; St John</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Law Office of Puckett and Redford</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Law Offices Michael McCarthy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Law Offices of David K Barhydt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Law Offices of Donna Ashton</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Law Offices of Russo &amp; Scolnick</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lehrman Kronick &amp; Lehrman LLP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mallios Rider &amp; Goley LLP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marcus Errico Emmer &amp; Brooks</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Michael Modestino</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Miller Starr Regalia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pahl &amp; McCay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Robert P. Weisoff</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rosenberg &amp; Estis P.C.</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Teller and Levit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Todd B. Rothbard Attorney at Law</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wasserman-Stern Law Offices</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Legal_Fee_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Fee 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Legal_Fee_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Fee 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Legal_Fee_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Fee 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Litigation_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Litigation Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Breach of Lease</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non Payment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Money_Judgment_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Money Judgment Status</label>
+        <picklist>
+            <controllingField>Money_Judgment__c</controllingField>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <controllingFieldValues>checked</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Satisfied</fullName>
+                <controllingFieldValues>checked</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Money_Judgment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Money Judgment</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NTQ_Expiration_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>NTQ Expiration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>No_Payments_Accepted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>used when absolutely no payments are accepted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box only when no payments accepted</inlineHelpText>
+        <label>No Payments Accepted</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Original_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Original Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Paid_to_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Paid to Date</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Projected_Default_Date__c</fullName>
+        <description>This field is for the attorneys to add (Admin Case #00014474).</description>
+        <externalId>false</externalId>
+        <label>Projected Default Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Lock_Out_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheduled Lock-Out Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Vacated_Locked_Out__c</fullName>
+        <externalId>false</externalId>
+        <label>Vacated\Locked Out</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>eRentPayer_De_Activated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>eRentPayer De-Activated</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <label>Litigation Activity</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Date__c</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>eRentPayer_De_Activated__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{YYYY}{MM}-{00000}</displayFormat>
+        <label>Litigation Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Litigation Activities</pluralLabel>
+    <searchLayouts>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Law_Firm__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Court_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>eRentPayer_De_Activated__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Account__c</searchFilterFields>
+        <searchFilterFields>Law_Firm__c</searchFilterFields>
+        <searchFilterFields>Court_Date__c</searchFilterFields>
+        <searchFilterFields>Date__c</searchFilterFields>
+        <searchFilterFields>eRentPayer_De_Activated__c</searchFilterFields>
+        <searchResultsAdditionalFields>Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Law_Firm__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Court_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>eRentPayer_De_Activated__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>No_Spaces_in_Email</fullName>
+        <active>true</active>
+        <errorConditionFormula>CONTAINS( Email_Recipients__c , &quot; &quot;)</errorConditionFormula>
+        <errorDisplayField>Email_Recipients__c</errorDisplayField>
+        <errorMessage>Please remove spaces in the Email Recipients field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Law_Firm_Picklist</fullName>
+        <active>false</active>
+        <description>Validation Rule needed for Apex Data Loader loads of Litigation Activities.</description>
+        <errorConditionFormula>AND(
+NOT(ISPICKVAL(Law_Firm__c, &quot;Griffin, Griffin, &amp; Alexander P.C.&quot;)),
+NOT(ISPICKVAL(Law_Firm__c, &quot;James A. Polon&quot;)),
+NOT(ISPICKVAL(Law_Firm__c, &quot;Keen &amp; Matney, LLC&quot;)),
+NOT(ISPICKVAL(Law_Firm__c, &quot;Law Offices of Michael N. McCarthy, P.C.&quot;)),
+NOT(ISPICKVAL(Law_Firm__c, &quot;Lehrman, Kronick &amp; Lehrman, LLP&quot;)),
+NOT(ISPICKVAL(Law_Firm__c, &quot;Mallios, Rider, &amp; Goley, LLP&quot;)),
+NOT(ISPICKVAL(Law_Firm__c, &quot;Robert P. Weisoff&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Law_Firm__c</errorDisplayField>
+        <errorMessage>Please select a valid picklist value.</errorMessage>
+    </validationRules>
+</CustomObject>
