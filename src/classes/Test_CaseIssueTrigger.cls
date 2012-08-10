@@ -68,7 +68,7 @@ public class Test_CaseIssueTrigger {
 		Case_Issue__c prevci1 = new Case_Issue__c(
 			Case__c = prevcases[1].Id,
 			RecordtypeId = refrtId,
-			Referred_Resident__c = prevcons[1].Id);
+			Referred_Resident__c = prevrefcons[0].Id);
 		previssues.add(prevci1);
 		insert previssues;
 		
@@ -104,7 +104,7 @@ public class Test_CaseIssueTrigger {
 		Case_Issue__c newci0 = new Case_Issue__c(
 			Case__c = testcases[0].Id,
 			RecordtypeId = refrtId,
-			Referred_Resident__c = prevcons[0].Id);
+			Referred_Resident__c = prevrefcons[0].Id);
 		testissues.add(newci0);
 		//this issue has a move in date in the past
 		Case_Issue__c newci1 = new Case_Issue__c(
@@ -126,9 +126,12 @@ system.debug('\n\n125 inserting issues');
 		insert testissues;
 test.stopTest();		
 		list<Case> resultcases = [select Id, Warning_Message__c from Case where Id in :testcases];
+system.debug('\n\nresultcases ' + resultcases);		
 		Integer checker = 1;
+		set<Id> caseids = new set<Id>();
 		for (Case c : resultcases)
 		{
+			caseids.add(c.Id);
 			if (c.Id == testcases[0].Id)
 			{
 				system.assertEquals('Applicant already referred by casetestcon 1', c.Warning_Message__c);
@@ -154,6 +157,12 @@ test.stopTest();
 			}
 		}
 		system.assertEquals(2 * 3 * 5, checker);
+	/* will only be a good test if there is an approval process available to submit these cases to. 080812 JN
+		list<ProcessInstanceHistory> procinshist = [select ID, TargetObjectID 
+			from ProcessInstanceHistory 
+			where TargetObjectID in :caseids];
+    	system.assertEquals(5, procinshist.size());  
+	*/
 	}
 	
 }//end class Test_CaseIssueTrigger

@@ -1,5 +1,7 @@
 trigger CaseValidations on Case (before insert,before update,after insert,after update) 
 {
+	if (false)
+	{
     List<Case> chk_case_updold = Trigger.old;
     List<Case> chk_case_updnew = Trigger.new;
     if(Trigger.isBefore)
@@ -415,5 +417,5 @@ trigger CaseValidations on Case (before insert,before update,after insert,after 
             }
         }*/
     }
-    
+    } //end if (false)
 }

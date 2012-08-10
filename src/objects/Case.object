@@ -17419,7 +17419,7 @@ IMAGE(&quot;https://na4.salesforce.com/servlet/servlet.FileDownload?file=0156000
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Approved_Amount_vs_Total_Net</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>This rule ensures that the Approved Amount is equal to Total Net Correction Amount.</description>
         <errorConditionFormula>AND(
 Approved_Amount__c &lt;&gt; Total_Net_Correction__c, 
@@ -17453,7 +17453,7 @@ OR(
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Concession_Adjusted_Amount_0</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Adjustment Type = &quot;Concession&quot; when the Case Primary Type = &quot;Correction of Fees&quot; then Adjusted Amount must equal 0</description>
         <errorConditionFormula>AND(
 ISPICKVAL(Case_Primary_Type__c , &quot;Correction of Fees&quot;),
@@ -17479,7 +17479,7 @@ ISPICKVAL( Adjustment_Type_5__c , &quot;Concession&quot;), ISNULL(Adjusted_Amoun
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Concession_Description</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Adjustment Type = &quot;Concession&quot; when the Case Primary Type = &quot;Correction of Fees&quot; then a description must be entered.</description>
         <errorConditionFormula>AND(
 ISPICKVAL(Case_Primary_Type__c , &quot;Correction of Fees&quot;),
@@ -17493,7 +17493,7 @@ LEN( Description ) = 0 )</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Credit_Original_Amount_0</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Adjustment Type = &quot;Enter Credit&quot; then Original Amount must equal 0</description>
         <errorConditionFormula>OR(
   AND (
@@ -17517,7 +17517,7 @@ ISPICKVAL( Adjustment_Type_5__c , &quot;Enter Credit&quot;), ISNULL(Original_Bil
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Dep_Adjs_Require_Amounts</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Requires &quot;Original Dep Amount&quot; and &quot;Adjusted Dep Amount&quot; fields to be populated based on Dep Adj type.</description>
         <errorConditionFormula>AND ( 
   OR ( 
@@ -17531,7 +17531,7 @@ ISNULL(  New_Deposit_Amount__c ))
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Dep_Adjs_Require_PBUs</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Require Tranfer From and To PBU fields to be populated based on Dep Adj type.</description>
         <errorConditionFormula>AND ( 
   OR ( 
@@ -17545,7 +17545,7 @@ LEN( Transfer_to_PBU__c  ) = 0
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Increase_Deposit_Amount</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>This rule ensures that the Adjusted Deposit Amount equals the current amount set by policy for associates.</description>
         <errorConditionFormula>AND( 
      ISPICKVAL ( Dep_Adj_Type__c , &quot;Increase Original Billing&quot;),
@@ -17557,7 +17557,7 @@ OR(
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Lock_Out_Community_Users</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Community level users are locked out after an Adjustment Case is Submitted for Approval, Approved or Rejected.
 
 Allowed editors would be System Admins, OSFA Managers, OSFA Public Templates, OSFA Acct Specialists.</description>
@@ -17574,7 +17574,7 @@ $Profile.Name= &quot;Community&quot;)</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Prohibit_negative_Payment_Amt</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>The Payment_Amount__c field is used on the Payment Transfer Adj Case.  It should never be a negative number.</description>
         <errorConditionFormula>Payment_Amount__c  &lt;= 0</errorConditionFormula>
         <errorDisplayField>Payment_Amount__c</errorDisplayField>
@@ -17582,7 +17582,7 @@ $Profile.Name= &quot;Community&quot;)</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Pymt_Trns_Req_Communities</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Require Tranfer From and To Community fields to be populated based on Pay Adj Type of Different Community.</description>
         <errorConditionFormula>AND (ISPICKVAL(Payment_Adjustment_Type__c , &quot;Different Community&quot;), 
 OR (
@@ -17593,7 +17593,7 @@ LEN(Transfer_To_Community__c  ) = 0
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_Description</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Adjustment Case - Checks to see that if  Primary Case Type is Customer Service Credit or Legal Fees. If yes, comments must be entered into the Description Field.</description>
         <errorConditionFormula>AND (
 OR(
@@ -17611,7 +17611,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_Type_of_Deposit</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Adjustment Case - Checks to see that if  Deposit Adjustment Type is populated.  If yes, Type of Deposit must be populated.</description>
         <errorConditionFormula>AND (
   NOT(ISPICKVAL(Dep_Adj_Type__c, &quot;&quot;)),
@@ -17622,7 +17622,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_field_for_Incorrect_FED</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Adjustment Case - Checks to see that if  Primary Case Type is Incorrect FEDl then Accurate FED must be populated.</description>
         <errorConditionFormula>AND (
   ISPICKVAL( Case_Primary_Type__c , &quot;Incorrect FED&quot;),
@@ -17633,7 +17633,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_2_Amts</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   NOT(ISPICKVAL( Adjustment_Type_2__c , &quot;&quot;)),
   OR(
@@ -17643,7 +17643,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_2_Type</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   (ISPICKVAL( Adjustment_Type_2__c , &quot;&quot;)),
   OR(
@@ -17654,7 +17654,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_3_Amts</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   NOT(ISPICKVAL( Adjustment_Type_3__c , &quot;&quot;)),
   OR(
@@ -17664,7 +17664,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_3_Type</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   (ISPICKVAL( Adjustment_Type_3__c , &quot;&quot;)),
   OR(
@@ -17675,7 +17675,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_4_Amts</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   NOT(ISPICKVAL( Adjustment_Type_4__c , &quot;&quot;)),
   OR(
@@ -17685,7 +17685,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_4_Type</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   (ISPICKVAL( Adjustment_Type_4__c , &quot;&quot;)),
   OR(
@@ -17696,7 +17696,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_5_Amts</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   NOT(ISPICKVAL( Adjustment_Type_5__c , &quot;&quot;)),
   OR(
@@ -17706,7 +17706,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Adjusment_5_Type</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   (ISPICKVAL( Adjustment_Type_5__c , &quot;&quot;)),
   OR(
@@ -17717,7 +17717,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Dep_Adj_Type</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND (
   (ISPICKVAL( Dep_Adj_Type__c  , &quot;&quot;)),
   OR(
@@ -17728,7 +17728,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Double_Chg_Fees</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Adjustment Case - Checks to see that if  Primary Case Type is Double Charged Fees then First &amp; Second Billing Dates must be populated.</description>
         <errorConditionFormula>AND (
   ISPICKVAL( Case_Primary_Type__c , &quot;Double Charged Fees&quot;),
@@ -17751,7 +17751,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Req_fields_for_Renewal</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Checks to see that if Adjusment Type is Renewal then Rent, Date and Responsible for MTM are filled in. If Responsibe for MTM is &quot;Yes&quot; in then the MTM Rate must be filled in.</description>
         <errorConditionFormula>AND (
   ISPICKVAL( Renewal_Adj_Type__c , &quot;Renewal&quot;),
@@ -17770,14 +17770,14 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Reserv_Fee_App_Signed</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Adjustment Case - Checks to see that if  App Signed field equals &quot;No&quot;.  If it does, the case can not be save and an error message provided.</description>
         <errorConditionFormula>ISPICKVAL(Application_Signed__c, &quot;No&quot;)</errorConditionFormula>
         <errorMessage>You have indicated that the application was NOT signed.  If this is accurate, a Reservation Fee can not be charged.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Status_Chg_from_Apprv_to_Trans</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>When the Primary Case Type of a case equals &quot;Transfer&quot; or &quot;Incorrect FED&quot; and the Status field equals &quot;Approved&quot; then the next valid Status must equal &quot;Transfer to OSFA Team Leads - SODA&quot;</description>
         <errorConditionFormula>AND(
    ISCHANGED( Status ), 
@@ -17792,7 +17792,7 @@ ISPICKVAL (Type_of_Deposit__c, &quot;Other&quot;)
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Term_Fee_Orig_0</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Case PrimaryType = Lease Termination Fee then Original Amount for the Termination Fee must equal 0</description>
         <errorConditionFormula>AND(
 ISPICKVAL(Case_Primary_Type__c, &quot;Lease Termination Fee&quot;),
@@ -17818,7 +17818,7 @@ ISPICKVAL( Adjustment_Type_5__c , &quot;Termination Fee&quot;), ISNULL(Original_
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Unbilled_Fees_Original_Amount_0</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Case Primary Type = Unbilled Fees then all Original Amount must equal 0.</description>
         <errorConditionFormula>OR(
 AND (
@@ -17836,7 +17836,7 @@ AND (
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Unbilled_Fees_Req_Applicant_Nam</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
 LEN( Applicant_Name__c ) = 0,
 ISPICKVAL(Case_Primary_Type__c , &quot;Unbilled Fees&quot;), 
@@ -17850,7 +17850,7 @@ ISPICKVAL( Adjustment_Type_5__c , &quot;Application Fee&quot;))
     </validationRules>
     <validationRules>
         <fullName>Adj_Case_Validate_Waive_MTM_Fields</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Adjustment Type = Waive MTM Fee then Original Amount &gt; Adjusted Amount.</description>
         <errorConditionFormula>AND(
 ISPICKVAL( Case_Primary_Type__c  , &quot;Renewal - Waive MTM Fee&quot;), (Original_Billing_Amount_2__c   &lt;=   Adjusted_Amount_2__c ))</errorConditionFormula>
@@ -17859,7 +17859,7 @@ ISPICKVAL( Case_Primary_Type__c  , &quot;Renewal - Waive MTM Fee&quot;), (Origin
     </validationRules>
     <validationRules>
         <fullName>Admin_Status_Change1_from_New_to_Eval</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Requires that the next status step equal &quot;Evaluating&quot;</description>
         <errorConditionFormula>AND(
 CONTAINS(&quot;012600000000nKsAAI&quot;, RecordTypeId), 
@@ -18003,7 +18003,7 @@ NOT(ISPICKVAL( Status, &quot;Closed&quot;))
     </validationRules>
     <validationRules>
         <fullName>Ajd_Case_Orig_Adj_Not_Zero</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Adjustment cases can not have both original amount and adjusted amount set to zero. Admin Request 00012729</description>
         <errorConditionFormula>((Adjusted_Amount_2__c  = 0   &amp;&amp;  Original_Billing_Amount_2__c = 0)
 ||

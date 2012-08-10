@@ -63,6 +63,7 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
                         	from Case_Issue__c 
                         	where RecordTypeId =: rectype.Id 
                         		and Referred_Resident__c in: residentconids];
+system.debug('\n\n66 previousissues ' + previousissues);
                         for(Case_Issue__c issue : previousissues)
                         {
                             conid2issuemap.put(issue.Referred_Resident__c,issue);
@@ -95,7 +96,7 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
                             }
                         }
                     }
-                    
+system.debug('\n\n98 conid2issuemap ' + conid2issuemap);                    
                     //If there were previous resident referral issues found in query
                     if(conid2issuemap.size() > 0)
                     {       
@@ -140,20 +141,18 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
                                     thisCase.OwnerId = revenueCollectionsGroup.Id;
                             	caseidstoupdate.add(thisCase.Id);
                             }
-                            for(Integer k=0;k<accid2MOdatemap.size();k++)
+                            Contact referredrescon = conid2conmap.get(issue.Referred_Resident__c);
+                            if(accid2MOdatemap.containskey(referredrescon.AccountId))
                             {
-                                Contact referredrescon = conid2conmap.get(issue.Referred_Resident__c);
-                                if(accid2MOdatemap.containskey(referredrescon.AccountId))
+                                Date moveout = accid2MOdatemap.get(referredrescon.AccountId);
+system.debug('\n\n149 moveout ' + moveout + ' issue date ' + issue.Expected_Move_in_Date__c);                                    
+                                if(moveout + 30 > issue.Expected_Move_in_Date__c)
                                 {
-                                    Date moveout = accid2MOdatemap.get(referredrescon.AccountId);
-                                    if(moveout + 30 < issue.Expected_Move_in_Date__c)
-                                    {
-                                        thisCase.Warning_Message__c = 'Prior Resident is not eligible for a referral bonus';
-                                        if(revenueCollectionsGroup != null)
-                                            thisCase.OwnerId = revenueCollectionsGroup.Id;
-                                    	caseidstoupdate.add(thisCase.Id);
-                                    } 
-                                }
+                                    thisCase.Warning_Message__c = 'Prior Resident is not eligible for a referral bonus';
+                                    if(revenueCollectionsGroup != null)
+                                        thisCase.OwnerId = revenueCollectionsGroup.Id;
+                                	caseidstoupdate.add(thisCase.Id);
+                                } 
                             }
                         }//if case is not owned by Team Leads Queue
                     }//end for j = 0 to trigger.new.size()
@@ -166,6 +165,7 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
                     	{
                     		casestoupdate.add(caseid2casemap.get(caseid));
                     	}
+system.debug('\n\n170 casestoupdate ' + casestoupdate);                    	
                     	update casestoupdate;
                     }//if caseidstoupdate.size() > 0
                 }//if res_ref_issues.size() > 0
@@ -182,7 +182,9 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
         	caseids.add(issue.Case__c);
         }
         //get existing approval processes for these cases that are Pending, if there are any
-        ProcessInstance[] procins = [select ID, TargetObjectID from ProcessInstance where TargetObjectID in :caseids and Status='Pending'];
+        ProcessInstance[] procins = [select ID, TargetObjectID 
+        	from ProcessInstance 
+        	where TargetObjectID in :caseids and Status='Pending'];
         
         //if there are as many processinstances as cases, they're all submitted. do this if that's not the case.
         if (procins.size() < caseids.size())
@@ -211,7 +213,9 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
 	                }
 	            }
 	            AVBCheckApproval.setapprovalset();
+system.debug('\n\n214 process ' + psrs);	            
 	            list<Approval.Processresult> res = Approval.process(psrs, false);
+	            AVBCheckApproval.setapprovalfalse();
 	            
 	        }
         }
