@@ -1,5 +1,5 @@
 public with sharing class CaseApproval {
-	/*
+	/* 
 	Purpose:  	determine who should be the approving user on a Case	
 	 
 	Created By:  Jeremy Nottingham (Synaptic) 8/6/12
@@ -12,68 +12,111 @@ public with sharing class CaseApproval {
 	 			v1.0 - (JN 8/6/12) Created this Trigger
 	 
 	*/
-	public list<Case> cases;
-	public set<Id> caseids;
-	public map<Id, User> caseid2approvermap;
-	public map<Id, User> userid2approvermap;
+	set<id> ownerids;
+	public map<Id, User> userid2approvermap = new map<Id, User>();
 	
-	public static map<Id, Id> roleid2parentroleidmap;
+	public static map<Id, Id> roleid2parentroleidmap = new map<Id, Id>();
+	public static map<Id, UserRole> roleid2rolemap;
 	
-	public CaseApproval(list<Case> cases)
+	static map<String, String> profname2jobmap = new map<String, String>
 	{
-		this.cases = cases;
-		caseids = new set<Id>();
-		for (Case c : cases)
-		{
-			caseids.add(c.Id);
-		}
+		'' => 'CC user',
+		'' => 'CSM user',
+		'' => 'CM user',
+		'' => 'CSO Specialist',
+		'' => 'CSO Manager',
+		'' => 'CSO Sr. Mgr/Director',
+		'Retail' => 'Retail User'
+	
+	};
+	
+	static map<String, String> job2rolewordmap = new map<String, String>
+	{
+		'' => 'CC user',
+		'' => 'CSM user',
+		'' => 'CM user',
+		'POD user' => 'POD',
+		'VP user' => 'VP',
+		'' => 'CSO Specialist',
+		'' => 'CSO Manager',
+		'' => 'CSO Sr. Mgr/Director'
+	};
+	
+	public CaseApproval(set<Id> ownerids)
+	{
+		this.ownerids = ownerids;
+		
+		//map out role hierarchy
 		mapRoles();
-		//determineCaseApprovers();
+		
+		//map map of user id to approver id
+		//determineApprovers();
 	}
 	
-	private void determineCaseApprovers()
+	private void determineApprovers()
 	{
-		set<Id> ownerids = new set<Id>(); //User Id
-		for (Case c : cases)
-		{
-			//collect owner ids
-			ownerids.add(c.OwnerId);
-		}
-		
 		//query for owners
 		map<Id, User> userid2usermap = new map<Id, User>([
-			select Id, UserRoleId, ProfileId, Profile.Name
+			select Id, Username, UserRoleId, UserRole.Name, ProfileId, Profile.Name 
 			from User 
 			where Id in :ownerids]);
 		
 		for (User u : userid2usermap.values()) 
 		{
 			//Determine proper approver based on attributes of the user
-			if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CC user'))
+			//CSM user
+			if (u.Username.toLowerCase().contains('_csm'))
 			{
 				//routes to CM
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSM user'))
-			{
-				//routes to CM
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CM user'))
+			} 
+			
+			//CM user
+			else if (u.Username.toLowerCase().contains('_cm'))
 			{
 				//routes to POD
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('POD user'))
+			} 
+//TODO			
+			//CC User
+			else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CC user'))
 			{
-				//no approval necessary
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('VP user'))
+				//routes to CM
+			} 
+			
+			//POD User
+			else if (u.UserRole.Name.toLowerCase().contains(job2rolewordmap.get('POD user')))
 			{
-				//no approval necessary
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSO Specialist'))
+				//no approval necessary, just put the user in as their own approver
+				userid2approvermap.put(u.Id, u);
+			} 
+			
+			//VP User
+			else if (u.UserRole.Name.toLowerCase().contains(job2rolewordmap.get('VP user')))
+			{
+				//no approval necessary, just put the user in as their own approver
+				userid2approvermap.put(u.Id, u);
+			} 
+//TODO			
+			//CSO Specialist
+			else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSO Specialist'))
 			{
 				//routes to manager	
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSO Manager'))
+			} 
+//TODO			
+			//CSO Manager
+			else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSO Manager'))
 			{
 				//routes to manager
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSO Sr. Mgr/Director'))
+			} 
+//TODO			
+			//CSO Sr Mgr/Director
+			else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('CSO Sr. Mgr/Director'))
 			{
-				//no approval necessary	
-			} else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('Retail User'))
+				//no approval necessary, just put the user in as their own approver
+				userid2approvermap.put(u.Id, u);
+			} 
+//TODO			
+			//Retail User
+			else if (profname2jobmap.get(u.Profile.Name).equalsIgnoreCase('Retail User'))
 			{
 				//routes to manager
 			}
@@ -85,18 +128,42 @@ public with sharing class CaseApproval {
 	{
 		CaseApproval.roleid2parentroleidmap = new map<Id, Id>();
 		//get Role Hierarchy
-		map<Id, UserRole> allroles = new map<Id, UserRole>([
+		roleid2rolemap = new map<Id, UserRole>([
 			select Id, ParentRoleId
 			from UserRole]);
 		
-		for (UserRole role : allroles.values())
+		for (UserRole role : roleid2rolemap.values())
 		{
 			CaseApproval.roleid2parentroleidmap.put(role.Id, role.ParentRoleId);
 		}
 	}
+	
+	public static void checkNeedsApprovalOnIssues(list<Case_Issue__c> issues)
+	{
+		set<Id> caseids = new set<Id>();
+		for (Case_Issue__c issue : issues)
+		{
+			caseids.add(issue.Case__c);
+		}
+		map<Id, Case> caseid2casemap = new map<Id, Case>([select Id, OwnerId
+			from Case 
+			where Id in :caseids]);
+		
+		//ownerids = new set<Id>();
+		//for (Case c : caseid2casemap.values()) 
+		//	ownerids.add(c.OwnerId);
+		
+		//map<Id, 
+		for (Case_Issue__c issue : issues)
+		{
+			if (issue.Charge_Type__c == 'this')
+			{
+				
+			} else if (issue.Charge_Type__c == 'this')
+			{
+				
+			} 
+		}
+		
+	}
 }
-
-
-
-
-

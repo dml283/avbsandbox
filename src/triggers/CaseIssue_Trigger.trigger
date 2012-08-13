@@ -2,11 +2,13 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
 {
 	/*
 	Purpose:  	Before
-					Insert
+					Insert/Update
 						For all Resident Referral recordtype Case Issues:
-							
+							validate that this is an allowable resident to refer. If not valid, forward case to Revenue Collections queue
+	 					If this Case Issue requires approval, set Requires Approval = TRUE
 				After	
-	 
+	 				Insert/Update
+	 					submit case for approval
 	Created By:  Jeremy Nottingham (Synaptic) 8/6/12
 	  
 	Last Modified By:  Jeremy Nottingham (Synaptic) 8/6/12
@@ -20,6 +22,8 @@ trigger CaseIssue_Trigger on Case_Issue__c (before insert,before update,after in
 
     if(Trigger.isBefore)
     {
+        //deal with Resident Referrals
+        
         Group sodaGroup = [select Id from Group where Type='Queue' and Name='OSFA Team leads - SODA'];
 	    Group revenueCollectionsGroup = [select Id from Group where Type='Queue' and Name='OSFA Team leads - Revenue Collections'];
 	    RecordType rectype = [select Id from RecordType where IsActive=true and SObjectType='Case_Issue__c' and Name='Resident Referral'];
@@ -171,6 +175,9 @@ system.debug('\n\n170 casestoupdate ' + casestoupdate);
                 }//if res_ref_issues.size() > 0
             }
         }
+        
+        //Determine if these Case Issue needs to be approved
+        CaseApproval.checkNeedsApprovalOnIssues(Trigger.new); 
     }//before
     
     
@@ -180,7 +187,11 @@ system.debug('\n\n170 casestoupdate ' + casestoupdate);
         for (Case_Issue__c issue : Trigger.new)
         {
         	caseids.add(issue.Case__c);
+        
         }
+        
+        //send this case for approval
+        
         //get existing approval processes for these cases that are Pending, if there are any
         ProcessInstance[] procins = [select ID, TargetObjectID 
         	from ProcessInstance 

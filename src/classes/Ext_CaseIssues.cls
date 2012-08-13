@@ -140,6 +140,7 @@ public class Ext_CaseIssues {
     private void checkCanCreate()
     {
         CanCreateCase = TRUE;
+        /* Removed 081312 JN. Decided against.
         if (accid != null)
         {
             try
@@ -156,6 +157,7 @@ public class Ext_CaseIssues {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Supplied Account Id not found.'));
             }
         }
+        */
     }
     
     private void popCaseOrigin()
@@ -233,7 +235,8 @@ public class Ext_CaseIssues {
         if (thisCase.Id != null)
         {
             caseid = thisCase.Id;
-            issues = [select Id, Category__c, Subcategory__c, Amount__c, Type__c, Charge_Type__c, Notes__c
+            issues = [select Id, Category__c, Subcategory__c, Amount__c, Type__c, Charge_Type__c, Notes__c, Customer_Group__c, 
+            	Case__c, Feedback_level__c
                 from Case_Issue__c
                 where Case__c = :thisCase.Id];
             
@@ -256,7 +259,7 @@ public class Ext_CaseIssues {
         Integer counter = 0;
         for (Integer i = 0; i < NumBlankIssues; i++)
         {
-            Case_Issue__c newissue = new Case_Issue__c(Case__c = thisCase.Id);
+            Case_Issue__c newissue = new Case_Issue__c(Case__c = thisCase.Id, Feedback_Level__c = 'Neutral');
             issues.add(newissue);
             extIssue newxissue = new extIssue(newissue);
             newxissue.IsEditable = TRUE;
@@ -553,20 +556,27 @@ system.debug('\n\namelist ' + namelist);
         if ((thisCase != null)
             && (thisCase.Id != null))
         {
-            list<Case_Issue__c> cistoupsert = new list<Case_Issue__c>();
+            list<Case_Issue__c> cistoinsert = new list<Case_Issue__c>();
             
             for (extIssue xi : xissues)
             {
                 Case_Issue__c ci = xi.issue;
-                if (ci.Category__c != null)
+                
+                //If this is a new Case Issue and it has a Category, insert it.
+                if ((ci.Category__c != null) && (ci.Id == null))
                 {
-                    cistoupsert.add(ci);
+                    if (ci.Case__c == null)
+                	{
+                		ci.Case__c = thisCase.Id;
+                		ci.Customer_Group__c = thisCase.AccountId;
+                	}
+                    cistoinsert.add(ci);
                 }
             }
-            if (cistoupsert.size() > 0)
+            if (cistoinsert.size() > 0)
             {
-system.debug('\n\n87 cistoupsert ' + cistoupsert);          
-                database.upsert(cistoupsert);
+system.debug('\n\n87 cistoinsert ' + cistoinsert);          
+                database.insert(cistoinsert);
             }
             pageref = new PageReference('/' + thisCase.Id);
         }

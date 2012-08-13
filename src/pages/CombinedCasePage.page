@@ -50,24 +50,37 @@
 			</apex:pageBlockButtons>
 			
 			<apex:pageBlockSection showHeader="true" title="Case Information" columns="2">
-				<apex:inputField required="true" value="{!Case.ContactId}"/>
+				<apex:outputField value="{!Case.AccountId}"/>
 				<apex:outputField value="{!Case.Account_Number__c}"/>
-				<apex:inputField required="true" value="{!Case.Origin}"/>
+				
+				<apex:inputField required="true" value="{!Case.ContactId}"/>
 				<apex:inputField value="{!Case.AVB_Contact_Name__c}"/>
-				<apex:inputField required="true" value="{!Case.Reason}"/> 
-				<apex:inputField required="true" value="{!Case.Status}"/>
-				<apex:inputField required="true" value="{!Case.Case_Primary_Type__c}"/>
-				<apex:inputField value="{!Case.Feedback_Level__c}"/>
-				<apex:inputField value="{!Case.Interaction_Type__c}"/>
-				<apex:inputField value="{!Case.Escalated_Queue__c}" rendered="{!ShowEscalatedQueue}" />
-				<apex:pageblocksectionitem rendered="{!!ShowEscalatedQueue}" />
+				
+				<apex:inputField value="{!Case.Interaction_Type__c}" required="true"/>
+				<apex:inputField required="true" value="{!Case.Origin}"/>
+				
+				<apex:outputField value="{!Case.Contact.Customer_Type__c}"/>
+				<!-- <apex:inputField value="{!Case.Feedback_Level__c}"/>
+				<apex:inputField required="true" value="{!Case.Reason}"/>  -->
 				<apex:inputField value="{!Case.Priority}"/>
-				<!-- <apex:inputField value="{!Case.Rejected__c}"/> -->
+				
+				<!-- <apex:inputField required="true" value="{!Case.Case_Primary_Type__c}"/> -->
+				<apex:pageblocksectionitem />
+				<apex:inputField required="true" value="{!Case.Status}"/>
+				
+				<apex:pageblocksectionitem rendered="{!!ShowEscalatedQueue}" />
+				<apex:inputField value="{!Case.Escalated_Queue__c}" rendered="{!ShowEscalatedQueue}" />
 			</apex:pageBlockSection> 
 			
 			<apex:pageBlockSection showHeader="true" title="Description Information" columns="1">
-				<apex:inputField style="width: 70%" value="{!Case.Subject}"/>
-				<apex:inputField style="width: 70%" value="{!Case.Description}"/>
+				<apex:pageblocksectionitem >
+					<apex:outputlabel value="Primary Subject" for="subject" />
+					<apex:inputField style="width: 70%" id="subject" value="{!Case.Subject}"/>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem >
+					<apex:outputlabel value="Overview" for="description" />
+					<apex:inputField style="width: 70%" id="description" value="{!Case.Description}"/>
+				</apex:pageblocksectionitem>
 				<!-- <apex:pageblocksectionitem >
 					<apex:outputlabel for="comments" value="Add Internal Comments" />
 					<apex:inputField id="comments" style="width: 70%" value="{!newComment.CommentBody}"/>
@@ -134,10 +147,20 @@
 					
 					<apex:column styleclass="toprow" >
 						<apex:facet name="header">
+							Feedback<br/>Level
+						</apex:facet>
+						<apex:inputfield value="{!xissue.issue.Feedback_Level__c}" rendered="{!xissue.IsEditable}"/>
+						<apex:outputfield value="{!xissue.issue.Feedback_Level__c}" rendered="{!!xissue.IsEditable}"/>
+					</apex:column>
+					
+					<apex:column styleclass="toprow" >
+						<apex:facet name="header">
 							Charge<br/>Type
 						</apex:facet>
-						<apex:outputlabel style="font-size: 10px;" value="Only Use for Adjustment Cases"  rendered="{!(xissue.IsEditable)}"/>
-						<br/>
+						<apex:outputpanel rendered="{!(xissue.IsEditable)}">
+							<apex:outputlabel style="font-size: 10px;" value="Only Use for Adjustment Cases<br/>"  />
+							<br/>
+						</apex:outputpanel>
 						<apex:inputfield value="{!xissue.issue.Charge_Type__c}" rendered="{!xissue.IsEditable}"/>
 						<apex:outputfield value="{!xissue.issue.Charge_Type__c}" rendered="{!!xissue.IsEditable}"/>
 					</apex:column>
