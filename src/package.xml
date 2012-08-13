@@ -43,5 +43,5 @@
         <members>UserLicense</members>
         <name>CustomObject</name>
     </types>
-    <version>15.0</version>
+    <version>25.0</version>
 </Package>

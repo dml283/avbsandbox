@@ -21,4 +21,5 @@
     <tab>Walk_in__c</tab>
     <tab>MRILeasingAssociate__c</tab>
     <tab>DateLoadTest__c</tab>
+    <tab>Manage_Task_Queues</tab>
 </CustomApplication>

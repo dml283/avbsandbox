@@ -1203,6 +1203,18 @@ ROUND(((Leased_Rent__c  /  Days_in_App_Cancel_Month__c ) *  IF(Days_Off_Market__
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Case_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Approving_Cases</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Case_Origin__c</fullName>
         <externalId>false</externalId>
         <label>Case Origin</label>
@@ -18083,16 +18095,6 @@ AND ( ISPICKVAL (Status, &quot;Closed&quot;), NOT($Profile.Name = &quot;System A
         <errorMessage>This case cannot be closed until all associated Move Tasks are Closed.</errorMessage>
     </validationRules>
     <webLinks>
-        <fullName>Edit_Case_Issues</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>page</linkType>
-        <masterLabel>Edit Case Issues</masterLabel>
-        <openType>replace</openType>
-        <page>CaseIssuePage</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
         <fullName>Edit_Entire_Case</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
@@ -18112,17 +18114,6 @@ AND ( ISPICKVAL (Status, &quot;Closed&quot;), NOT($Profile.Name = &quot;System A
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
         <url>/apex/CombinedCasePage?accid={!Account.Id}&amp;retURL=/{!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Select_Case_Associates</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Select Case Associates</masterLabel>
-        <openType>sidebar</openType>
-        <page>caseuserselect</page>
-        <protected>false</protected>
     </webLinks>
     <webLinks>
         <fullName>activities__Create_Tasks_Cases</fullName>
